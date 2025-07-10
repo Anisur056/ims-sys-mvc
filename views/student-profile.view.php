@@ -23,6 +23,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
 {
     if(isset($_POST['addVoucherbtn'])){
         $ENTRY_DATE = $_POST['ENTRY_DATE'];
+        $STUDENT_NAME = $_POST['STUDENT_NAME'];
+        $STUDENT_CLASS = $_POST['STUDENT_CLASS'];
+        $STUDENT_SECTION = $_POST['STUDENT_SECTION'];
+        $STUDENT_ROLL = $_POST['STUDENT_ROLL'];
         $TRANSECTION_STATUS = 'cash_in';
         $ACCOUNTS_HEAD = 'FEES_COLLECTION';
         $DESCRIPTION = $_POST['DESCRIPTION'];
@@ -33,7 +37,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
         $RECEIVED_BY = $_SESSION['user'];
         $INKED_TO = $id;
 
-        $db->addVoucher($ENTRY_DATE, $TRANSECTION_STATUS, $ACCOUNTS_HEAD, 
+        $db->addVoucher($ENTRY_DATE, $STUDENT_NAME,$STUDENT_CLASS,
+            $STUDENT_SECTION, $STUDENT_ROLL,
+            $TRANSECTION_STATUS, $ACCOUNTS_HEAD, 
             $DESCRIPTION, $AMOUNT, $RECEIVED, 
             $DUE, $REMARK, $RECEIVED_BY, $INKED_TO);
     }
@@ -276,7 +282,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
                         
                         case 'id-card':
                             ?>
-                            <!--Fees----------------------------------------------------------------------------------------------------------->
+                            <!--id-card----------------------------------------------------------------------------------------------------------->
                             <?php
                             break;
 
@@ -292,6 +298,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
                                             <tr>
                                                 <th>VOUCHER NO</th>
                                                 <th>ENTRY DATE</th>
+                                                <th>STUDENT NAME</th>
                                                 <th>DESCRIPTION</th>
                                                 <th>AMOUNT</th>
                                                 <th>RECEIVED</th>
@@ -306,22 +313,23 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
                                                 $result = $db->showVoucherByStudentId($id);
                                                 foreach($result as $data){
                                                     ?>
-                                                <tr>
-                                                    <td data-label="VOUCHER NO:"><?= $data['VOUCHER_NO'] ?></td>
-                                                    <td data-label="ENTRY DATE:"><?= $data['ENTRY_DATE'] ?></td>
-                                                    <td data-label="DESCRIPTION:" class="bangla"><?= $data['DESCRIPTION'] ?></td>
-                                                    <td data-label="AMOUNT:"><?= $data['AMOUNT'] ?></td>
-                                                    <td data-label="RECEIVED:"><?= $data['RECEIVED'] ?></td>
-                                                    <td data-label="DUE:"><?= $data['DUE'] ?></td>
-                                                    <td data-label="REMARK:" class="bangla"><?= $data['REMARK'] ?></td>
-                                                    <td data-label="RECEIVED BY:"><?= $data['RECEIVED_BY'] ?></td>
-                                                    <td data-label="ACTIONS:">
-                                                    <a class="btn btn-warning m-1" data-bs-toggle="modal" data-bs-target="#update<?= $data['VOUCHER_NO'] ?>" href="#"><i class="fas fa-pen-to-square"></i></a>
-                                                    <a class="btn btn-success m-1" href="/student-fee-print?voucher-print-id=<?= $data['VOUCHER_NO'] ?>"><i class="fas fa-solid fa-print"></i></a>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td data-label="VOUCHER NO:"><?= $data['VOUCHER_NO'] ?></td>
+                                                        <td data-label="ENTRY DATE:"><?= $data['ENTRY_DATE'] ?></td>
+                                                        <td data-label="STUDENT NAME:" class="bangla"><?= $data['STUDENT_NAME'] ?></td>
+                                                        <td data-label="DESCRIPTION:" class="bangla"><?= $data['DESCRIPTION'] ?></td>
+                                                        <td data-label="AMOUNT:"><?= $data['AMOUNT'] ?></td>
+                                                        <td data-label="RECEIVED:"><?= $data['RECEIVED'] ?></td>
+                                                        <td data-label="DUE:"><?= $data['DUE'] ?></td>
+                                                        <td data-label="REMARK:" class="bangla"><?= $data['REMARK'] ?></td>
+                                                        <td data-label="RECEIVED BY:"><?= $data['RECEIVED_BY'] ?></td>
+                                                        <td data-label="ACTIONS:">
+                                                        <a class="btn btn-warning m-1" data-bs-toggle="modal" data-bs-target="#update<?= $data['VOUCHER_NO'] ?>" href="#"><i class="fas fa-pen-to-square"></i></a>
+                                                        <a class="btn btn-success m-1" target="_blank" href="/student-fee-print?voucher-print-id=<?= $data['VOUCHER_NO'] ?>"><i class="fas fa-solid fa-print"></i></a>
+                                                        </td>
+                                                    </tr>
 
-                                                    <!-- Model Content For Voucher Add-->
+                                                    <!-- Model Content For Voucher update-->
                                                     <div class="modal fade" id="update<?= $data['VOUCHER_NO'] ?>">
                                                         <form action="" method="post">
                                                             <div class="modal-dialog">
@@ -340,28 +348,48 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
                                                                         </div>
 
                                                                         <div class="form-floating mb-3">
+                                                                            <input type="text" class="form-control bangla" name="STUDENT_NAME" placeholder="" value="<?= $data['STUDENT_NAME'] ?>">
+                                                                            <label class="bangla">শিক্ষার্থীর নাম</label>
+                                                                        </div>
+
+                                                                        <div class="form-floating mb-3">
+                                                                            <input type="text" class="form-control" name="STUDENT_CLASS" placeholder="" value="<?= $data['STUDENT_CLASS'] ?>">
+                                                                            <label class="bangla">শ্রেনী</label>
+                                                                        </div>
+
+                                                                        <div class="form-floating mb-3">
+                                                                            <input type="text" class="form-control" name="STUDENT_SECTION" placeholder="" value="<?= $data['STUDENT_SECTION'] ?>">
+                                                                            <label class="bangla">সেকশন</label>
+                                                                        </div>
+
+                                                                        <div class="form-floating mb-3">
+                                                                            <input type="text" class="form-control" name="STUDENT_ROLL" placeholder="" value="<?= $data['STUDENT_ROLL'] ?>">
+                                                                            <label class="bangla">শ্রেনী রোল</label>
+                                                                        </div>
+
+                                                                        <div class="form-floating mb-3">
                                                                             <textarea name="DESCRIPTION" class="form-control bangla" placeholder="" id="floatingTextarea2" style="height: 200px"><?= $data['DESCRIPTION'] ?></textarea>
-                                                                            <label for="floatingTextarea2">DESCRIPTION</label>
+                                                                            <label for="floatingTextarea2">টাকা গ্রহণের বিবরণ</label>
                                                                         </div>
 
                                                                         <div class="form-floating mb-3">
                                                                             <input type="text" class="form-control" name="AMOUNT" placeholder="" value="<?= $data['AMOUNT'] ?>" required>
-                                                                            <label>AMOUNT:</label>
+                                                                            <label>আদায়যোগ্য টাকা</label>
                                                                         </div>
 
                                                                         <div class="form-floating mb-3">
                                                                             <input type="text" class="form-control" name="RECEIVED" placeholder="" value="<?= $data['RECEIVED'] ?>">
-                                                                            <label>RECEIVED:</label>
+                                                                            <label>গ্রহনকৃত টাকা</label>
                                                                         </div>
                                                                         
                                                                         <div class="form-floating mb-3">
                                                                             <input type="text" class="form-control" name="DUE" placeholder="" value="<?= $data['DUE'] ?>">
-                                                                            <label>DUE:</label>
+                                                                            <label>বকেয়া</label>
                                                                         </div>
 
                                                                         <div class="form-floating mb-3">
                                                                             <textarea name="REMARK" class="form-control bangla" placeholder="" id="floatingTextarea2" style="height: 200px"><?= $data['REMARK'] ?></textarea>
-                                                                            <label for="floatingTextarea2">REMARK</label>
+                                                                            <label for="floatingTextarea2">বেতন সংক্রান্ত মন্তব্য লিখুন</label>
                                                                         </div>
 
                                                                     </div>
@@ -393,32 +421,62 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
 
                                                     <div class="form-floating mb-3">
                                                         <input type="text" class="form-control" name="ENTRY_DATE" placeholder="" value="<?= date('d/m/Y') ?>">
-                                                        <label>ENTRY_DATE:</label>
+                                                        <label class="bangla">গ্রহণের তারিখ</label>
+                                                    </div>
+
+                                                    <?php
+                                                        $result = $db->showStudentById($id);
+                                                        foreach($result as $data){
+                                                            $NAME = $data['NAME_BN'];
+                                                            $CLASS = $data['CLASS'];
+                                                            $SECTION = $data['SECTION'];
+                                                            $ROLL = $data['ROLL'];
+                                                        }
+                                                    ?>
+
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control bangla" name="STUDENT_NAME" placeholder="" value="<?= $NAME ?>">
+                                                        <label class="bangla">শিক্ষার্থীর নাম</label>
+                                                    </div>
+
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" name="STUDENT_CLASS" placeholder="" value="<?= $CLASS ?>">
+                                                        <label class="bangla">শ্রেনী</label>
+                                                    </div>
+
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" name="STUDENT_SECTION" placeholder="" value="<?= $SECTION ?>">
+                                                        <label class="bangla">সেকশন</label>
+                                                    </div>
+
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" name="STUDENT_ROLL" placeholder="" value="<?= $ROLL ?>">
+                                                        <label class="bangla">শ্রেনী রোল</label>
                                                     </div>
 
                                                     <div class="form-floating mb-3">
                                                         <textarea name="DESCRIPTION" class="form-control bangla" placeholder="" id="floatingTextarea2" style="height: 200px">জানুয়ারী-২০২৫ এর বেতন গ্রহণ।</textarea>
-                                                        <label for="floatingTextarea2">DESCRIPTION</label>
+                                                        <label for="floatingTextarea2" class="bangla">টাকা গ্রহণের বিবরণ</label>
                                                     </div>
 
                                                     <div class="form-floating mb-3">
                                                         <input type="text" class="form-control" name="AMOUNT" placeholder="" value="" required>
-                                                        <label>AMOUNT:</label>
+                                                        <label class="bangla">আদায়যোগ্য টাকা</label>
                                                     </div>
 
                                                     <div class="form-floating mb-3">
                                                         <input type="text" class="form-control" name="RECEIVED" placeholder="" value="">
-                                                        <label>RECEIVED:</label>
+                                                        <label class="bangla">গ্রহনকৃত টাকা</label>
                                                     </div>
                                                     
                                                     <div class="form-floating mb-3">
                                                         <input type="text" class="form-control" name="DUE" placeholder="" value="">
-                                                        <label>DUE:</label>
+                                                        <label class="bangla">বকেয়া</label>
                                                     </div>
 
                                                     <div class="form-floating mb-3">
-                                                        <textarea name="REMARK" class="form-control bangla" placeholder="" id="floatingTextarea2" style="height: 200px">বেতন সংক্রান্ত কোন মন্তব্য থাকলে লিখুন</textarea>
-                                                        <label for="floatingTextarea2">REMARK</label>
+                                                        <textarea name="REMARK" class="form-control bangla" placeholder="" id="floatingTextarea2" style="height: 200px" placeholder=""></textarea>
+                                                        <label for="floatingTextarea2" class="bangla">বেতন সংক্রান্ত মন্তব্য লিখুন</label>
                                                     </div>
 
                                                 </div>
@@ -438,7 +496,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
 
                         case 'result':
                             ?>
-                            <!--Fees----------------------------------------------------------------------------------------------------------->
+                            <!--result----------------------------------------------------------------------------------------------------------->
                             <div class="row" style="padding-bottom: 10px;">
                                 <div class="col-md-12 text-center">
                                     <fieldset class="border p-2">
@@ -471,7 +529,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
 
                         case 'attendance':
                             ?>
-                            <!--Fees----------------------------------------------------------------------------------------------------------->                                    
+                            <!--attendance----------------------------------------------------------------------------------------------------------->                                    
                             <div class="row" style="padding-bottom: 10px; overflow-x:auto;">
                                 <table  style="width: 100%;">
                                     <tbody><tr>

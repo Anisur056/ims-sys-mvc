@@ -1,25 +1,29 @@
+<?php $db = new ModelDbClass(); ?>
+
 <?php
-    // if(isset($_GET['id'])){
-    //     $id = $_GET['id'];
-    //     $verify = $pdo->prepare('SELECT * FROM `tax-return-data` WHERE id=?');
-    //     $verify->execute([$id]);
-    //     if($verify->rowCount())
-    //     {
-    //         $row = $verify->fetch();
-    //         $id = $row['id'];
-    //         $assessment_year = $row['assessment_year'];
-    //         $taxpayer_name = $row['taxpayer_name'];
-    //         $nid_number = $row['nid_number'];
-    //         $tin_number = $row['tin_number'];
-    //         $tin_circle = $row['tin_circle'];
-    //         $tax_zone_number = $row['tax_zone_number'];
-    //         $tax_zone_area = $row['tax_zone_area'];
-    //         $total_income = $row['total_income'];
-    //         $paid_tax = $row['paid_tax']; 
-    //         $reg_ref_number = $row['reg_ref_number'];
-    //         $submit_date = $row['submit_date'];
-    //     }
-    // }
+    if(isset($_GET['voucher-print-id'])){
+        $id = $_GET['voucher-print-id'];
+
+        $result = $db->showVoucherById($id);
+
+        foreach($result as $data){
+
+            $VOUCHER_NO = $data['VOUCHER_NO'];
+            $ENTRY_DATE = $data['ENTRY_DATE'];
+            $STUDENT_NAME = $data['STUDENT_NAME'];
+            $STUDENT_CLASS = $data['STUDENT_CLASS'];
+            $STUDENT_SECTION = $data['STUDENT_SECTION'];
+            $STUDENT_ROLL = $data['STUDENT_ROLL'];
+            $DESCRIPTION = $data['DESCRIPTION'];
+            $AMOUNT = $data['AMOUNT'];
+            $RECEIVED = $data['RECEIVED'];
+            $DUE = $data['DUE'];
+            $REMARK = $data['REMARK'];
+            $RECEIVED_BY = $data['RECEIVED_BY'];
+
+        }
+
+    }
     $qrTxt = "TIN:";
 ?>
 
@@ -49,7 +53,7 @@
             body{
                 margin: 0;
             }
-            button{
+            .d-none{
                 display: none;
             }
         }
@@ -97,7 +101,7 @@
         .txt-left-6{
             font-family: roboto;
             position: absolute;
-            top: 4.150in;
+            top: 4.400in;
             left: 3.900in;
         }
         .txt-left-7{
@@ -161,7 +165,7 @@
         .txt-right-6{
             font-family: roboto;
             position: absolute;
-            top: 4.150in;
+            top: 4.400in;
             left: 7.500in;
         }
         .txt-right-7{
@@ -191,29 +195,39 @@
             
             <div class="print">
                 <div class="left">
-                    <img style="width: 8.2677in;" src="views/theme/img/voucher-img/img-voucher.jpg" alt="">
-                    <p class="txt-left-voucher">2025000009</p>
-                    <p class="txt-left-1">12 12 2025</p>
-                    <p class="txt-left-2">উম্মে আতিয়া মুনতাহা</p>
-                    <p class="txt-left-3">NURSERY</p>
-                    <p class="txt-left-4">001</p>
-                    <p class="txt-left-5">600</p>
-                    <p class="txt-left-6">600</p>
-                    <p class="txt-left-7">Due: 500</p>
-                    <p class="txt-left-8">জানুয়ারীর কোচিং এর টাকা ৫০০ টাকা বাকী আছে।</p>
+                    <img id="voucher" style="width: 8.2677in;" src="views/theme/img/voucher-img/img-voucher.jpg" alt="">
+                
+                    <p class="txt-left-voucher"><?= $VOUCHER_NO ?></p>
+                    <p class="txt-left-1"><?= $ENTRY_DATE ?></p>
+                    <p class="txt-left-2"><?= $STUDENT_NAME ?></p>
+                    <p class="txt-left-3"><?= $STUDENT_CLASS ?></p>
+                    <p class="txt-left-4"><?= $STUDENT_ROLL ?></p>
+                    <p class="txt-left-5"><?= $RECEIVED ?></p>
+                    <p class="txt-left-6"><?= $RECEIVED ?></p>
+                    <p class="txt-left-7">Due: <?= $DUE ?></p>
+                    <p class="txt-left-8"><?= $REMARK ?></p>
+                    <?php if($DUE === 0):?>
+                    <img class="img-left-due" src="views/theme/img/voucher-img/paid-seal.png">
+                    <?php else:?>
                     <img class="img-left-due" src="views/theme/img/voucher-img/due-seal.png">
+                    <?php endif; ?>
+
                 </div>
                 <div class="right">
-                    <p class="txt-right-voucher">2025000009</p>
-                    <p class="txt-right-1">12 12 2025</p>
-                    <p class="txt-right-2">উম্মে আতিয়া মুনতাহা</p>
-                    <p class="txt-right-3">NURSERY</p>
-                    <p class="txt-right-4">001</p>
-                    <p class="txt-right-5">600</p>
-                    <p class="txt-right-6">600</p>
-                    <p class="txt-right-7">Due: 500</p>
-                    <p class="txt-right-8">জানুয়ারীর কোচিং এর টাকা ৫০০ টাকা বাকী আছে।</p>
+                    <p class="txt-right-voucher"><?= $VOUCHER_NO ?></p>
+                    <p class="txt-right-1"><?= $ENTRY_DATE ?></p>
+                    <p class="txt-right-2"><?= $STUDENT_NAME ?></p>
+                    <p class="txt-right-3"><?= $STUDENT_CLASS ?></p>
+                    <p class="txt-right-4"><?= $STUDENT_ROLL ?></p>
+                    <p class="txt-right-5"><?= $RECEIVED ?></p>
+                    <p class="txt-right-6"><?= $RECEIVED ?></p>
+                    <p class="txt-right-7">Due: <?= $DUE ?></p>
+                    <p class="txt-right-8"><?= $REMARK ?></p>
+                    <?php if($DUE === 0):?>
                     <img class="img-right-due" src="views/theme/img/voucher-img/paid-seal.png">
+                    <?php else:?>
+                    <img class="img-right-due" src="views/theme/img/voucher-img/due-seal.png">
+                    <?php endif; ?>
                 </div>
             </div>
             
@@ -222,7 +236,98 @@
         </section>
 
     <br>
-    <button style="padding: 5px 20px;" type="button" onclick="Btnprint()">Print</button>
+    <div style="display:flex; flex-direction: row;">
+        <button class="d-none" style="padding: 5px 20px; margin: 9px;" type="button" onclick="Btnprint()">Print</button>
+
+        <div style="padding: 5px 20px; margin: 9px;" class="checkbox-wrapper-3 d-none">
+            <input type="checkbox" id="cbx-3" onclick="myFunction()"/>
+            <label for="cbx-3" class="toggle"><span></span></label>
+            
+        </div>
+        <h1 class="d-none" style="padding: 5px 20px; margin: 9px;">Show/Hide Voucher Image</h1>
+
+        <style>
+            .checkbox-wrapper-3 input[type="checkbox"] {
+                visibility: hidden;
+                display: none;
+            }
+
+            .checkbox-wrapper-3 .toggle {
+                position: relative;
+                display: block;
+                width: 40px;
+                height: 20px;
+                cursor: pointer;
+                -webkit-tap-highlight-color: transparent;
+                transform: translate3d(0, 0, 0);
+            }
+            .checkbox-wrapper-3 .toggle:before {
+                content: "";
+                position: relative;
+                top: 3px;
+                left: 3px;
+                width: 34px;
+                height: 14px;
+                display: block;
+                background: #9A9999;
+                border-radius: 8px;
+                transition: background 0.2s ease;
+            }
+            .checkbox-wrapper-3 .toggle span {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 20px;
+                height: 20px;
+                display: block;
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0 3px 8px rgba(154, 153, 153, 0.5);
+                transition: all 0.2s ease;
+            }
+            .checkbox-wrapper-3 .toggle span:before {
+                content: "";
+                position: absolute;
+                display: block;
+                margin: -18px;
+                width: 56px;
+                height: 56px;
+                background: rgba(79, 46, 220, 0.5);
+                border-radius: 50%;
+                transform: scale(0);
+                opacity: 1;
+                pointer-events: none;
+            }
+
+            .checkbox-wrapper-3 #cbx-3:checked + .toggle:before {
+                background: #947ADA;
+            }
+            .checkbox-wrapper-3 #cbx-3:checked + .toggle span {
+                background: #4F2EDC;
+                transform: translateX(20px);
+                transition: all 0.2s cubic-bezier(0.8, 0.4, 0.3, 1.25), background 0.15s ease;
+                box-shadow: 0 3px 8px rgba(79, 46, 220, 0.2);
+            }
+            .checkbox-wrapper-3 #cbx-3:checked + .toggle span:before {
+                transform: scale(1);
+                opacity: 0;
+                transition: all 0.4s ease;
+            }
+        </style>
+    </div>
+
+
+    <script>
+        function myFunction() {
+        var x = document.getElementById("voucher");
+        if (x.style.visibility === "hidden") {
+            x.style.visibility = "visible";
+        } else {
+            x.style.visibility = "hidden";
+        }
+        }
+    </script>
+
     <!-- <br>
     <button  style="padding: 5px 20px;" type="button" onclick="generatePDF()">Download-PDF</button> -->
     <!-- ----------------------- Script End ---------------------->

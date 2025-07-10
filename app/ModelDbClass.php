@@ -124,17 +124,24 @@ class ModelDbClass{
         return $statement->fetchAll();
     }
 
-    public function addVoucher($ENTRY_DATE, $TRANSECTION_STATUS, $ACCOUNTS_HEAD, 
-        $DESCRIPTION, $AMOUNT, $RECEIVED, 
-        $DUE, $REMARK, $RECEIVED_BY, $INKED_TO){
+    public function addVoucher($ENTRY_DATE, $STUDENT_NAME,$STUDENT_CLASS,
+            $STUDENT_SECTION, $STUDENT_ROLL,
+            $TRANSECTION_STATUS, $ACCOUNTS_HEAD, 
+            $DESCRIPTION, $AMOUNT, $RECEIVED, 
+            $DUE, $REMARK, $RECEIVED_BY, $INKED_TO){
             $addStudent = $this->pub_pdo->prepare('INSERT INTO `shnmm_tbl_vouchers`
-            (`ENTRY_DATE`, `TRANSECTION_STATUS`, `ACCOUNTS_HEAD`, `DESCRIPTION`, `AMOUNT`, `RECEIVED`, `DUE`, `REMARK`, `RECEIVED_BY`, `INKED_TO`) 
+            (`ENTRY_DATE`,`STUDENT_NAME`,`STUDENT_CLASS`,
+            `STUDENT_SECTION`, `STUDENT_ROLL`,`TRANSECTION_STATUS`, 
+            `ACCOUNTS_HEAD`, `DESCRIPTION`, `AMOUNT`, 
+            `RECEIVED`, `DUE`, `REMARK`, `RECEIVED_BY`, `INKED_TO`) 
             VALUES (?,?,?,
             ?,?,?,
+            ?,?,?,?,
             ?,?,?,?)');
       
-        $addStudent->execute([
-            $ENTRY_DATE, $TRANSECTION_STATUS, $ACCOUNTS_HEAD, 
+        $addStudent->execute([$ENTRY_DATE, $STUDENT_NAME,$STUDENT_CLASS,
+            $STUDENT_SECTION, $STUDENT_ROLL,
+            $TRANSECTION_STATUS, $ACCOUNTS_HEAD, 
             $DESCRIPTION, $AMOUNT, $RECEIVED, 
             $DUE, $REMARK, $RECEIVED_BY, $INKED_TO]);
     }
@@ -150,6 +157,11 @@ class ModelDbClass{
           $AMOUNT,$RECEIVED,$DUE,
           $REMARK,$VOUCHER_NO,]);
     }
-
+    
+    public function showVoucherById($voucher_id){
+        $statement = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_vouchers` WHERE `VOUCHER_NO`=?');
+        $statement->execute([$voucher_id]);
+        return $statement->fetchAll();
+    }
 
 }
