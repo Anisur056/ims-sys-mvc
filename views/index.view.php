@@ -36,7 +36,7 @@
             <div class="small-box text-bg-primary">
               <div class="inner">
                 <h3>
-                  <?php $db->StudentCount('*'); ?>
+                  <?php $db->StudentCount('ALL','ACTIVE'); ?>
                 </h3>
                 <p>Total Students</p>
               </div>

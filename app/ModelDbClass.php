@@ -9,20 +9,40 @@ class ModelDbClass{
         $this->pub_pdo = $pdo;
     }
 
-    public function StudentCount($info){
-        if($info === '*'){
-            $select = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students`');
-            $select->execute();
-            echo $select->rowCount();
-        }else{
-            $select = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `CLASS`=?');
-            $select->execute([$info]);
+    public function StudentCount($CLASS,$STATUS){
+
+        if($CLASS === 'ALL'){
+            $select = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `STATUS`=?');
+            $select->execute([$STATUS]);
             echo $select->rowCount();
         }
 
+        if(!empty($CLASS)){
+            $select = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `CLASS`=? AND `STATUS`=?');
+            $select->execute([$CLASS,$STATUS]);
+            echo $select->rowCount();
+        }
+        
+
+        if($CLASS === ''){
+            $select = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `STATUS`=?');
+            $select->execute([$STATUS]);
+            echo $select->rowCount();
+        }
+
+        // if($info === '*'){
+        //     $select = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students`');
+        //     $select->execute();
+        //     echo $select->rowCount();
+        // }else{
+        //     $select = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `CLASS`=?');
+        //     $select->execute([$info]);
+        //     echo $select->rowCount();
+        // }
+
     }
 
-    public function StudentCountExStatus(){
+    public function StudentCountByStatus(){
         $select = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `STATUS`=?');
         $select->execute(['EX']);
         echo $select->rowCount();
@@ -42,7 +62,7 @@ class ModelDbClass{
 
     public function showStudentByExStatus(){
         $statement = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `STATUS`=? ORDER BY `ROLL`');
-        $statement->execute(['EX']);
+        $statement->execute(['IN-ACTIVE']);
         return $statement->fetchAll();
     } 
 
@@ -109,10 +129,8 @@ class ModelDbClass{
         $PRESENT_ADDRESS,$PERMANENT_ADDRESS]);
     }
 
-    public function trashExStudentById($STUDENT_ID){
-
-        //INSERT INTO archived SELECT * FROM table1 WHERE id='$id'
-        $delete = $this->pub_pdo->prepare('DELETE FROM `shnmm_tbl_students` WHERE `STUDENT_ID` = ?');
-	    $delete->execute([$STUDENT_ID]);
+    public function changeStatusStudentById($STUDENT_ID,$STATUS,$REMARK){
+        $changeStatus = $this->pub_pdo->prepare('UPDATE `shnmm_tbl_students` SET `STATUS`= ?, `REMARK`= ? WHERE `STUDENT_ID` = ?');
+	    $changeStatus->execute([$STATUS,$REMARK,$STUDENT_ID]);
     }
 }

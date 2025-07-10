@@ -79,8 +79,10 @@
 
     if(isset($_POST['deleteStudentBtn'])){
       $STUDENT_ID = $_POST['STUDENT_ID'];
+      $STATUS = $_POST['STATUS'];
+      $REMARK = $_POST['REMARK'];
 
-      $db->trashExStudentById($STUDENT_ID);
+      $db->changeStatusStudentById($STUDENT_ID,$STATUS,$REMARK);
     }
   }    
   
@@ -124,15 +126,20 @@
     <div class="container-fluid">
       <hr>
       <nav class="mb-3">
-        <a class="btn btn-primary m-1" href="?class=PLAY">PLAY- <?php $db->StudentCount('PLAY'); ?></a>
-        <a class="btn btn-primary m-1" href="?class=NURSERY">NURSERY- <?php $db->StudentCount('NURSERY'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=ONE">ONE- <?php $db->StudentCount('ONE'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=TWO">TWO- <?php $db->StudentCount('TWO'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=THREE">THREE- <?php $db->StudentCount('THREE'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=FOUR">FOUR- <?php $db->StudentCount('FOUR'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=HIFZ-NAZERA">HIFZ-NAZERA- <?php $db->StudentCount('HIFZ-NAZERA'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=HIFZ-INTERNATIONAL">HIFZ-INTERNATIONAL- <?php $db->StudentCount('HIFZ-INTERNATIONAL'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=HIFZ-RIVISION">HIFZ-RIVISION- <?php $db->StudentCount('HIFZ-RIVISION'); ?></a>
+        <a class="btn btn-primary m-1" href="?class=PLAY">PLAY- <?php $db->StudentCount('PLAY','ACTIVE'); ?></a>
+        <a class="btn btn-primary m-1" href="?class=NURSERY">NURSERY- <?php $db->StudentCount('NURSERY','ACTIVE'); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=ONE">ONE- <?php $db->StudentCount('ONE','ACTIVE'); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=TWO">TWO- <?php $db->StudentCount('TWO','ACTIVE'); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=THREE">THREE- <?php $db->StudentCount('THREE','ACTIVE'); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=FOUR">FOUR- <?php $db->StudentCount('FOUR','ACTIVE'); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=HIFZ-NAZERA">HIFZ-NAZERA- <?php $db->StudentCount('HIFZ-NAZERA','ACTIVE'); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=HIFZ-INTERNATIONAL">HIFZ-INTERNATIONAL- <?php $db->StudentCount('HIFZ-INTERNATIONAL','ACTIVE'); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=HIFZ-RIVISION">HIFZ-RIVISION- <?php $db->StudentCount('HIFZ-RIVISION','ACTIVE'); ?></a>
+        <hr>
+        <a class="btn btn-danger m-1 " href="?STATUS=IN-ACTIVE">IN-ACTIVE- <?php $db->StudentCount('','IN-ACTIVE'); ?></a>
+        <a class="btn btn-danger m-1 " href="?STATUS=ILEAVE">LEAVE- <?php $db->StudentCount('','ILEAVE'); ?></a>
+        <a class="btn btn-danger m-1 " href="?STATUS=TC">TC- <?php $db->StudentCount('','TC'); ?></a>
+        <a class="btn btn-danger m-1 " href="?STATUS=BOARD-EXAM-COMPLETE">BOARD-EXAM-COMPLETE- <?php $db->StudentCount('','BOARD-EXAM-COMPLETE'); ?></a>
       </nav>
       <hr>
       <h4 class="mb-3">Total Record Found <b><?php $db->StudentCount($class); ?></b></h4>
@@ -219,12 +226,22 @@
                     </div>
                     <form method="post">
                       <div class="modal-body">
-                          <div class="card-body">
+                        <div class="card-body">
                             <p>Student ID: <?= $data['STUDENT_ID'] ?></p>
-                            <p>Name English: <?= $data['NAME_EN'] ?></p>
-                            <p>Name Bangla: <?= $data['NAME_BN'] ?></p>
+                            <p>Name: <?= $data['NAME_EN'] ?></p>
+                            <p class="bangla">নাম: <?= $data['NAME_BN'] ?></p>
                             <input type="hidden" name="STUDENT_ID" value="<?= $data['STUDENT_ID'] ?>">
-                          </div>
+                            <select name="STATUS" class="form-select" required="">
+                                <option value="IN-ACTIVE">Inactive Student</option>
+                                <option value="LEAVE">Studnet Leave</option>
+                                <option value="TC">Transfer Another Institute (TC)</option>
+                                <option value="BOARD-EXAM-COMPLETE">Board Exam Complete</option>
+                            </select>
+                            <div class="form-floating mt-3">
+                              <textarea name="REMARK" class="form-control" placeholder="" id="floatingTextarea2" style="height: 200px"></textarea>
+                              <label for="floatingTextarea2">REMARK</label>
+                            </div>
+                        </div>
                       </div>
                       <div class="modal-footer">
 
