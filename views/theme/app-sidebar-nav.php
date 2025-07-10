@@ -35,50 +35,50 @@
             </a>
             </li>
 
-            <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon bi bi-people"></i>
-              <p>Students Portal</p>
-            </a>
-            <ul class="nav nav-treeview">
-                <li class="nav-item">
-                <a href="<?= $web_address ?>student-record" class="nav-link <?= urlIs('/student-record') ? 'active' : '' ?>">
-                    <i class="nav-icon bi bi-person-lines-fill"></i>
-                    <p>Students Record</p>
-                </a>
-                </li>
-                <li class="nav-item">
-                <a href="<?= $web_address ?>" class="nav-link <?= urlIs('') ? 'active' : '' ?>">
-                    <i class="nav-icon bi bi-person-lines-fill"></i>
-                    <p>Ex Students</p>
-                </a>
-                </li>
-                <li class="nav-item">
-                <a href="<?= $web_address ?>" class="nav-link">
-                    <i class="nav-icon bi bi-clipboard-check-fill"></i>
-                    <p>Attendance</p>
-                </a>
-                </li>
-                <li class="nav-item">
-                <a href="<?= $web_address ?>student-phone-book" class="nav-link <?= urlIs('/student-phone-book') ? 'active' : '' ?>">
-                    <i class="nav-icon bi bi-telephone-fill"></i>
-                    <p>Students Phone Book</p>
-                </a>
-                </li>
-                <li class="nav-item">
-                <a href="<?= $web_address ?>" class="nav-link">
-                    <i class="nav-icon bi bi-person-badge-fill"></i>
-                    <p>Id Card Download</p>
-                </a>
-                </li>
-                <li class="nav-item">
-                <a href="<?= $web_address ?>" class="nav-link">
-                    <i class="nav-icon bi bi-cash-coin"></i>
-                    <p>Take Fees</p>
-                </a>
-                </li>
-            </ul>
-          </li>
+            <!-- <li class="nav-item">
+                <a href="#" class="nav-link">
+                <i class="nav-icon bi bi-people"></i>
+                <p>Students Portal</p>
+                </a> -->
+                <!-- <ul class="nav nav-treeview"> -->
+                    <li class="nav-item">
+                    <a href="<?= $web_address ?>student-record" class="nav-link <?= urlIs('/student-record') ? 'active' : '' ?>">
+                        <i class="nav-icon bi bi-person-lines-fill"></i>
+                        <p>Students Record</p>
+                    </a>
+                    </li>
+                    <!-- <li class="nav-item">
+                    <a href="<?= $web_address ?>" class="nav-link <?= urlIs('') ? 'active' : '' ?>">
+                        <i class="nav-icon bi bi-person-lines-fill"></i>
+                        <p>Ex Students</p>
+                    </a>
+                    </li> -->
+                    <!-- <li class="nav-item">
+                    <a href="<?= $web_address ?>" class="nav-link">
+                        <i class="nav-icon bi bi-clipboard-check-fill"></i>
+                        <p>Attendance</p>
+                    </a>
+                    </li> -->
+                    <!-- <li class="nav-item">
+                    <a href="<?= $web_address ?>student-phone-book" class="nav-link <?= urlIs('/student-phone-book') ? 'active' : '' ?>">
+                        <i class="nav-icon bi bi-telephone-fill"></i>
+                        <p>Students Phone Book</p>
+                    </a>
+                    </li> -->
+                    <!-- <li class="nav-item">
+                    <a href="<?= $web_address ?>" class="nav-link">
+                        <i class="nav-icon bi bi-person-badge-fill"></i>
+                        <p>Id Card Download</p>
+                    </a>
+                    </li>
+                    <li class="nav-item">
+                    <a href="<?= $web_address ?>" class="nav-link">
+                        <i class="nav-icon bi bi-cash-coin"></i>
+                        <p>Take Fees</p>
+                    </a>
+                    </li> -->
+                <!-- </ul> -->
+            <!-- </li> -->
 
 
             <li class="nav-header"><b>SMS Portal</b></li>

@@ -7,8 +7,10 @@
 <?php
   if ($_SERVER['REQUEST_METHOD']=='POST') 
   {
-    if(isset($_POST['update'])){
-      
+    if(isset($_POST['send_sms'])){
+      $sms_number = $_POST['mobile_number'];
+      $message = $_POST['message'];
+      sms_send($sms_number,$message);
     }
   }
 ?>
@@ -34,6 +36,9 @@
       <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modelRegisterStudent">
         Register Student
       </button>
+      <a type="button" class="btn btn-primary" href="<?= $web_address ?>student-record-table" >
+        Table View
+      </a>
       <!-- Model Register Student -->
       <div class="modal fade" id="modelRegisterStudent">
         <div class="modal-dialog">
@@ -114,170 +119,94 @@
               foreach($result as $data){
                 ?>
 
-                <!-- Model For Edit -->
-                <div class="modal fade" id="edit<?= $data['STUDENT_ID'] ?>">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <form method="post">
-
+                <!-- Model Content For SMS-->
+                <div class="modal fade" id="sms<?= $data['STUDENT_ID'] ?>">
+                  <form action="" method="post">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title">Update Student Information</h5>
+                          <h1 class="modal-title fs-5">Send SMS</h1>
                           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-
                         <div class="modal-body">
-                          <p>Student ID: <?= $data['STUDENT_ID'] ?></p>
-                          <div class="card p-3 mb-3 bg-success">
-                            <h5>Academic Information</h5>
-                            <input type="hidden" name="STUDENT_ID" value="<?= $data['STUDENT_ID'] ?>">
 
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['ACADEMIC_YEAR'] ?>">
-                              <label>Academic Year:</label>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['SHIFT'] ?>">
-                              <label>Shift</label>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['CLASS'] ?>">
-                              <label>Class</label>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['SECTION'] ?>">
-                              <label>Section</label>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['ROLL'] ?>">
-                              <label>Roll</label>
-                            </div>
+                          <div class="form-group">
+                              <label class="control-label"> Sender ID: +88 09617-624 990 </label>
                           </div>
 
-                          <div class="card p-3 mb-3">
-                            <h5>Student Information</h5>
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['NAME_EN'] ?>">
-                              <label>Name (In English)</label>
-                            </div>
+                          <div class="form-group">
+                            <label class="control-label">  Recipients <span class="red">*</span> : </label>
+                                <textarea rows="2" 
+                                class="form-control input-medium" 
+                                name="mobile_number"><?= $data['FATHER_MOBILE_NUMBER'] ?></textarea>
+                          </div>
+                          
 
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['NAME_BN'] ?>">
-                              <label>Name (In Bangla)</label>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['BLOOD_GROUP'] ?>">
-                              <label>Blood Group</label>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['RELIGION'] ?>">
-                              <label>Religion</label>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['GENDER'] ?>">
-                              <label>Gender</label>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['DATE_OF_BIRTH'] ?>">
-                              <label>Date of Birth</label>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['BIRTH_REG_NO'] ?>">
-                              <label>Birth Reg. No.</label>
-                            </div>
+                          <div class="form-group">
+                          <label class="control-label">  Message <span class="red">*</span> : </label>
+                                <textarea rows="5" 
+                                class="form-control input-medium" 
+                                name="message">আপনার সন্তান, <?= $data['NAME_BN'] ?>- মাদ্রাসায় উপস্থিত হয়নি। তারিখ: <?= date('d-m-Y') ?>, সময়: <?= date('h:i:sA') ?></textarea>
                           </div>
 
-                          <div class="card p-3 mb-3  bg-success">
-                            <h5>Guardian Information</h5>
-
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['FATHER_NAME'] ?>">
-                              <label>Father's Name</label>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['FATHER_MOBILE_NUMBER'] ?>">
-                              <label>Father's Mobile Number</label>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['FATHER_NID'] ?>">
-                              <label>Father's N.I.D</label>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['MOTHER_NAME'] ?>">
-                              <label>Mother's Name</label>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['MOTHER_MOBILE_NUMBER'] ?>">
-                              <label>Mother's Mobile Number</label>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['MOTHER_NID'] ?>">
-                              <label>Mother's N.I.D</label>
-                            </div>
-                          </div>
-
-                          <div class="card p-3 mb-3">
-                            <h5>Address</h5>
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['PRESENT_ADDRESS'] ?>">
-                              <label>Present Address</label>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" name="" placeholder="" value="<?= $data['PERMANENT_ADDRESS'] ?>">
-                              <label>Permanent Address</label>
-                            </div>
-                          </div>
-
-                        </div> 
-
+                        </div>
                         <div class="modal-footer">
-                          <input type="submit" class="btn btn-outline-primary" name="update" value="Update">
-                          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
-                        </div> 
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" name="send_sms" class="btn btn-primary">Send</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <!-- End Model Content -->
 
-                      </form>
+                <!-- Model Content For Delete-->
+                <div class="modal fade bg-danger" id="delete<?= $data['STUDENT_ID'] ?>">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5">AAA</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body">
+
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                          Fugiat modi, deleniti aspernatur eos exercitationem saepe quasi non? 
+                          Esse voluptas sit ipsam, recusandae provident iusto 
+                          ex veniam necessitatibus totam, deleniti ab?
+                        </p>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <!-- End Model For Edit -->
+                <!-- End Model Content -->                
 
-                  <!-- Card Record -->
-                  <div class="div-card">
-                    <div class="image">
-                        <img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img">
-                    </div>
-                    <div class="text-data">
-                      <span class="name bangla"><?= $data['NAME_EN'] ?></span>
-                      <span class="name bangla"><?= $data['NAME_BN'] ?></span>
-                      <span class="job">Roll: <?= $data['ROLL'] ?></span>
-                      <span class="job">Class: <?= $data['CLASS'] ?></span>
-                      <span class="job">ID: <?= $data['STUDENT_ID'] ?></span>
-                      <span class="job">Father : <?= $data['FATHER_NAME'] ?></span>
-                      <span class="job">Mobile: <?= $data['FATHER_MOBILE_NUMBER'] ?></span>
-                      <span class="job">Date of Birth: <?= $data['DATE_OF_BIRTH'] ?></span>
-                    </div>
-                    <div class="buttons">
-                				<a class="button bg-primary" href="/student-details?id=<?= $data['STUDENT_ID'] ?>"><i class="fa-solid fa-table-list"></i> Details</a>
-                				<a class="button bg-secondary" data-bs-toggle="modal" data-bs-target="#edit<?= $data['STUDENT_ID'] ?>" href=""><i class="fas fa-user-edit"></i> Update Info</a>
-                        <a class="button bg-success" href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Call</a>
-                				<a class="button bg-info" data-bs-toggle="modal" data-bs-target="#<?= $data['STUDENT_ID'] ?>" href=""><i class="fa-solid fa-comment-sms"></i> SMS</a>
-                        <a class="button bg-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fas fa-user-times"></i> Delete</a>
-                    </div>
+                <!-- Card Record -->
+                <div class="div-card">
+                  <div class="image">
+                      <img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img">
                   </div>
+                  <div class="text-data">
+                    <span class="bangla name"><?= $data['NAME_BN'] ?></span>
+                    <span class="name"><?= $data['NAME_EN'] ?></span>
+                    <span class="job">Roll: <?= $data['ROLL'] ?></span>
+                    <span class="job">Class: <?= $data['CLASS'] ?></span>
+                    <span class="job">Father : <?= $data['FATHER_NAME'] ?></span>
+                    <span class="job">Date of Birth: <?= $data['DATE_OF_BIRTH'] ?></span>
+                  </div>
+                  <div class="buttons">
+                      <a class="button bg-primary" href="/student-details?id=<?= $data['STUDENT_ID'] ?>"><i class="fa-solid fa-table-list"></i> Details</a>
+                      <a class="button bg-success" href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Father- <?= $data['FATHER_MOBILE_NUMBER'] ?></a>
+                      <a class="button bg-success" href="tel:<?= $data['MOTHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Mother- <?= $data['MOTHER_MOBILE_NUMBER'] ?></a>
+                      <a class="button bg-info" data-bs-toggle="modal" data-bs-target="#sms<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-comment-sms"></i> SMS</a>
+                      <a class="button bg-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fas fa-user-times"></i> Delete</a>
+                  </div>
+                </div>
                 <!-- End Card Record -->
                 <?php
               }
@@ -290,24 +219,96 @@
               $result = $db->showStudentByClass('NURSERY');
               foreach($result as $data){
                 ?>
-                  <div class="div-card">
-                    <div class="image">
-                        <img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img">
+
+                <!-- Model Content For SMS-->
+                <div class="modal fade" id="sms<?= $data['STUDENT_ID'] ?>">
+                  <form action="" method="post">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5">Send SMS</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+
+                          <div class="form-group">
+                              <label class="control-label"> Sender ID: +88 09617-624 990 </label>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label">  Recipients <span class="red">*</span> : </label>
+                                <textarea rows="2" 
+                                class="form-control input-medium" 
+                                name="mobile_number"><?= $data['FATHER_MOBILE_NUMBER'] ?></textarea>
+                          </div>
+                          
+
+                          <div class="form-group">
+                          <label class="control-label">  Message <span class="red">*</span> : </label>
+                                <textarea rows="5" 
+                                class="form-control input-medium" 
+                                name="message">আপনার সন্তান, <?= $data['NAME_BN'] ?>- মাদ্রাসায় উপস্থিত হয়নি। তারিখ: <?= date('d-m-Y') ?>, সময়: <?= date('h:i:sA') ?></textarea>
+                          </div>
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" name="send_sms" class="btn btn-primary">Send</button>
+                        </div>
+                      </div>
                     </div>
-                    <div class="text-data">
-                      <span class="name"><?= $data['NAME_BN'] ?></span>
-                      <span class="job">Roll: <?= $data['ROLL'] ?></span>
-                      <span class="job">Class: <?= $data['CLASS'] ?></span>
-                      <span class="job">ID: <?= $data['STUDENT_ID'] ?></span>
-                      <span class="job">Father : <?= $data['FATHER_NAME'] ?></span>
-                      <span class="job">Mobile: <?= $data['FATHER_MOBILE_NUMBER'] ?></span>
-                      <span class="job">Date of Birth: <?= $data['DATE_OF_BIRTH'] ?></span>
-                    </div>
-                    <div class="buttons">
-                        <a href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button">Edit</a>
-                        <a href="#" class="button red">Delete</a>
+                  </form>
+                </div>
+                <!-- End Model Content -->
+
+                <!-- Model Content For Delete-->
+                <div class="modal fade bg-danger" id="delete<?= $data['STUDENT_ID'] ?>">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5">AAA</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body">
+
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                          Fugiat modi, deleniti aspernatur eos exercitationem saepe quasi non? 
+                          Esse voluptas sit ipsam, recusandae provident iusto 
+                          ex veniam necessitatibus totam, deleniti ab?
+                        </p>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
                     </div>
                   </div>
+                </div>
+                <!-- End Model Content -->                
+
+                <!-- Card Record -->
+                <div class="div-card">
+                  <div class="image">
+                      <img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img">
+                  </div>
+                  <div class="text-data">
+                    <span class="bangla name"><?= $data['NAME_BN'] ?></span>
+                    <span class="name"><?= $data['NAME_EN'] ?></span>
+                    <span class="job">Roll: <?= $data['ROLL'] ?></span>
+                    <span class="job">Class: <?= $data['CLASS'] ?></span>
+                    <span class="job">Father : <?= $data['FATHER_NAME'] ?></span>
+                    <span class="job">Date of Birth: <?= $data['DATE_OF_BIRTH'] ?></span>
+                  </div>
+                  <div class="buttons">
+                      <a class="button bg-primary" href="/student-details?id=<?= $data['STUDENT_ID'] ?>"><i class="fa-solid fa-table-list"></i> Details</a>
+                      <a class="button bg-success" href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Father- <?= $data['FATHER_MOBILE_NUMBER'] ?></a>
+                      <a class="button bg-success" href="tel:<?= $data['MOTHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Mother- <?= $data['MOTHER_MOBILE_NUMBER'] ?></a>
+                      <a class="button bg-info" data-bs-toggle="modal" data-bs-target="#sms<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-comment-sms"></i> SMS</a>
+                      <a class="button bg-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fas fa-user-times"></i> Delete</a>
+                  </div>
+                </div>
+                <!-- End Card Record -->
                 <?php
               }
             ?>
@@ -319,24 +320,96 @@
               $result = $db->showStudentByClass('ONE');
               foreach($result as $data){
                 ?>
-                  <div class="div-card">
-                    <div class="image">
-                        <img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img">
+
+                <!-- Model Content For SMS-->
+                <div class="modal fade" id="sms<?= $data['STUDENT_ID'] ?>">
+                  <form action="" method="post">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5">Send SMS</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+
+                          <div class="form-group">
+                              <label class="control-label"> Sender ID: +88 09617-624 990 </label>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label">  Recipients <span class="red">*</span> : </label>
+                                <textarea rows="2" 
+                                class="form-control input-medium" 
+                                name="mobile_number"><?= $data['FATHER_MOBILE_NUMBER'] ?></textarea>
+                          </div>
+                          
+
+                          <div class="form-group">
+                          <label class="control-label">  Message <span class="red">*</span> : </label>
+                                <textarea rows="5" 
+                                class="form-control input-medium" 
+                                name="message">আপনার সন্তান, <?= $data['NAME_BN'] ?>- মাদ্রাসায় উপস্থিত হয়নি। তারিখ: <?= date('d-m-Y') ?>, সময়: <?= date('h:i:sA') ?></textarea>
+                          </div>
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" name="send_sms" class="btn btn-primary">Send</button>
+                        </div>
+                      </div>
                     </div>
-                    <div class="text-data">
-                      <span class="name"><?= $data['NAME_BN'] ?></span>
-                      <span class="job">Roll: <?= $data['ROLL'] ?></span>
-                      <span class="job">Class: <?= $data['CLASS'] ?></span>
-                      <span class="job">ID: <?= $data['STUDENT_ID'] ?></span>
-                      <span class="job">Father : <?= $data['FATHER_NAME'] ?></span>
-                      <span class="job">Mobile: <?= $data['FATHER_MOBILE_NUMBER'] ?></span>
-                      <span class="job">Date of Birth: <?= $data['DATE_OF_BIRTH'] ?></span>
-                    </div>
-                    <div class="buttons">
-                        <a href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button">Edit</a>
-                        <a href="#" class="button red">Delete</a>
+                  </form>
+                </div>
+                <!-- End Model Content -->
+
+                <!-- Model Content For Delete-->
+                <div class="modal fade bg-danger" id="delete<?= $data['STUDENT_ID'] ?>">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5">AAA</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body">
+
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                          Fugiat modi, deleniti aspernatur eos exercitationem saepe quasi non? 
+                          Esse voluptas sit ipsam, recusandae provident iusto 
+                          ex veniam necessitatibus totam, deleniti ab?
+                        </p>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
                     </div>
                   </div>
+                </div>
+                <!-- End Model Content -->                
+
+                <!-- Card Record -->
+                <div class="div-card">
+                  <div class="image">
+                      <img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img">
+                  </div>
+                  <div class="text-data">
+                    <span class="bangla name"><?= $data['NAME_BN'] ?></span>
+                    <span class="name"><?= $data['NAME_EN'] ?></span>
+                    <span class="job">Roll: <?= $data['ROLL'] ?></span>
+                    <span class="job">Class: <?= $data['CLASS'] ?></span>
+                    <span class="job">Father : <?= $data['FATHER_NAME'] ?></span>
+                    <span class="job">Date of Birth: <?= $data['DATE_OF_BIRTH'] ?></span>
+                  </div>
+                  <div class="buttons">
+                      <a class="button bg-primary" href="/student-details?id=<?= $data['STUDENT_ID'] ?>"><i class="fa-solid fa-table-list"></i> Details</a>
+                      <a class="button bg-success" href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Father- <?= $data['FATHER_MOBILE_NUMBER'] ?></a>
+                      <a class="button bg-success" href="tel:<?= $data['MOTHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Mother- <?= $data['MOTHER_MOBILE_NUMBER'] ?></a>
+                      <a class="button bg-info" data-bs-toggle="modal" data-bs-target="#sms<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-comment-sms"></i> SMS</a>
+                      <a class="button bg-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fas fa-user-times"></i> Delete</a>
+                  </div>
+                </div>
+                <!-- End Card Record -->
                 <?php
               }
             ?>
@@ -348,24 +421,96 @@
               $result = $db->showStudentByClass('TWO');
               foreach($result as $data){
                 ?>
-                  <div class="div-card">
-                    <div class="image">
-                        <img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img">
+
+                <!-- Model Content For SMS-->
+                <div class="modal fade" id="sms<?= $data['STUDENT_ID'] ?>">
+                  <form action="" method="post">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5">Send SMS</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+
+                          <div class="form-group">
+                              <label class="control-label"> Sender ID: +88 09617-624 990 </label>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label">  Recipients <span class="red">*</span> : </label>
+                                <textarea rows="2" 
+                                class="form-control input-medium" 
+                                name="mobile_number"><?= $data['FATHER_MOBILE_NUMBER'] ?></textarea>
+                          </div>
+                          
+
+                          <div class="form-group">
+                          <label class="control-label">  Message <span class="red">*</span> : </label>
+                                <textarea rows="5" 
+                                class="form-control input-medium" 
+                                name="message">আপনার সন্তান, <?= $data['NAME_BN'] ?>- মাদ্রাসায় উপস্থিত হয়নি। তারিখ: <?= date('d-m-Y') ?>, সময়: <?= date('h:i:sA') ?></textarea>
+                          </div>
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" name="send_sms" class="btn btn-primary">Send</button>
+                        </div>
+                      </div>
                     </div>
-                    <div class="text-data">
-                      <span class="name"><?= $data['NAME_BN'] ?></span>
-                      <span class="job">Roll: <?= $data['ROLL'] ?></span>
-                      <span class="job">Class: <?= $data['CLASS'] ?></span>
-                      <span class="job">ID: <?= $data['STUDENT_ID'] ?></span>
-                      <span class="job">Father : <?= $data['FATHER_NAME'] ?></span>
-                      <span class="job">Mobile: <?= $data['FATHER_MOBILE_NUMBER'] ?></span>
-                      <span class="job">Date of Birth: <?= $data['DATE_OF_BIRTH'] ?></span>
-                    </div>
-                    <div class="buttons">
-                        <a href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button">Edit</a>
-                        <a href="#" class="button red">Delete</a>
+                  </form>
+                </div>
+                <!-- End Model Content -->
+
+                <!-- Model Content For Delete-->
+                <div class="modal fade bg-danger" id="delete<?= $data['STUDENT_ID'] ?>">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5">AAA</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body">
+
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                          Fugiat modi, deleniti aspernatur eos exercitationem saepe quasi non? 
+                          Esse voluptas sit ipsam, recusandae provident iusto 
+                          ex veniam necessitatibus totam, deleniti ab?
+                        </p>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
                     </div>
                   </div>
+                </div>
+                <!-- End Model Content -->                
+
+                <!-- Card Record -->
+                <div class="div-card">
+                  <div class="image">
+                      <img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img">
+                  </div>
+                  <div class="text-data">
+                    <span class="bangla name"><?= $data['NAME_BN'] ?></span>
+                    <span class="name"><?= $data['NAME_EN'] ?></span>
+                    <span class="job">Roll: <?= $data['ROLL'] ?></span>
+                    <span class="job">Class: <?= $data['CLASS'] ?></span>
+                    <span class="job">Father : <?= $data['FATHER_NAME'] ?></span>
+                    <span class="job">Date of Birth: <?= $data['DATE_OF_BIRTH'] ?></span>
+                  </div>
+                  <div class="buttons">
+                      <a class="button bg-primary" href="/student-details?id=<?= $data['STUDENT_ID'] ?>"><i class="fa-solid fa-table-list"></i> Details</a>
+                      <a class="button bg-success" href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Father- <?= $data['FATHER_MOBILE_NUMBER'] ?></a>
+                      <a class="button bg-success" href="tel:<?= $data['MOTHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Mother- <?= $data['MOTHER_MOBILE_NUMBER'] ?></a>
+                      <a class="button bg-info" data-bs-toggle="modal" data-bs-target="#sms<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-comment-sms"></i> SMS</a>
+                      <a class="button bg-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fas fa-user-times"></i> Delete</a>
+                  </div>
+                </div>
+                <!-- End Card Record -->
                 <?php
               }
             ?>
@@ -377,24 +522,96 @@
               $result = $db->showStudentByClass('THREE');
               foreach($result as $data){
                 ?>
-                  <div class="div-card">
-                    <div class="image">
-                        <img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img">
+
+                <!-- Model Content For SMS-->
+                <div class="modal fade" id="sms<?= $data['STUDENT_ID'] ?>">
+                  <form action="" method="post">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5">Send SMS</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+
+                          <div class="form-group">
+                              <label class="control-label"> Sender ID: +88 09617-624 990 </label>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label">  Recipients <span class="red">*</span> : </label>
+                                <textarea rows="2" 
+                                class="form-control input-medium" 
+                                name="mobile_number"><?= $data['FATHER_MOBILE_NUMBER'] ?></textarea>
+                          </div>
+                          
+
+                          <div class="form-group">
+                          <label class="control-label">  Message <span class="red">*</span> : </label>
+                                <textarea rows="5" 
+                                class="form-control input-medium" 
+                                name="message">আপনার সন্তান, <?= $data['NAME_BN'] ?>- মাদ্রাসায় উপস্থিত হয়নি। তারিখ: <?= date('d-m-Y') ?>, সময়: <?= date('h:i:sA') ?></textarea>
+                          </div>
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" name="send_sms" class="btn btn-primary">Send</button>
+                        </div>
+                      </div>
                     </div>
-                    <div class="text-data">
-                      <span class="name"><?= $data['NAME_BN'] ?></span>
-                      <span class="job">Roll: <?= $data['ROLL'] ?></span>
-                      <span class="job">Class: <?= $data['CLASS'] ?></span>
-                      <span class="job">ID: <?= $data['STUDENT_ID'] ?></span>
-                      <span class="job">Father : <?= $data['FATHER_NAME'] ?></span>
-                      <span class="job">Mobile: <?= $data['FATHER_MOBILE_NUMBER'] ?></span>
-                      <span class="job">Date of Birth: <?= $data['DATE_OF_BIRTH'] ?></span>
-                    </div>
-                    <div class="buttons">
-                        <a href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button">Edit</a>
-                        <a href="#" class="button red">Delete</a>
+                  </form>
+                </div>
+                <!-- End Model Content -->
+
+                <!-- Model Content For Delete-->
+                <div class="modal fade bg-danger" id="delete<?= $data['STUDENT_ID'] ?>">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5">AAA</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body">
+
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                          Fugiat modi, deleniti aspernatur eos exercitationem saepe quasi non? 
+                          Esse voluptas sit ipsam, recusandae provident iusto 
+                          ex veniam necessitatibus totam, deleniti ab?
+                        </p>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
                     </div>
                   </div>
+                </div>
+                <!-- End Model Content -->                
+
+                <!-- Card Record -->
+                <div class="div-card">
+                  <div class="image">
+                      <img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img">
+                  </div>
+                  <div class="text-data">
+                    <span class="bangla name"><?= $data['NAME_BN'] ?></span>
+                    <span class="name"><?= $data['NAME_EN'] ?></span>
+                    <span class="job">Roll: <?= $data['ROLL'] ?></span>
+                    <span class="job">Class: <?= $data['CLASS'] ?></span>
+                    <span class="job">Father : <?= $data['FATHER_NAME'] ?></span>
+                    <span class="job">Date of Birth: <?= $data['DATE_OF_BIRTH'] ?></span>
+                  </div>
+                  <div class="buttons">
+                      <a class="button bg-primary" href="/student-details?id=<?= $data['STUDENT_ID'] ?>"><i class="fa-solid fa-table-list"></i> Details</a>
+                      <a class="button bg-success" href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Father- <?= $data['FATHER_MOBILE_NUMBER'] ?></a>
+                      <a class="button bg-success" href="tel:<?= $data['MOTHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Mother- <?= $data['MOTHER_MOBILE_NUMBER'] ?></a>
+                      <a class="button bg-info" data-bs-toggle="modal" data-bs-target="#sms<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-comment-sms"></i> SMS</a>
+                      <a class="button bg-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fas fa-user-times"></i> Delete</a>
+                  </div>
+                </div>
+                <!-- End Card Record -->
                 <?php
               }
             ?>
@@ -406,24 +623,96 @@
               $result = $db->showStudentByClass('FOUR');
               foreach($result as $data){
                 ?>
-                  <div class="div-card">
-                    <div class="image">
-                        <img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img">
+
+                <!-- Model Content For SMS-->
+                <div class="modal fade" id="sms<?= $data['STUDENT_ID'] ?>">
+                  <form action="" method="post">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5">Send SMS</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+
+                          <div class="form-group">
+                              <label class="control-label"> Sender ID: +88 09617-624 990 </label>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label">  Recipients <span class="red">*</span> : </label>
+                                <textarea rows="2" 
+                                class="form-control input-medium" 
+                                name="mobile_number"><?= $data['FATHER_MOBILE_NUMBER'] ?></textarea>
+                          </div>
+                          
+
+                          <div class="form-group">
+                          <label class="control-label">  Message <span class="red">*</span> : </label>
+                                <textarea rows="5" 
+                                class="form-control input-medium" 
+                                name="message">আপনার সন্তান, <?= $data['NAME_BN'] ?>- মাদ্রাসায় উপস্থিত হয়নি। তারিখ: <?= date('d-m-Y') ?>, সময়: <?= date('h:i:sA') ?></textarea>
+                          </div>
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" name="send_sms" class="btn btn-primary">Send</button>
+                        </div>
+                      </div>
                     </div>
-                    <div class="text-data">
-                      <span class="name"><?= $data['NAME_BN'] ?></span>
-                      <span class="job">Roll: <?= $data['ROLL'] ?></span>
-                      <span class="job">Class: <?= $data['CLASS'] ?></span>
-                      <span class="job">ID: <?= $data['STUDENT_ID'] ?></span>
-                      <span class="job">Father : <?= $data['FATHER_NAME'] ?></span>
-                      <span class="job">Mobile: <?= $data['FATHER_MOBILE_NUMBER'] ?></span>
-                      <span class="job">Date of Birth: <?= $data['DATE_OF_BIRTH'] ?></span>
-                    </div>
-                    <div class="buttons">
-                        <a href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button">Edit</a>
-                        <a href="#" class="button red">Delete</a>
+                  </form>
+                </div>
+                <!-- End Model Content -->
+
+                <!-- Model Content For Delete-->
+                <div class="modal fade bg-danger" id="delete<?= $data['STUDENT_ID'] ?>">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5">AAA</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body">
+
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                          Fugiat modi, deleniti aspernatur eos exercitationem saepe quasi non? 
+                          Esse voluptas sit ipsam, recusandae provident iusto 
+                          ex veniam necessitatibus totam, deleniti ab?
+                        </p>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
                     </div>
                   </div>
+                </div>
+                <!-- End Model Content -->                
+
+                <!-- Card Record -->
+                <div class="div-card">
+                  <div class="image">
+                      <img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img">
+                  </div>
+                  <div class="text-data">
+                    <span class="bangla name"><?= $data['NAME_BN'] ?></span>
+                    <span class="name"><?= $data['NAME_EN'] ?></span>
+                    <span class="job">Roll: <?= $data['ROLL'] ?></span>
+                    <span class="job">Class: <?= $data['CLASS'] ?></span>
+                    <span class="job">Father : <?= $data['FATHER_NAME'] ?></span>
+                    <span class="job">Date of Birth: <?= $data['DATE_OF_BIRTH'] ?></span>
+                  </div>
+                  <div class="buttons">
+                      <a class="button bg-primary" href="/student-details?id=<?= $data['STUDENT_ID'] ?>"><i class="fa-solid fa-table-list"></i> Details</a>
+                      <a class="button bg-success" href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Father- <?= $data['FATHER_MOBILE_NUMBER'] ?></a>
+                      <a class="button bg-success" href="tel:<?= $data['MOTHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Mother- <?= $data['MOTHER_MOBILE_NUMBER'] ?></a>
+                      <a class="button bg-info" data-bs-toggle="modal" data-bs-target="#sms<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-comment-sms"></i> SMS</a>
+                      <a class="button bg-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fas fa-user-times"></i> Delete</a>
+                  </div>
+                </div>
+                <!-- End Card Record -->
                 <?php
               }
             ?>
@@ -435,24 +724,96 @@
               $result = $db->showStudentByClass('HIFZ-NAZERA');
               foreach($result as $data){
                 ?>
-                  <div class="div-card">
-                    <div class="image">
-                        <img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img">
+
+                <!-- Model Content For SMS-->
+                <div class="modal fade" id="sms<?= $data['STUDENT_ID'] ?>">
+                  <form action="" method="post">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5">Send SMS</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+
+                          <div class="form-group">
+                              <label class="control-label"> Sender ID: +88 09617-624 990 </label>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label">  Recipients <span class="red">*</span> : </label>
+                                <textarea rows="2" 
+                                class="form-control input-medium" 
+                                name="mobile_number"><?= $data['FATHER_MOBILE_NUMBER'] ?></textarea>
+                          </div>
+                          
+
+                          <div class="form-group">
+                          <label class="control-label">  Message <span class="red">*</span> : </label>
+                                <textarea rows="5" 
+                                class="form-control input-medium" 
+                                name="message">আপনার সন্তান, <?= $data['NAME_BN'] ?>- মাদ্রাসায় উপস্থিত হয়নি। তারিখ: <?= date('d-m-Y') ?>, সময়: <?= date('h:i:sA') ?></textarea>
+                          </div>
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" name="send_sms" class="btn btn-primary">Send</button>
+                        </div>
+                      </div>
                     </div>
-                    <div class="text-data">
-                      <span class="name"><?= $data['NAME_BN'] ?></span>
-                      <span class="job">Roll: <?= $data['ROLL'] ?></span>
-                      <span class="job">Class: <?= $data['CLASS'] ?></span>
-                      <span class="job">ID: <?= $data['STUDENT_ID'] ?></span>
-                      <span class="job">Father : <?= $data['FATHER_NAME'] ?></span>
-                      <span class="job">Mobile: <?= $data['FATHER_MOBILE_NUMBER'] ?></span>
-                      <span class="job">Date of Birth: <?= $data['DATE_OF_BIRTH'] ?></span>
-                    </div>
-                    <div class="buttons">
-                        <a href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button">Edit</a>
-                        <a href="#" class="button red">Delete</a>
+                  </form>
+                </div>
+                <!-- End Model Content -->
+
+                <!-- Model Content For Delete-->
+                <div class="modal fade bg-danger" id="delete<?= $data['STUDENT_ID'] ?>">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5">AAA</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body">
+
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                          Fugiat modi, deleniti aspernatur eos exercitationem saepe quasi non? 
+                          Esse voluptas sit ipsam, recusandae provident iusto 
+                          ex veniam necessitatibus totam, deleniti ab?
+                        </p>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
                     </div>
                   </div>
+                </div>
+                <!-- End Model Content -->                
+
+                <!-- Card Record -->
+                <div class="div-card">
+                  <div class="image">
+                      <img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img">
+                  </div>
+                  <div class="text-data">
+                    <span class="bangla name"><?= $data['NAME_BN'] ?></span>
+                    <span class="name"><?= $data['NAME_EN'] ?></span>
+                    <span class="job">Roll: <?= $data['ROLL'] ?></span>
+                    <span class="job">Class: <?= $data['CLASS'] ?></span>
+                    <span class="job">Father : <?= $data['FATHER_NAME'] ?></span>
+                    <span class="job">Date of Birth: <?= $data['DATE_OF_BIRTH'] ?></span>
+                  </div>
+                  <div class="buttons">
+                      <a class="button bg-primary" href="/student-details?id=<?= $data['STUDENT_ID'] ?>"><i class="fa-solid fa-table-list"></i> Details</a>
+                      <a class="button bg-success" href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Father- <?= $data['FATHER_MOBILE_NUMBER'] ?></a>
+                      <a class="button bg-success" href="tel:<?= $data['MOTHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Mother- <?= $data['MOTHER_MOBILE_NUMBER'] ?></a>
+                      <a class="button bg-info" data-bs-toggle="modal" data-bs-target="#sms<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-comment-sms"></i> SMS</a>
+                      <a class="button bg-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fas fa-user-times"></i> Delete</a>
+                  </div>
+                </div>
+                <!-- End Card Record -->
                 <?php
               }
             ?>
@@ -464,26 +825,96 @@
               $result = $db->showStudentByClass('HIFZ-INTERNATIONAL');
               foreach($result as $data){
                 ?>
-                  <div class="div-card">
-                    <div class="image">
-                        <img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img">
+
+                <!-- Model Content For SMS-->
+                <div class="modal fade" id="sms<?= $data['STUDENT_ID'] ?>">
+                  <form action="" method="post">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5">Send SMS</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+
+                          <div class="form-group">
+                              <label class="control-label"> Sender ID: +88 09617-624 990 </label>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label">  Recipients <span class="red">*</span> : </label>
+                                <textarea rows="2" 
+                                class="form-control input-medium" 
+                                name="mobile_number"><?= $data['FATHER_MOBILE_NUMBER'] ?></textarea>
+                          </div>
+                          
+
+                          <div class="form-group">
+                          <label class="control-label">  Message <span class="red">*</span> : </label>
+                                <textarea rows="5" 
+                                class="form-control input-medium" 
+                                name="message">আপনার সন্তান, <?= $data['NAME_BN'] ?>- মাদ্রাসায় উপস্থিত হয়নি। তারিখ: <?= date('d-m-Y') ?>, সময়: <?= date('h:i:sA') ?></textarea>
+                          </div>
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" name="send_sms" class="btn btn-primary">Send</button>
+                        </div>
+                      </div>
                     </div>
-                    <div class="text-data">
-                      <span class="name"><?= $data['NAME_BN'] ?></span>
-                      <span class="job">Roll: <?= $data['ROLL'] ?></span>
-                      <span class="job">Class: <?= $data['CLASS'] ?></span>
-                      <span class="job">ID: <?= $data['STUDENT_ID'] ?></span>
-                      <span class="job">Father : <?= $data['FATHER_NAME'] ?></span>
-                      <span class="job">Mobile: <?= $data['FATHER_MOBILE_NUMBER'] ?></span>
-                      <span class="job">Date of Birth: <?= $data['DATE_OF_BIRTH'] ?></span>
-                    </div>
-                    <div class="buttons">
-                				<a class="button" data-toggle="modal" data-target="#image1" href="#"><i class="fa-solid fa-table-list"></i> Details</a>
-                				<a class="button" data-toggle="modal" data-target="#image1" href="#"><i class="far fa-image"></i> Update Image</a>
-                				<a class="button" data-toggle="modal" data-target="#edit1" href="#"><i class="fas fa-user-edit"></i> Update Info</a>
-                        <a class="button red" data-toggle="modal" data-target="#delete1" href="#"><i class="fas fa-user-times"></i> Delete</a>
+                  </form>
+                </div>
+                <!-- End Model Content -->
+
+                <!-- Model Content For Delete-->
+                <div class="modal fade bg-danger" id="delete<?= $data['STUDENT_ID'] ?>">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5">AAA</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body">
+
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                          Fugiat modi, deleniti aspernatur eos exercitationem saepe quasi non? 
+                          Esse voluptas sit ipsam, recusandae provident iusto 
+                          ex veniam necessitatibus totam, deleniti ab?
+                        </p>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
                     </div>
                   </div>
+                </div>
+                <!-- End Model Content -->                
+
+                <!-- Card Record -->
+                <div class="div-card">
+                  <div class="image">
+                      <img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img">
+                  </div>
+                  <div class="text-data">
+                    <span class="bangla name"><?= $data['NAME_BN'] ?></span>
+                    <span class="name"><?= $data['NAME_EN'] ?></span>
+                    <span class="job">Roll: <?= $data['ROLL'] ?></span>
+                    <span class="job">Class: <?= $data['CLASS'] ?></span>
+                    <span class="job">Father : <?= $data['FATHER_NAME'] ?></span>
+                    <span class="job">Date of Birth: <?= $data['DATE_OF_BIRTH'] ?></span>
+                  </div>
+                  <div class="buttons">
+                      <a class="button bg-primary" href="/student-details?id=<?= $data['STUDENT_ID'] ?>"><i class="fa-solid fa-table-list"></i> Details</a>
+                      <a class="button bg-success" href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Father- <?= $data['FATHER_MOBILE_NUMBER'] ?></a>
+                      <a class="button bg-success" href="tel:<?= $data['MOTHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Mother- <?= $data['MOTHER_MOBILE_NUMBER'] ?></a>
+                      <a class="button bg-info" data-bs-toggle="modal" data-bs-target="#sms<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-comment-sms"></i> SMS</a>
+                      <a class="button bg-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fas fa-user-times"></i> Delete</a>
+                  </div>
+                </div>
+                <!-- End Card Record -->
                 <?php
               }
             ?>
@@ -495,25 +926,96 @@
               $result = $db->showStudentByClass('HIFZ-RIVISION');
               foreach($result as $data){
                 ?>
-                  <div class="div-card">
-                    <div class="image">
-                        <img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img">
+
+                <!-- Model Content For SMS-->
+                <div class="modal fade" id="sms<?= $data['STUDENT_ID'] ?>">
+                  <form action="" method="post">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5">Send SMS</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+
+                          <div class="form-group">
+                              <label class="control-label"> Sender ID: +88 09617-624 990 </label>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label">  Recipients <span class="red">*</span> : </label>
+                                <textarea rows="2" 
+                                class="form-control input-medium" 
+                                name="mobile_number"><?= $data['FATHER_MOBILE_NUMBER'] ?></textarea>
+                          </div>
+                          
+
+                          <div class="form-group">
+                          <label class="control-label">  Message <span class="red">*</span> : </label>
+                                <textarea rows="5" 
+                                class="form-control input-medium" 
+                                name="message">আপনার সন্তান, <?= $data['NAME_BN'] ?>- মাদ্রাসায় উপস্থিত হয়নি। তারিখ: <?= date('d-m-Y') ?>, সময়: <?= date('h:i:sA') ?></textarea>
+                          </div>
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" name="send_sms" class="btn btn-primary">Send</button>
+                        </div>
+                      </div>
                     </div>
-                    <div class="text-data">
-                      <span class="name"><?= $data['NAME_BN'] ?></span>
-                      <span class="job">Roll: <?= $data['ROLL'] ?></span>
-                      <span class="job">Class: <?= $data['CLASS'] ?></span>
-                      <span class="job">ID: <?= $data['STUDENT_ID'] ?></span>
-                      <span class="job">Father : <?= $data['FATHER_NAME'] ?></span>
-                      <span class="job">Mobile: <?= $data['FATHER_MOBILE_NUMBER'] ?></span>
-                      <span class="job">Date of Birth: <?= $data['DATE_OF_BIRTH'] ?></span>
-                    </div>
-                    <div class="buttons">
-                				<a class="button" data-toggle="modal" data-target="#image1" href="#"><i class="far fa-image"></i>Edit Image</a>
-                				<a class="button" data-toggle="modal" data-target="#edit1" href="#"><i class="fas fa-user-edit"></i>Edit Info</a>
-                        <a class="button red" data-toggle="modal" data-target="#delete1" href="#"><i class="fas fa-user-times"></i>Delete</a>
+                  </form>
+                </div>
+                <!-- End Model Content -->
+
+                <!-- Model Content For Delete-->
+                <div class="modal fade bg-danger" id="delete<?= $data['STUDENT_ID'] ?>">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5">AAA</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body">
+
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                          Fugiat modi, deleniti aspernatur eos exercitationem saepe quasi non? 
+                          Esse voluptas sit ipsam, recusandae provident iusto 
+                          ex veniam necessitatibus totam, deleniti ab?
+                        </p>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
                     </div>
                   </div>
+                </div>
+                <!-- End Model Content -->                
+
+                <!-- Card Record -->
+                <div class="div-card">
+                  <div class="image">
+                      <img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img">
+                  </div>
+                  <div class="text-data">
+                    <span class="bangla name"><?= $data['NAME_BN'] ?></span>
+                    <span class="name"><?= $data['NAME_EN'] ?></span>
+                    <span class="job">Roll: <?= $data['ROLL'] ?></span>
+                    <span class="job">Class: <?= $data['CLASS'] ?></span>
+                    <span class="job">Father : <?= $data['FATHER_NAME'] ?></span>
+                    <span class="job">Date of Birth: <?= $data['DATE_OF_BIRTH'] ?></span>
+                  </div>
+                  <div class="buttons">
+                      <a class="button bg-primary" href="/student-details?id=<?= $data['STUDENT_ID'] ?>"><i class="fa-solid fa-table-list"></i> Details</a>
+                      <a class="button bg-success" href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Father- <?= $data['FATHER_MOBILE_NUMBER'] ?></a>
+                      <a class="button bg-success" href="tel:<?= $data['MOTHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i> Mother- <?= $data['MOTHER_MOBILE_NUMBER'] ?></a>
+                      <a class="button bg-info" data-bs-toggle="modal" data-bs-target="#sms<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-comment-sms"></i> SMS</a>
+                      <a class="button bg-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fas fa-user-times"></i> Delete</a>
+                  </div>
+                </div>
+                <!-- End Card Record -->
                 <?php
               }
             ?>
