@@ -3,6 +3,33 @@
 }
 
 table .profile-img{
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
+}
+
+@media (max-width: 650px){
+    .studentRecordTable thead{
+        display: none;
+    }
+    .studentRecordTable td{
+        display: grid;
+        gap: 5px;
+
+    }
+    .studentRecordTable td:nth-of-type(1)::before{
+        content: "ROLL: ";
+        text-align: left;
+    }
+    .studentRecordTable td:nth-of-type(2)::before{
+        text-align: center;
+    }
+    .studentRecordTable td:nth-of-type(3)::before{
+        content: "নাম: ";
+    }
+    .studentRecordTable td:nth-of-type(4)::before{
+        content: "NAME: ";
+    }
+    .studentRecordTable td:nth-of-type(5)::before{
+        content: "FATHER: ";
+    }
 }

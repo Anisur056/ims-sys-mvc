@@ -114,6 +114,275 @@
       <a target="_blank" type="button" class="btn btn-success" href="<?= $web_address ?>student-record-table" >
       <i class="fa-solid fa-list-check"></i>  Records Table
       </a>
+    </div>
+
+  </div>
+  <!--end::App Content Header-->
+
+  <div class="app-content">
+    
+    <div class="container-fluid">
+      <hr>
+      <nav class="mb-3">
+        <a class="btn btn-primary m-1" href="?class=PLAY">PLAY- <?php $db->StudentCount('PLAY'); ?></a>
+        <a class="btn btn-primary m-1" href="?class=NURSERY">NURSERY- <?php $db->StudentCount('NURSERY'); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=ONE">ONE- <?php $db->StudentCount('ONE'); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=TWO">TWO- <?php $db->StudentCount('TWO'); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=THREE">THREE- <?php $db->StudentCount('THREE'); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=FOUR">FOUR- <?php $db->StudentCount('FOUR'); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=HIFZ-NAZERA">HIFZ-NAZERA- <?php $db->StudentCount('HIFZ-NAZERA'); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=HIFZ-INTERNATIONAL">HIFZ-INTERNATIONAL- <?php $db->StudentCount('HIFZ-INTERNATIONAL'); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=HIFZ-RIVISION">HIFZ-RIVISION- <?php $db->StudentCount('HIFZ-RIVISION'); ?></a>
+      </nav>
+      <hr>
+      <h4 class="mb-3">Total Record Found <b><?php $db->StudentCount($class); ?></b></h4>
+
+      <table id="studentTable" class="table table-striped table-bordered studentRecordTable">
+        <thead>
+          <tr>
+          <th>ROLL</th>
+          <th>PIC</th>
+          <th>NAME_BN</th>
+          <th>NAME_EN</th>
+          <th>FATHER_NAME</th>                    
+          <th>ACTION</th>
+          </tr>
+        </thead>
+          <?php
+            $result = $db->showStudentByClass($class);
+            foreach($result as $data){
+              ?>
+
+              <tr>
+              <td><a class="text-decoration-none btn btn-primary" href="/student-profile?id=<?= $data['STUDENT_ID'] ?>"><?= $data['ROLL'] ?></a></td>
+              <td><img src="<?= $data['PIC'] ?>" alt="" class="profile-img img-thumbnail"></td>
+              <td class="bangla"><?= $data['NAME_BN'] ?></td>
+              <td><?= $data['NAME_EN'] ?></td>
+              <td><?= $data['FATHER_NAME'] ?></td>
+              <td>
+                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update<?= $data['STUDENT_ID'] ?>" href="#"><i class="fas fa-pen-to-square"></i></a>
+                <a class="btn btn-success" href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i>(<?= $data['FATHER_MOBILE_NUMBER'] ?>) </a>
+                <a class="btn btn-success" href="tel:<?= $data['MOTHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i>(<?= $data['MOTHER_MOBILE_NUMBER'] ?>)</a>
+                <a class="btn btn-info" data-bs-toggle="modal" data-bs-target="#sms<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-comment-sms"></i></a>
+                <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-trash"></i></a>
+              </td>
+              </tr>
+
+              <!-- Model Content For SMS-->
+              <div class="modal fade" id="sms<?= $data['STUDENT_ID'] ?>">
+                <form action="" method="post">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5">Send SMS</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body">
+
+                        <div class="form-group">
+                            <label class="control-label"> Sender ID: +88 09617-624 990 </label>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="control-label">  Recipients <span class="red">*</span> : </label>
+                              <textarea rows="2" 
+                              class="form-control input-medium" 
+                              name="mobile_number"><?= $data['FATHER_MOBILE_NUMBER'] ?></textarea>
+                        </div>
+                        
+
+                        <div class="form-group">
+                        <label class="control-label">  Message <span class="red">*</span> : </label>
+                              <textarea rows="5" 
+                              class="form-control input-medium" 
+                              name="message">আপনার সন্তান, <?= $data['NAME_BN'] ?>- মাদ্রাসায় উপস্থিত হয়নি। তারিখ: <?= date('d-m-Y') ?>, সময়: <?= date('h:i:sA') ?></textarea>
+                        </div>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" name="send_sms" class="btn btn-primary">Send</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- End Model Content -->
+
+              <!-- Model Content For Delete-->
+              <div class="modal fade bg-danger" id="delete<?= $data['STUDENT_ID'] ?>">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5">Delete Student</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form method="post">
+                      <div class="modal-body">
+                          <div class="card-body">
+                            <p>Student ID: <?= $data['STUDENT_ID'] ?></p>
+                            <p>Name English: <?= $data['NAME_EN'] ?></p>
+                            <p>Name Bangla: <?= $data['NAME_BN'] ?></p>
+                            <input type="hidden" name="STUDENT_ID" value="<?= $data['STUDENT_ID'] ?>">
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+
+                        <input type="submit" class="btn btn-danger" name="deleteStudentBtn" value="Delete">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>                      
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- End Model Content -->
+                
+              <!-- Model Content For Update-->
+              <div class="modal fade" id="update<?= $data['STUDENT_ID'] ?>">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5">Update Student Records</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+
+                      <form method="post">
+                        <div class="card-body">
+                          <p>Student ID: <?= $data['STUDENT_ID'] ?></p>
+                          <div class="card p-3 mb-3 bg-success">
+                            <h5>Academic Information</h5>
+                            <input type="hidden" name="STUDENT_ID" value="<?= $data['STUDENT_ID'] ?>">
+
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="ACADEMIC_YEAR" placeholder="" value="<?= $data['ACADEMIC_YEAR'] ?>">
+                              <label>Academic Year:</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="SHIFT" placeholder="" value="<?= $data['SHIFT'] ?>">
+                              <label>Shift</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="CLASS" placeholder="" value="<?= $data['CLASS'] ?>">
+                              <label>Class</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="SECTION" placeholder="" value="<?= $data['SECTION'] ?>">
+                              <label>Section</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="ROLL" placeholder="" value="<?= $data['ROLL'] ?>">
+                              <label>Roll</label>
+                            </div>
+                          </div>
+
+                          <div class="card p-3 mb-3">
+                            <h5>Student Information</h5>
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="NAME_EN" placeholder="" value="<?= $data['NAME_EN'] ?>">
+                              <label>Name (In English)</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="NAME_BN" placeholder="" value="<?= $data['NAME_BN'] ?>">
+                              <label>Name (In Bangla)</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="BLOOD_GROUP" placeholder="" value="<?= $data['BLOOD_GROUP'] ?>">
+                              <label>Blood Group</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="RELIGION" placeholder="" value="<?= $data['RELIGION'] ?>">
+                              <label>Religion</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="GENDER" placeholder="" value="<?= $data['GENDER'] ?>">
+                              <label>Gender</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="DATE_OF_BIRTH" placeholder="" value="<?= $data['DATE_OF_BIRTH'] ?>">
+                              <label>Date of Birth</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="BIRTH_REG_NO" placeholder="" value="<?= $data['BIRTH_REG_NO'] ?>">
+                              <label>Birth Reg. No.</label>
+                            </div>
+                          </div>
+
+                          <div class="card p-3 mb-3  bg-success">
+                            <h5>Guardian Information</h5>
+
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="FATHER_NAME" placeholder="" value="<?= $data['FATHER_NAME'] ?>">
+                              <label>Father's Name</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="FATHER_MOBILE_NUMBER" placeholder="" value="<?= $data['FATHER_MOBILE_NUMBER'] ?>">
+                              <label>Father's Mobile Number</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="FATHER_NID" placeholder="" value="<?= $data['FATHER_NID'] ?>">
+                              <label>Father's N.I.D</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="MOTHER_NAME" placeholder="" value="<?= $data['MOTHER_NAME'] ?>">
+                              <label>Mother's Name</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="MOTHER_MOBILE_NUMBER" placeholder="" value="<?= $data['MOTHER_MOBILE_NUMBER'] ?>">
+                              <label>Mother's Mobile Number</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="MOTHER_NID" placeholder="" value="<?= $data['MOTHER_NID'] ?>">
+                              <label>Mother's N.I.D</label>
+                            </div>
+                          </div>
+
+                          <div class="card p-3 mb-3">
+                            <h5>Address</h5>
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="PRESENT_ADDRESS" placeholder="" value="<?= $data['PRESENT_ADDRESS'] ?>">
+                              <label>Present Address</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" name="PERMANENT_ADDRESS" placeholder="" value="<?= $data['PERMANENT_ADDRESS'] ?>">
+                              <label>Permanent Address</label>
+                            </div>
+                          </div>
+
+                        </div> 
+                        <div class="card-footer">
+                          <input type="submit" class="btn btn-outline-primary" name="updateStudentBtn" value="Update">
+                          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
+                        </div> 
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Model Content --> 
+                  
+                <?php
+              }
+            ?>
+      </table>
+
       <!-- Model Add Student -->
       <div class="modal fade" id="modelAddStudent">
         <div class="modal-dialog">
@@ -285,277 +554,6 @@
         </div>
       </div>
       <!-- End Model Bulk Upload Student -->
-    </div>
-
-  </div>
-  <!--end::App Content Header-->
-
-  <div class="app-content">
-    
-    <div class="container-fluid">
-      <hr>
-      <nav class="mb-3">
-        <a class="btn btn-primary m-1" href="?class=PLAY">PLAY- <?php $db->StudentCount('PLAY'); ?></a>
-        <a class="btn btn-primary m-1" href="?class=NURSERY">NURSERY- <?php $db->StudentCount('NURSERY'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=ONE">ONE- <?php $db->StudentCount('ONE'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=TWO">TWO- <?php $db->StudentCount('TWO'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=THREE">THREE- <?php $db->StudentCount('THREE'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=FOUR">FOUR- <?php $db->StudentCount('FOUR'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=HIFZ-NAZERA">HIFZ-NAZERA- <?php $db->StudentCount('HIFZ-NAZERA'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=HIFZ-INTERNATIONAL">HIFZ-INTERNATIONAL- <?php $db->StudentCount('HIFZ-INTERNATIONAL'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=HIFZ-RIVISION">HIFZ-RIVISION- <?php $db->StudentCount('HIFZ-RIVISION'); ?></a>
-      </nav>
-      <hr>
-      <h4 class="mb-3">Total Record Found <b><?php $db->StudentCount($class); ?></b></h4>
-
-      <div class="div-container">
-
-        <table id="studentTable" class="table table-striped table-bordered">
-          <thead>
-            <tr>
-            <th>ROLL</th>
-            <th>PIC</th>
-            <th>NAME_BN</th>
-            <th>NAME_EN</th>
-            <th>FATHER_NAME</th>                    
-            <th>ACTION</th>
-            </tr>
-          </thead>
-            <?php
-              $result = $db->showStudentByClass($class);
-              foreach($result as $data){
-                ?>
-                <!-- Model Content For SMS-->
-                <div class="modal fade" id="sms<?= $data['STUDENT_ID'] ?>">
-                  <form action="" method="post">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5">Send SMS</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-
-                          <div class="form-group">
-                              <label class="control-label"> Sender ID: +88 09617-624 990 </label>
-                          </div>
-
-                          <div class="form-group">
-                            <label class="control-label">  Recipients <span class="red">*</span> : </label>
-                                <textarea rows="2" 
-                                class="form-control input-medium" 
-                                name="mobile_number"><?= $data['FATHER_MOBILE_NUMBER'] ?></textarea>
-                          </div>
-                          
-
-                          <div class="form-group">
-                          <label class="control-label">  Message <span class="red">*</span> : </label>
-                                <textarea rows="5" 
-                                class="form-control input-medium" 
-                                name="message">আপনার সন্তান, <?= $data['NAME_BN'] ?>- মাদ্রাসায় উপস্থিত হয়নি। তারিখ: <?= date('d-m-Y') ?>, সময়: <?= date('h:i:sA') ?></textarea>
-                          </div>
-
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="submit" name="send_sms" class="btn btn-primary">Send</button>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <!-- End Model Content -->
-
-                <!-- Model Content For Delete-->
-                <div class="modal fade bg-danger" id="delete<?= $data['STUDENT_ID'] ?>">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-5">Delete Student</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                      </div>
-                      <form method="post">
-                        <div class="modal-body">
-                            <div class="card-body">
-                              <p>Student ID: <?= $data['STUDENT_ID'] ?></p>
-                              <p>Name English: <?= $data['NAME_EN'] ?></p>
-                              <p>Name Bangla: <?= $data['NAME_BN'] ?></p>
-                              <input type="hidden" name="STUDENT_ID" value="<?= $data['STUDENT_ID'] ?>">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-
-                          <input type="submit" class="btn btn-danger" name="deleteStudentBtn" value="Delete">
-                          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>                      
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-                <!-- End Model Content -->
-                  
-                <!-- Model Content For Update-->
-                <div class="modal fade" id="update<?= $data['STUDENT_ID'] ?>">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-5">Update Student Records</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                      </div>
-                      <div class="modal-body">
-
-                        <form method="post">
-                          <div class="card-body">
-                            <p>Student ID: <?= $data['STUDENT_ID'] ?></p>
-                            <div class="card p-3 mb-3 bg-success">
-                              <h5>Academic Information</h5>
-                              <input type="hidden" name="STUDENT_ID" value="<?= $data['STUDENT_ID'] ?>">
-
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="ACADEMIC_YEAR" placeholder="" value="<?= $data['ACADEMIC_YEAR'] ?>">
-                                <label>Academic Year:</label>
-                              </div>
-
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="SHIFT" placeholder="" value="<?= $data['SHIFT'] ?>">
-                                <label>Shift</label>
-                              </div>
-
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="CLASS" placeholder="" value="<?= $data['CLASS'] ?>">
-                                <label>Class</label>
-                              </div>
-
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="SECTION" placeholder="" value="<?= $data['SECTION'] ?>">
-                                <label>Section</label>
-                              </div>
-
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="ROLL" placeholder="" value="<?= $data['ROLL'] ?>">
-                                <label>Roll</label>
-                              </div>
-                            </div>
-
-                            <div class="card p-3 mb-3">
-                              <h5>Student Information</h5>
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="NAME_EN" placeholder="" value="<?= $data['NAME_EN'] ?>">
-                                <label>Name (In English)</label>
-                              </div>
-
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="NAME_BN" placeholder="" value="<?= $data['NAME_BN'] ?>">
-                                <label>Name (In Bangla)</label>
-                              </div>
-
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="BLOOD_GROUP" placeholder="" value="<?= $data['BLOOD_GROUP'] ?>">
-                                <label>Blood Group</label>
-                              </div>
-
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="RELIGION" placeholder="" value="<?= $data['RELIGION'] ?>">
-                                <label>Religion</label>
-                              </div>
-
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="GENDER" placeholder="" value="<?= $data['GENDER'] ?>">
-                                <label>Gender</label>
-                              </div>
-
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="DATE_OF_BIRTH" placeholder="" value="<?= $data['DATE_OF_BIRTH'] ?>">
-                                <label>Date of Birth</label>
-                              </div>
-
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="BIRTH_REG_NO" placeholder="" value="<?= $data['BIRTH_REG_NO'] ?>">
-                                <label>Birth Reg. No.</label>
-                              </div>
-                            </div>
-
-                            <div class="card p-3 mb-3  bg-success">
-                              <h5>Guardian Information</h5>
-
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="FATHER_NAME" placeholder="" value="<?= $data['FATHER_NAME'] ?>">
-                                <label>Father's Name</label>
-                              </div>
-
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="FATHER_MOBILE_NUMBER" placeholder="" value="<?= $data['FATHER_MOBILE_NUMBER'] ?>">
-                                <label>Father's Mobile Number</label>
-                              </div>
-
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="FATHER_NID" placeholder="" value="<?= $data['FATHER_NID'] ?>">
-                                <label>Father's N.I.D</label>
-                              </div>
-
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="MOTHER_NAME" placeholder="" value="<?= $data['MOTHER_NAME'] ?>">
-                                <label>Mother's Name</label>
-                              </div>
-
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="MOTHER_MOBILE_NUMBER" placeholder="" value="<?= $data['MOTHER_MOBILE_NUMBER'] ?>">
-                                <label>Mother's Mobile Number</label>
-                              </div>
-
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="MOTHER_NID" placeholder="" value="<?= $data['MOTHER_NID'] ?>">
-                                <label>Mother's N.I.D</label>
-                              </div>
-                            </div>
-
-                            <div class="card p-3 mb-3">
-                              <h5>Address</h5>
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="PRESENT_ADDRESS" placeholder="" value="<?= $data['PRESENT_ADDRESS'] ?>">
-                                <label>Present Address</label>
-                              </div>
-
-                              <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="PERMANENT_ADDRESS" placeholder="" value="<?= $data['PERMANENT_ADDRESS'] ?>">
-                                <label>Permanent Address</label>
-                              </div>
-                            </div>
-
-                          </div> 
-                          <div class="card-footer">
-                            <input type="submit" class="btn btn-outline-primary" name="updateStudentBtn" value="Update">
-                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
-                          </div> 
-                        </form>
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- End Model Content --> 
-
-                <tr>
-                <td><a class="text-decoration-none btn btn-primary" href="/student-profile?id=<?= $data['STUDENT_ID'] ?>"><?= $data['ROLL'] ?></a></td>
-                <td><img src="<?= $data['PIC'] ?>" alt="" class="profile-img img-thumbnail"></td>
-                <td><?= $data['NAME_BN'] ?></td>
-                <td><?= $data['NAME_EN'] ?></td>
-                <td><?= $data['FATHER_NAME'] ?></td>
-                <td>
-                  <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update<?= $data['STUDENT_ID'] ?>" href="#"><i class="fas fa-pen-to-square"></i></a>
-                  <a class="btn btn-success" href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i>(<?= $data['FATHER_MOBILE_NUMBER'] ?>) </a>
-                  <a class="btn btn-success" href="tel:<?= $data['MOTHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i>(<?= $data['MOTHER_MOBILE_NUMBER'] ?>)</a>
-                  <a class="btn btn-info" data-bs-toggle="modal" data-bs-target="#sms<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-comment-sms"></i></a>
-                  <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-trash"></i></a>
-                </td>
-                </tr>
-                    
-                  <?php
-                }
-              ?>
-        </table>
-
-      </div>
       
     </div>
     

@@ -96,17 +96,17 @@
         <!--end::Col-->
         <div class="col-lg-3 col-6">
           <!--begin::Small Box Widget 4-->
-          <a href="<?= $web_address ?>student-phone-book">
+          <!-- <a href="<?= $web_address ?>student-phone-book">
             <div class="small-box text-bg-primary">
               <div class="inner">
                 <h3>
-                <?php $db->StudentCount('*'); ?>
+                <?php //$db->StudentCount('*'); ?>
                 </h3>
                 <p>Phone Book</p>
               </div>
               <span class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">Click Here <i class="bi bi-link-45deg"></i></span>
             </div>
-          </a>
+          </a> -->
           <!--end::Small Box Widget 4-->
         </div>
         <!--end::Col-->

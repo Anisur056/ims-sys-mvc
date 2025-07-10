@@ -43,18 +43,7 @@
                   exportOptions: {
                     columns: ':visible'
                   },
-                  autoPrint: false,
-                  customize: function (win) {
-                      $(win.document.body)
-                          .prepend(
-                              '<img src="views/theme/img/logo.png" style="position:absolute; top:50%; right:50%; transform: translate(50%,-50%); opacity: 0.1;" />'
-                          );
-
-                      $(win.document.body)
-                          .find('table')
-                          .addClass('compact')
-                          .css('font-size', 'inherit');
-                  }
+                  autoPrint: false
                 },
                 {
                     extend: 'colvis',
