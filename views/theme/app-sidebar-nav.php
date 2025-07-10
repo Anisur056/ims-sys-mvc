@@ -49,12 +49,6 @@
                     </a>
                     </li>
                     <li class="nav-item">
-                    <a href="<?= $web_address ?>student-ex-record" class="nav-link <?= urlIs('/student-ex-record') ? 'active' : '' ?>">
-                        <i class="nav-icon bi bi-person-x"></i>
-                        <p>Students Ex Record</p>
-                    </a>
-                    </li>
-                    <li class="nav-item">
                     <a href="<?= $web_address ?>student-attendance" class="nav-link <?= urlIs('/student-attendance') ? 'active' : '' ?>">
                         <i class="nav-icon bi bi-clipboard-check"></i>
                         <p>Attendance</p>

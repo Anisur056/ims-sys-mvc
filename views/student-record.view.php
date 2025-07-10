@@ -129,19 +129,19 @@
       <hr>
       <nav class="mb-3">
         <a class="btn btn-primary m-1" href="?class=PLAY">PLAY- <?php $db->StudentCount('PLAY',NULL); ?></a>
-        <a class="btn btn-primary m-1" href="?class=NURSERY&status=NULL">NURSERY- <?php $db->StudentCount('NURSERY',NULL); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=ONE&status=NULL">ONE- <?php $db->StudentCount('ONE',NULL); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=TWO&status=NULL">TWO- <?php $db->StudentCount('TWO',NULL); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=THREE&status=NULL">THREE- <?php $db->StudentCount('THREE',NULL); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=FOUR&status=NULL">FOUR- <?php $db->StudentCount('FOUR',NULL); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=HIFZ-NAZERA&status=NULL">HIFZ-NAZERA- <?php $db->StudentCount('HIFZ-NAZERA',NULL); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=HIFZ-INTERNATIONAL&status=NULL">HIFZ-INTERNATIONAL- <?php $db->StudentCount('HIFZ-INTERNATIONAL',NULL); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=HIFZ-RIVISION&status=NULL">HIFZ-RIVISION- <?php $db->StudentCount('HIFZ-RIVISION',NULL); ?></a>
+        <a class="btn btn-primary m-1" href="?class=NURSERY">NURSERY- <?php $db->StudentCount('NURSERY',NULL); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=ONE">ONE- <?php $db->StudentCount('ONE',NULL); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=TWO">TWO- <?php $db->StudentCount('TWO',NULL); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=THREE">THREE- <?php $db->StudentCount('THREE',NULL); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=FOUR">FOUR- <?php $db->StudentCount('FOUR',NULL); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=HIFZ-NAZERA">HIFZ-NAZERA- <?php $db->StudentCount('HIFZ-NAZERA',NULL); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=HIFZ-INTERNATIONAL">HIFZ-INTERNATIONAL- <?php $db->StudentCount('HIFZ-INTERNATIONAL',NULL); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=HIFZ-RIVISION">HIFZ-RIVISION- <?php $db->StudentCount('HIFZ-RIVISION',NULL); ?></a>
         <hr>
-        <a class="btn btn-danger m-1 " href="?STATUS=IN-ACTIVE">IN-ACTIVE- <?php $db->StudentCount(NULL,'IN-ACTIVE'); ?></a>
-        <a class="btn btn-danger m-1 " href="?STATUS=ILEAVE">LEAVE- <?php $db->StudentCount(NULL,'ILEAVE'); ?></a>
-        <a class="btn btn-danger m-1 " href="?STATUS=TC">TC- <?php $db->StudentCount(NULL,'TC'); ?></a>
-        <a class="btn btn-danger m-1 " href="?STATUS=BOARD-EXAM-COMPLETE">BOARD-EXAM-COMPLETE- <?php $db->StudentCount(NULL,'BOARD-EXAM-COMPLETE'); ?></a>
+        <a class="btn btn-danger m-1 " href="?status=IN-ACTIVE">IN-ACTIVE- <?php $db->StudentCount(NULL,'IN-ACTIVE'); ?></a>
+        <a class="btn btn-danger m-1 " href="?status=LEAVE">LEAVE- <?php $db->StudentCount(NULL,'ILEAVE'); ?></a>
+        <a class="btn btn-danger m-1 " href="?status=TC">TC- <?php $db->StudentCount(NULL,'TC'); ?></a>
+        <a class="btn btn-danger m-1 " href="?status=BOARD-EXAM-COMPLETE">BOARD-EXAM-COMPLETE- <?php $db->StudentCount(NULL,'BOARD-EXAM-COMPLETE'); ?></a>
       </nav>
       <hr>
       <h4 class="mb-3">Total Record Found <b><?php $db->StudentCount($CLASS,NULL); ?></b></h4>
@@ -160,6 +160,9 @@
           <?php
             $result = $db->showStudentByCatagory($CLASS, $STATUS);
             foreach($result as $data){
+              if($STATUS){
+                echo "hi";
+              }
               ?>
 
               <tr>
@@ -173,7 +176,9 @@
                 <a class="btn btn-success" href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i>(<?= $data['FATHER_MOBILE_NUMBER'] ?>) </a>
                 <a class="btn btn-success" href="tel:<?= $data['MOTHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i>(<?= $data['MOTHER_MOBILE_NUMBER'] ?>)</a>
                 <a class="btn btn-info" data-bs-toggle="modal" data-bs-target="#sms<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-comment-sms"></i></a>
-                <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-trash"></i></a>
+                <?php if($STATUS): ?>
+                  <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-trash"></i></a>
+                <?php endif; ?>
               </td>
               </tr>
 
