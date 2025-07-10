@@ -58,7 +58,7 @@ class ModelDbClass{
     $GENDER,$DATE_OF_BIRTH,$BIRTH_REG_NO,
     $FATHER_NAME,$FATHER_MOBILE_NUMBER,$FATHER_NID,
     $MOTHER_NAME,$MOTHER_MOBILE_NUMBER,$MOTHER_NID,
-    $PRESENT_ADDRESS,$PERMANENT_ADDRESS,$STUDENT_ID){
+    $PRESENT_ADDRESS,$PERMANENT_ADDRESS,$REMARK,$STUDENT_ID){
         $update = $this->pub_pdo->prepare('UPDATE `shnmm_tbl_students` SET 
         `ACADEMIC_YEAR`= ?,`SHIFT`= ?,`SECTION`= ?,
         `CLASS`= ?,`ROLL`= ?,`NAME_EN`= ?,
@@ -66,7 +66,7 @@ class ModelDbClass{
         `GENDER`= ?,`DATE_OF_BIRTH`= ?,`BIRTH_REG_NO`= ?,
         `FATHER_NAME`= ?,`FATHER_MOBILE_NUMBER`= ?,`FATHER_NID`= ?,
         `MOTHER_NAME`= ?,`MOTHER_MOBILE_NUMBER`= ?,`MOTHER_NID`= ?,
-        `PRESENT_ADDRESS`= ?,`PERMANENT_ADDRESS`= ? WHERE `STUDENT_ID` = ?');
+        `PRESENT_ADDRESS`= ?,`PERMANENT_ADDRESS`= ?, `REMARK`= ? WHERE `STUDENT_ID` = ?');
   
         $update->execute([
           $ACADEMIC_YEAR,$SHIFT,$SECTION,
@@ -75,7 +75,7 @@ class ModelDbClass{
           $GENDER,$DATE_OF_BIRTH,$BIRTH_REG_NO,
           $FATHER_NAME,$FATHER_MOBILE_NUMBER,$FATHER_NID,
           $MOTHER_NAME,$MOTHER_MOBILE_NUMBER,$MOTHER_NID,
-          $PRESENT_ADDRESS,$PERMANENT_ADDRESS,$STUDENT_ID]);
+          $PRESENT_ADDRESS,$PERMANENT_ADDRESS,$REMARK,$STUDENT_ID]);
     }
 
     public function addStudentRecord($ACADEMIC_YEAR,$SHIFT,$SECTION,
@@ -84,20 +84,20 @@ class ModelDbClass{
     $GENDER,$DATE_OF_BIRTH,$BIRTH_REG_NO,
     $FATHER_NAME,$FATHER_MOBILE_NUMBER,$FATHER_NID,
     $MOTHER_NAME,$MOTHER_MOBILE_NUMBER,$MOTHER_NID,
-    $PRESENT_ADDRESS,$PERMANENT_ADDRESS){
+    $PRESENT_ADDRESS,$PERMANENT_ADDRESS,$REMARK){
         $addStudent = $this->pub_pdo->prepare('INSERT INTO `shnmm_tbl_students` (`ACADEMIC_YEAR`, `SHIFT`, `SECTION`, 
         `CLASS`, `ROLL`, `NAME_EN`, 
         `NAME_BN`, `BLOOD_GROUP`, `RELIGION`, 
         `GENDER`, `DATE_OF_BIRTH`, `BIRTH_REG_NO`, 
         `FATHER_NAME`, `FATHER_MOBILE_NUMBER`, `FATHER_NID`, 
         `MOTHER_NAME`, `MOTHER_MOBILE_NUMBER`, `MOTHER_NID`, 
-        `PRESENT_ADDRESS`, `PERMANENT_ADDRESS`) VALUES (?,?,?,
+        `PRESENT_ADDRESS`, `PERMANENT_ADDRESS`,`REMARK`) VALUES (?,?,?,
         ?,?,?,
         ?,?,?,
         ?,?,?,
         ?,?,?,
         ?,?,?,
-        ?,?)');
+        ?,?,?)');
       
       $addStudent->execute([
         $ACADEMIC_YEAR,$SHIFT,$SECTION,
@@ -106,7 +106,7 @@ class ModelDbClass{
         $GENDER,$DATE_OF_BIRTH,$BIRTH_REG_NO,
         $FATHER_NAME,$FATHER_MOBILE_NUMBER,$FATHER_NID,
         $MOTHER_NAME,$MOTHER_MOBILE_NUMBER,$MOTHER_NID,
-        $PRESENT_ADDRESS,$PERMANENT_ADDRESS]);
+        $PRESENT_ADDRESS,$PERMANENT_ADDRESS,$REMARK]);
     }
 
     public function changeStatusStudentById($STUDENT_ID,$STATUS,$REMARK){

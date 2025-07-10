@@ -2,11 +2,6 @@
     font-family: "Tiro Bangla", serif;
 }
 
-table .profile-img{
-    width: 100px;
-    height: 100px;
-}
-
 @media (max-width: 650px){
     .studentRecordTable thead{
         display: none;
@@ -31,5 +26,8 @@ table .profile-img{
     }
     .studentRecordTable td:nth-of-type(5)::before{
         content: "FATHER: ";
+    }
+    .studentRecordTable td:nth-of-type(6)::before{
+        content: "REMARK: ";
     }
 }

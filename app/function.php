@@ -15,7 +15,6 @@
         $url = "http://bulksmsbd.net/api/smsapi";
         $api_key = "Kdan9bcjkwFAPLHNyaBR";
         $senderid = "8809617624990";
-        $sms_number = "8801871123427";
      
         $data = [
             "api_key" => $api_key,

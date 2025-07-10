@@ -6,11 +6,15 @@
 <!-- begin::`shnmm_tbl_students`-update -->
 <?php
 
-  if(empty($_GET['class']) && empty($_GET['status'])){
+  if(!isset($_GET['class'])){
     $CLASS = 'PLAY';
-    $STATUS = NULL;
   }else{
     $CLASS = $_GET['class']; 
+  }
+
+  if(!isset($_GET['status'])){
+    $STATUS = NULL;
+  }else{
     $STATUS = $_GET['status']; 
   }
 
@@ -44,10 +48,11 @@
       $MOTHER_NID = $_POST['MOTHER_NID'];
       $PRESENT_ADDRESS = $_POST['PRESENT_ADDRESS'];
       $PERMANENT_ADDRESS = $_POST['PERMANENT_ADDRESS'];
+      $REMARK = $_POST['REMARK'];
 
       $db->updateStudentById($ACADEMIC_YEAR,$SHIFT,$SECTION,$CLASS,$ROLL,$NAME_EN,$NAME_BN,$BLOOD_GROUP,$RELIGION,$GENDER,
       $DATE_OF_BIRTH,$BIRTH_REG_NO,$FATHER_NAME,$FATHER_MOBILE_NUMBER,$FATHER_NID,$MOTHER_NAME,$MOTHER_MOBILE_NUMBER,
-      $MOTHER_NID,$PRESENT_ADDRESS,$PERMANENT_ADDRESS,$STUDENT_ID);
+      $MOTHER_NID,$PRESENT_ADDRESS,$PERMANENT_ADDRESS,$REMARK,$STUDENT_ID);
     }
 
     if(isset($_POST['addStudentbtn'])){
@@ -72,10 +77,11 @@
       $MOTHER_NID = $_POST['MOTHER_NID'];
       $PRESENT_ADDRESS = $_POST['PRESENT_ADDRESS'];
       $PERMANENT_ADDRESS = $_POST['PERMANENT_ADDRESS'];
+      $REMARK = $_POST['REMARK'];
 
       $db->addStudentRecord($ACADEMIC_YEAR,$SHIFT,$SECTION,$CLASS,$ROLL,$NAME_EN,$NAME_BN,$BLOOD_GROUP,$RELIGION,$GENDER,
       $DATE_OF_BIRTH,$BIRTH_REG_NO,$FATHER_NAME,$FATHER_MOBILE_NUMBER,$FATHER_NID,$MOTHER_NAME,$MOTHER_MOBILE_NUMBER,
-      $MOTHER_NID,$PRESENT_ADDRESS,$PERMANENT_ADDRESS);
+      $MOTHER_NID,$PRESENT_ADDRESS,$PERMANENT_ADDRESS,$REMARK);
 
     }
 
@@ -139,12 +145,11 @@
         <a class="btn btn-primary m-1 " href="?class=HIFZ-RIVISION">HIFZ-RIVISION- <?php $db->StudentCount('HIFZ-RIVISION',NULL); ?></a>
         <hr>
         <a class="btn btn-danger m-1 " href="?status=IN-ACTIVE">IN-ACTIVE- <?php $db->StudentCount(NULL,'IN-ACTIVE'); ?></a>
-        <a class="btn btn-danger m-1 " href="?status=LEAVE">LEAVE- <?php $db->StudentCount(NULL,'ILEAVE'); ?></a>
+        <a class="btn btn-danger m-1 " href="?status=LEAVE">LEAVE- <?php $db->StudentCount(NULL,'LEAVE'); ?></a>
         <a class="btn btn-danger m-1 " href="?status=TC">TC- <?php $db->StudentCount(NULL,'TC'); ?></a>
         <a class="btn btn-danger m-1 " href="?status=BOARD-EXAM-COMPLETE">BOARD-EXAM-COMPLETE- <?php $db->StudentCount(NULL,'BOARD-EXAM-COMPLETE'); ?></a>
       </nav>
       <hr>
-      <h4 class="mb-3">Total Record Found <b><?php $db->StudentCount($CLASS,NULL); ?></b></h4>
 
       <table id="studentTable" class="table table-striped table-bordered studentRecordTable">
         <thead>
@@ -154,33 +159,79 @@
           <th>NAME_BN</th>
           <th>NAME_EN</th>
           <th>FATHER_NAME</th>                    
+          <th>REMARK</th>                    
           <th>ACTION</th>
           </tr>
         </thead>
           <?php
             $result = $db->showStudentByCatagory($CLASS, $STATUS);
             foreach($result as $data){
-              if($STATUS){
-                echo "hi";
-              }
               ?>
 
               <tr>
               <td><a class="text-decoration-none btn btn-primary" href="/student-profile?id=<?= $data['STUDENT_ID'] ?>"><?= $data['ROLL'] ?></a></td>
-              <td><img src="<?= $data['PIC'] ?>" alt="" class="profile-img img-thumbnail"></td>
+              <td><img src="<?= $data['PIC'] ?>" alt="" class="img-fluid img-thumbnail" style="width:150px; height:auto;"></td>
               <td class="bangla"><?= $data['NAME_BN'] ?></td>
               <td><?= $data['NAME_EN'] ?></td>
               <td><?= $data['FATHER_NAME'] ?></td>
+              <td class="bangla"><?= $data['REMARK'] ?></td>
               <td>
-                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update<?= $data['STUDENT_ID'] ?>" href="#"><i class="fas fa-pen-to-square"></i></a>
-                <a class="btn btn-success" href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i>(<?= $data['FATHER_MOBILE_NUMBER'] ?>) </a>
-                <a class="btn btn-success" href="tel:<?= $data['MOTHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i>(<?= $data['MOTHER_MOBILE_NUMBER'] ?>)</a>
-                <a class="btn btn-info" data-bs-toggle="modal" data-bs-target="#sms<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-comment-sms"></i></a>
-                <?php if($STATUS): ?>
-                  <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-trash"></i></a>
-                <?php endif; ?>
+                <a class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#update<?= $data['STUDENT_ID'] ?>" href="#"><i class="fas fa-pen-to-square"></i> Update</a>
+                <a class="btn btn-success m-1" data-bs-toggle="modal" data-bs-target="#call<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-phone-volume"></i> Call</a>
+                <a class="btn btn-info m-1" data-bs-toggle="modal" data-bs-target="#sms<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-comment-sms"></i> SMS</a>
+                <a class="btn btn-danger m-1" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-right-left"></i> Move</a>
               </td>
               </tr>
+
+              <!-- Model Content For CALL-->
+              <div class="modal fade" id="call<?= $data['STUDENT_ID'] ?>">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5">Call</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <!--begin::Small Box Widget 4-->
+                          <a class="text-decoration-none" href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>">
+                            <div class="small-box text-bg-success">
+                              <div class="inner">
+                                <h3>
+                                <?= $data['FATHER_MOBILE_NUMBER'] ?>
+                                </h3>
+                                <p><?= $data['FATHER_NAME'] ?></p>
+                              </div>
+                              <span class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">Call Now <i class="fa-solid fa-phone-volume"></i></span>
+                            </div>
+                          </a>
+                          <!--end::Small Box Widget 4-->
+                        </div>
+    
+                        <div class="col-sm-6">
+                          <!--begin::Small Box Widget 4-->
+                          <a class="text-decoration-none" href="tel:<?= $data['MOTHER_MOBILE_NUMBER'] ?>">
+                            <div class="small-box text-bg-success">
+                              <div class="inner">
+                                <h3>
+                                <?= $data['MOTHER_MOBILE_NUMBER'] ?>
+                                </h3>
+                                <p><?= $data['MOTHER_NAME'] ?></p>
+                              </div>
+                              <span class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">Call Now <i class="fa-solid fa-phone-volume"></i></span>
+                            </div>
+                          </a>
+                          <!--end::Small Box Widget 4-->
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Model Content -->
 
               <!-- Model Content For SMS-->
               <div class="modal fade" id="sms<?= $data['STUDENT_ID'] ?>">
@@ -228,7 +279,7 @@
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h1 class="modal-title fs-5">Delete Student</h1>
+                      <h1 class="modal-title fs-5">Move Student</h1>
                       <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <form method="post">
@@ -239,20 +290,22 @@
                             <p class="bangla">নাম: <?= $data['NAME_BN'] ?></p>
                             <input type="hidden" name="STUDENT_ID" value="<?= $data['STUDENT_ID'] ?>">
                             <select name="STATUS" class="form-select" required="">
-                                <option value="IN-ACTIVE">Inactive Student</option>
+                                <option value="">Please Select a Action</option>
+                                <option value="ACTIVE">ACTIVE</option>
+                                <option value="IN-ACTIVE">Inactive Student</option>                                
                                 <option value="LEAVE">Studnet Leave</option>
                                 <option value="TC">Transfer Another Institute (TC)</option>
                                 <option value="BOARD-EXAM-COMPLETE">Board Exam Complete</option>
                             </select>
                             <div class="form-floating mt-3">
-                              <textarea name="REMARK" class="form-control" placeholder="" id="floatingTextarea2" style="height: 200px"></textarea>
+                              <textarea name="REMARK" class="form-control" placeholder="" id="floatingTextarea2" style="height: 200px"><?= $data['REMARK'] ?></textarea>
                               <label for="floatingTextarea2">REMARK</label>
                             </div>
                         </div>
                       </div>
                       <div class="modal-footer">
 
-                        <input type="submit" class="btn btn-danger" name="deleteStudentBtn" value="Delete">
+                        <input type="submit" class="btn btn-danger" name="deleteStudentBtn" value="Move">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>                      
                       </div>
                     </form>
@@ -386,6 +439,13 @@
                             <div class="form-floating mb-3">
                               <input type="text" class="form-control" name="PERMANENT_ADDRESS" placeholder="" value="<?= $data['PERMANENT_ADDRESS'] ?>">
                               <label>Permanent Address</label>
+                            </div>
+                          </div>
+
+                          <div class="card p-3 mb-3">
+                            <div class="form-floating mt-3">
+                              <textarea name="REMARK" class="form-control bangla" placeholder="" id="floatingTextarea2" style="height: 200px"><?= $data['REMARK'] ?></textarea>
+                              <label for="floatingTextarea2">REMARK</label>
                             </div>
                           </div>
 
@@ -530,6 +590,13 @@
                     <div class="form-floating mb-3">
                       <input type="text" class="form-control" name="PERMANENT_ADDRESS" placeholder="">
                       <label>Permanent Address</label>
+                    </div>
+                  </div>
+
+                  <div class="card p-3 mb-3">
+                    <div class="form-floating mt-3">
+                      <textarea name="REMARK" class="form-control" placeholder="" id="floatingTextarea2" style="height: 200px">ভর্তি সংক্রান্ত কোন মন্তব্য থাকলে লিখুন</textarea>
+                      <label for="floatingTextarea2">REMARK</label>
                     </div>
                   </div>
 
