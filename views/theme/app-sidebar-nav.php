@@ -42,12 +42,6 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                <a href="<?= $web_address ?>" class="nav-link">
-                    <i class="nav-icon bi bi-person-plus-fill"></i>
-                    <p>Admission</p>
-                </a>
-                </li>
-                <li class="nav-item">
                 <a href="<?= $web_address ?>student-record" class="nav-link <?= urlIs('/student-record') ? 'active' : '' ?>">
                     <i class="nav-icon bi bi-person-lines-fill"></i>
                     <p>Students Record</p>
