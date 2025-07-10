@@ -28,7 +28,7 @@
             class="user-image rounded-circle shadow"
             alt="User Image"
         />
-        <span class="d-none d-md-inline">Anisur Rahman</span>
+        <span class="d-none d-md-inline"><?= $_SESSION['user']; ?></span>
         </a>
         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
         <!--begin::User Image-->
@@ -39,7 +39,7 @@
             alt="User Image"
             />
             <p>
-            Anisur Rahman - Computer Opraretor/IT
+            <?= $_SESSION['user']; ?>
             <small>Member since 02/02/2025</small>
             </p>
         </li>
@@ -47,7 +47,7 @@
         <!--begin::Menu Footer-->
         <li class="user-footer">
             <a href="#" class="btn btn-default btn-flat">Profile</a>
-            <a href="#" class="btn btn-default btn-flat float-end">Log out</a>
+            <a href="verify?logout" class="btn btn-default btn-flat float-end">Log out</a>
         </li>
         <!--end::Menu Footer-->
         </ul>

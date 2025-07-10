@@ -1,3 +1,4 @@
+<?php require ('app/verify-session.php'); ?>
 <?php include "theme/app-head.php"; ?>
 <?php include "theme/app-header-nav.php"; ?>
 <?php include "theme/app-sidebar-nav.php"; ?>

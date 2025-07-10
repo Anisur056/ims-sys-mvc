@@ -1,3 +1,4 @@
+<?php require ('app/verify-session.php'); ?>
 <?php include "theme/app-head.php"; ?>
 <?php $db = new ModelDbClass(); ?>
 
