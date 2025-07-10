@@ -458,16 +458,16 @@
                     `REMARK` TEXT NOT NULL
                 );
             
-CREATE TABLE `shnmm_tbl_vouchers` 
-(`VOUCHER_NO` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-`ENTRY_DATE` TEXT NOT NULL , 
-`CREDIT_CASH_IN` TEXT NOT NULL , 
-`DEBIT_CASH_OUT` TEXT NOT NULL ,
-`DESCRIPTION` TEXT NOT NULL , 
-`AMOUNT` INT NOT NULL , 
-`DUE` INT NOT NULL , 
-`REMARK` TEXT NOT NULL , 
-`RECEIVED_BY` TEXT NOT NULL);</textarea>
+                CREATE TABLE `shnmm_tbl_vouchers` 
+                (`VOUCHER_NO` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+                `ENTRY_DATE` TEXT NOT NULL , 
+                `CREDIT_CASH_IN` TEXT NOT NULL , 
+                `DEBIT_CASH_OUT` TEXT NOT NULL ,
+                `DESCRIPTION` TEXT NOT NULL , 
+                `AMOUNT` INT NOT NULL , 
+                `DUE` INT NOT NULL , 
+                `REMARK` TEXT NOT NULL , 
+                `RECEIVED_BY` TEXT NOT NULL);</textarea>
                 </div>
 
                 <!-- ALTER TABLE `shnmm_tbl_students` ADD `STATUS` TEXT NOT NULL  DEFAULT ('ACTIVE'); -->

@@ -286,9 +286,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
                             <div class="card mt-3">
                                 <div class="card-body">
                                     <p class="fs-5 w-auto fw-bold p-3 border-bottom">Student Fees Collection</p>
-                                    <a href="#" class="btn btn-primary float-end m-2" data-bs-toggle="modal" data-bs-target="#modelAddVoucher">
-                                        <i class="fa-solid fa-hand-holding-dollar"></i> Take Fees
-                                    </a>
+                                    <a href="#" class="btn btn-primary float-end m-2" data-bs-toggle="modal" data-bs-target="#modelAddVoucher"><i class="fa-solid fa-hand-holding-dollar"></i>Take Fees</a>
                                     <table class="table table-bordered table-striped studentRecordTable">
                                         <thead>
                                             <tr>
@@ -326,53 +324,53 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
                                                     <!-- Model Content For Voucher Add-->
                                                     <div class="modal fade" id="update<?= $data['VOUCHER_NO'] ?>">
                                                         <form action="" method="post">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5">Update Fees Information</h1>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h1 class="modal-title fs-5">Update Fees Information</h1>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+
+                                                                        <input type="hidden" name="VOUCHER_NO" value="<?= $data['VOUCHER_NO'] ?>">
+
+                                                                        <div class="form-floating mb-3">
+                                                                            <input type="text" class="form-control" name="ENTRY_DATE" placeholder="" value="<?= $data['ENTRY_DATE'] ?>">
+                                                                            <label>ENTRY_DATE:</label>
+                                                                        </div>
+
+                                                                        <div class="form-floating mb-3">
+                                                                            <textarea name="DESCRIPTION" class="form-control bangla" placeholder="" id="floatingTextarea2" style="height: 200px"><?= $data['DESCRIPTION'] ?></textarea>
+                                                                            <label for="floatingTextarea2">DESCRIPTION</label>
+                                                                        </div>
+
+                                                                        <div class="form-floating mb-3">
+                                                                            <input type="text" class="form-control" name="AMOUNT" placeholder="" value="<?= $data['AMOUNT'] ?>" required>
+                                                                            <label>AMOUNT:</label>
+                                                                        </div>
+
+                                                                        <div class="form-floating mb-3">
+                                                                            <input type="text" class="form-control" name="RECEIVED" placeholder="" value="<?= $data['RECEIVED'] ?>">
+                                                                            <label>RECEIVED:</label>
+                                                                        </div>
+                                                                        
+                                                                        <div class="form-floating mb-3">
+                                                                            <input type="text" class="form-control" name="DUE" placeholder="" value="<?= $data['DUE'] ?>">
+                                                                            <label>DUE:</label>
+                                                                        </div>
+
+                                                                        <div class="form-floating mb-3">
+                                                                            <textarea name="REMARK" class="form-control bangla" placeholder="" id="floatingTextarea2" style="height: 200px"><?= $data['REMARK'] ?></textarea>
+                                                                            <label for="floatingTextarea2">REMARK</label>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                        <button type="submit" name="updateVoucherbtn" class="btn btn-primary">Update</button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <div class="modal-body">
-
-                                                                <input type="hidden" name="VOUCHER_NO" value="<?= $data['VOUCHER_NO'] ?>">
-
-                                                                <div class="form-floating mb-3">
-                                                                    <input type="text" class="form-control" name="ENTRY_DATE" placeholder="" value="<?= $data['ENTRY_DATE'] ?>">
-                                                                    <label>ENTRY_DATE:</label>
-                                                                </div>
-
-                                                                <div class="form-floating mb-3">
-                                                                    <textarea name="DESCRIPTION" class="form-control bangla" placeholder="" id="floatingTextarea2" style="height: 200px"><?= $data['DESCRIPTION'] ?></textarea>
-                                                                    <label for="floatingTextarea2">DESCRIPTION</label>
-                                                                </div>
-
-                                                                <div class="form-floating mb-3">
-                                                                    <input type="text" class="form-control" name="AMOUNT" placeholder="" value="<?= $data['AMOUNT'] ?>" required>
-                                                                    <label>AMOUNT:</label>
-                                                                </div>
-
-                                                                <div class="form-floating mb-3">
-                                                                    <input type="text" class="form-control" name="RECEIVED" placeholder="" value="<?= $data['RECEIVED'] ?>">
-                                                                    <label>RECEIVED:</label>
-                                                                </div>
-                                                                
-                                                                <div class="form-floating mb-3">
-                                                                    <input type="text" class="form-control" name="DUE" placeholder="" value="<?= $data['DUE'] ?>">
-                                                                    <label>DUE:</label>
-                                                                </div>
-
-                                                                <div class="form-floating mb-3">
-                                                                    <textarea name="REMARK" class="form-control bangla" placeholder="" id="floatingTextarea2" style="height: 200px"><?= $data['REMARK'] ?></textarea>
-                                                                    <label for="floatingTextarea2">REMARK</label>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit" name="updateVoucherbtn" class="btn btn-primary">Update</button>
-                                                            </div>
-                                                            </div>
-                                                        </div>
                                                         </form>
                                                     </div>
                                                     <!-- End Model Content -->
@@ -383,53 +381,53 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
                                     <!-- Model Content For Voucher Add-->
                                     <div class="modal fade" id="modelAddVoucher">
                                         <form action="" method="post">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5">Take Fees</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5">Take Fees</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    <input type="hidden" name="STUDENT_ID" value="<?= $id ?>">
+
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" name="ENTRY_DATE" placeholder="" value="<?= date('d/m/Y') ?>">
+                                                        <label>ENTRY_DATE:</label>
+                                                    </div>
+
+                                                    <div class="form-floating mb-3">
+                                                        <textarea name="DESCRIPTION" class="form-control bangla" placeholder="" id="floatingTextarea2" style="height: 200px">জানুয়ারী-২০২৫ এর বেতন গ্রহণ।</textarea>
+                                                        <label for="floatingTextarea2">DESCRIPTION</label>
+                                                    </div>
+
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" name="AMOUNT" placeholder="" value="" required>
+                                                        <label>AMOUNT:</label>
+                                                    </div>
+
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" name="RECEIVED" placeholder="" value="">
+                                                        <label>RECEIVED:</label>
+                                                    </div>
+                                                    
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" name="DUE" placeholder="" value="">
+                                                        <label>DUE:</label>
+                                                    </div>
+
+                                                    <div class="form-floating mb-3">
+                                                        <textarea name="REMARK" class="form-control bangla" placeholder="" id="floatingTextarea2" style="height: 200px">বেতন সংক্রান্ত কোন মন্তব্য থাকলে লিখুন</textarea>
+                                                        <label for="floatingTextarea2">REMARK</label>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" name="addVoucherbtn" class="btn btn-primary">Save</button>
+                                                </div>
+                                                </div>
                                             </div>
-                                            <div class="modal-body">
-
-                                                <input type="hidden" name="STUDENT_ID" value="<?= $id ?>">
-
-                                                <div class="form-floating mb-3">
-                                                    <input type="text" class="form-control" name="ENTRY_DATE" placeholder="" value="<?= date('d/m/Y') ?>">
-                                                    <label>ENTRY_DATE:</label>
-                                                </div>
-
-                                                <div class="form-floating mb-3">
-                                                    <textarea name="DESCRIPTION" class="form-control bangla" placeholder="" id="floatingTextarea2" style="height: 200px">জানুয়ারী-২০২৫ এর বেতন গ্রহণ।</textarea>
-                                                    <label for="floatingTextarea2">DESCRIPTION</label>
-                                                </div>
-
-                                                <div class="form-floating mb-3">
-                                                    <input type="text" class="form-control" name="AMOUNT" placeholder="" value="" required>
-                                                    <label>AMOUNT:</label>
-                                                </div>
-
-                                                <div class="form-floating mb-3">
-                                                    <input type="text" class="form-control" name="RECEIVED" placeholder="" value="">
-                                                    <label>RECEIVED:</label>
-                                                </div>
-                                                
-                                                <div class="form-floating mb-3">
-                                                    <input type="text" class="form-control" name="DUE" placeholder="" value="">
-                                                    <label>DUE:</label>
-                                                </div>
-
-                                                <div class="form-floating mb-3">
-                                                    <textarea name="REMARK" class="form-control bangla" placeholder="" id="floatingTextarea2" style="height: 200px">বেতন সংক্রান্ত কোন মন্তব্য থাকলে লিখুন</textarea>
-                                                    <label for="floatingTextarea2">REMARK</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" name="addVoucherbtn" class="btn btn-primary">Save</button>
-                                            </div>
-                                            </div>
-                                        </div>
                                         </form>
                                     </div>
                                     <!-- End Model Content -->

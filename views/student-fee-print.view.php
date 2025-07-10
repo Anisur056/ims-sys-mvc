@@ -27,144 +27,220 @@
 <head>
     <style>
         @page { size: A4; margin: 0 }
-
-        body {
+        *{
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            flex-direction: column;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             font-size: 10pt;
         }
-        .sheet {
-            /* width: 8.268in;  */
-            width: 8.25in; 
-            height: 11in;
-            /* height: 11.693in; */
-            margin: 0;
-            overflow: hidden;
-            position: relative;
-            /* page-break-after: always; */
-            background-color: #fafafa;
+        @font-face {
+            font-family: boishkhi;
+            src: url(views/theme/fonts/Boishkhi.ttf);
         }
-        .sheet img{
-            width: 100%;
+        @font-face {
+            font-family: sutonny;
+            src: url(views/theme/fonts/SutonnyOMJ.ttf);
         }
-        .tax_year{
-            font-family: ban;
-            position: absolute;
-            top: 2.430in;
-            left: 3.910in;
+        @font-face {
+            font-family: roboto;
+            src: url(views/theme/fonts/Roboto-Regular.ttf);
         }
-        .tax_name{
-            position: absolute;
-            top: 2.770in;
-            left: 2.950in;
-        }
-        .nid_num{
-            font-family: ban;
-            position: absolute;
-            top: 2.960in;
-            left: 3.840in;
-        }        
-        .tin_num{
-            font-family: ban;
-            letter-spacing: 14.700px;
-            position: absolute;
-            top: 3.150in;
-            left: 2.870in;
-        }
-        .tin_circle{
-            position: absolute;
-            top: 3.400in;
-            left: 2.700in;
-        }
-        .tin_area{
-            position: absolute;
-            top: 3.400in;
-            left: 5.100in;
-        }
-        .taxer_income{
-            font-family: ban;
-            position: absolute;
-            top: 3.690in;
-            left: 2.780in;
-        }
-        .taxer_pay{
-            font-family: ban;
-            position: absolute;
-            top: 3.860in;
-            left: 3.200in;
-        }
-        .tin_reg{
-            font-family: ban;
-            position: absolute;
-            top: 4.130in;
-            left: 4.750in;
-        }
-        .tin_submit_date{
-            font-family: ban;
-            position: absolute;
-            top: 4.540in;
-            left: 4.770in;
-        }
-        #qrcode img{
-            width: 45px;
-            height: 45px;
-            position: absolute;
-            top: 5.760in;
-            left: 3.930in;
-        }
-        /** For screen preview **/
-        @media screen {
-            body { background: #e0e0e0 }
-            .sheet {
-                background: white;
-                box-shadow: 0 .5mm 2mm rgba(0,0,0,.3);
-                margin: 5mm auto;
+        @media print{
+            body{
+                margin: 0;
+            }
+            button{
+                display: none;
             }
         }
-        /** Fix for Chrome issue #273306 **/
-        @media print {
-            body.A4 { width: 8.263in;}
-            button{display: none;}
+
+
+
+        .txt-left-voucher{
+            font-family: roboto;
+            position: absolute;
+            top: 1.070in;
+            left: .650in;
+        }
+
+        .txt-left-1{
+            font-family: boishkhi;
+            position: absolute;
+            top: 1.249in;
+            left: 3.820in;
+        }
+        .txt-left-2{
+            font-family: sutonny;
+            position: absolute;
+            top: 1.570in;
+            left: 1.500in;
+            font-size: 13pt;
+        }
+        .txt-left-3{
+            font-family: roboto;
+            position: absolute;
+            top: 1.800in;
+            left: 1.100in;
+        }
+        .txt-left-4{
+            font-family: roboto;
+            position: absolute;
+            top: 1.800in;
+            left: 4.010in;
+        }
+        .txt-left-5{
+            font-family: roboto;
+            position: absolute;
+            top: 2.550in;
+            left: 3.900in;
+        }
+        .txt-left-6{
+            font-family: roboto;
+            position: absolute;
+            top: 4.150in;
+            left: 3.900in;
+        }
+        .txt-left-7{
+            font-family: roboto;
+            position: absolute;
+            top: 4.150in;
+            left: 1.900in;
+        }
+        .txt-left-8{
+            font-family: sutonny;
+            position: absolute;
+            top: 4.650in;
+            left: .600in;
+        }
+        .img-left-due{
+            position: absolute;
+            width: 70px;
+            top: 4.650in;
+            left: 2.800in;  
+        }
+        /* /////////////////////////////// */
+
+        .txt-right-voucher{
+            font-family: roboto;
+            position: absolute;
+            top: 1.100in;
+            left: 4.650in;
+        }
+
+        .txt-right-1{
+            font-family: boishkhi;
+            position: absolute;
+            top: 1.300in;
+            left: 7.350in;
+        }
+        .txt-right-2{
+            font-family: sutonny;
+            position: absolute;
+            top: 1.550in;
+            left: 5.600in;
+            font-size: 13pt;
+        }
+        .txt-right-3{
+            font-family: roboto;
+            position: absolute;
+            top: 1.750in;
+            left: 5.100in;
+        }
+        .txt-right-4{
+            font-family: roboto;
+            position: absolute;
+            top: 1.750in;
+            left: 7.500in;
+        }
+        .txt-right-5{
+            font-family: roboto;
+            position: absolute;
+            top: 2.550in;
+            left: 7.500in;
+        }
+        .txt-right-6{
+            font-family: roboto;
+            position: absolute;
+            top: 4.150in;
+            left: 7.500in;
+        }
+        .txt-right-7{
+            font-family: roboto;
+            position: absolute;
+            top: 4.150in;
+            left: 5.900in;
+        }
+        .txt-right-8{
+            font-family: sutonny;
+            position: absolute;
+            top: 4.650in;
+            left: 4.700in;
+        }
+        .img-right-due{
+            position: absolute;
+            width: 70px;
+            top: 4.650in;
+            left: 6.300in;  
         }
     </style>
 </head>
 <body class="A4">
     <!-- ----------------------- Main Content ---------------------->
-        <div>
-            <section class="sheet" id="a4-pdf">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae animi tenetur asperiores nobis, ut mollitia! Similique recusandae placeat ratione nostrum, tenetur impedit deleniti molestias sunt ipsa libero pariatur dolore earum?
-                
-                <<span id="qrcode"></span>
-                
-            </section>
-        </div>
 
-        
+        <section class="print" id="a4-pdf">
+            
+            <div class="print">
+                <div class="left">
+                    <img style="width: 8.2677in;" src="views/theme/img/voucher-img/img-voucher.jpg" alt="">
+                    <p class="txt-left-voucher">2025000009</p>
+                    <p class="txt-left-1">12 12 2025</p>
+                    <p class="txt-left-2">উম্মে আতিয়া মুনতাহা</p>
+                    <p class="txt-left-3">NURSERY</p>
+                    <p class="txt-left-4">001</p>
+                    <p class="txt-left-5">600</p>
+                    <p class="txt-left-6">600</p>
+                    <p class="txt-left-7">Due: 500</p>
+                    <p class="txt-left-8">জানুয়ারীর কোচিং এর টাকা ৫০০ টাকা বাকী আছে।</p>
+                    <img class="img-left-due" src="views/theme/img/voucher-img/due-seal.png">
+                </div>
+                <div class="right">
+                    <p class="txt-right-voucher">2025000009</p>
+                    <p class="txt-right-1">12 12 2025</p>
+                    <p class="txt-right-2">উম্মে আতিয়া মুনতাহা</p>
+                    <p class="txt-right-3">NURSERY</p>
+                    <p class="txt-right-4">001</p>
+                    <p class="txt-right-5">600</p>
+                    <p class="txt-right-6">600</p>
+                    <p class="txt-right-7">Due: 500</p>
+                    <p class="txt-right-8">জানুয়ারীর কোচিং এর টাকা ৫০০ টাকা বাকী আছে।</p>
+                    <img class="img-right-due" src="views/theme/img/voucher-img/paid-seal.png">
+                </div>
+            </div>
+            
+            <!-- <span id="qrcode"></span> -->
+            
+        </section>
+
     <br>
     <button style="padding: 5px 20px;" type="button" onclick="Btnprint()">Print</button>
-    <br>
-    <button  style="padding: 5px 20px;" type="button" onclick="generatePDF()">Download-PDF</button>
+    <!-- <br>
+    <button  style="padding: 5px 20px;" type="button" onclick="generatePDF()">Download-PDF</button> -->
     <!-- ----------------------- Script End ---------------------->
     
     <!-- ----------------------- Script for QR Code ---------------------->
-    <script src="views/theme/js/qrcode.js"></script>
+    <!-- <script src="views/theme/js/qrcode.js"></script>
     <script type="text/javascript">
     var qrcode = new QRCode(document.getElementById("qrcode"), {
-        text: "<?php echo $qrTxt ;?>",
+        text: "<?php //echo $qrTxt ;?>",
         colorDark : "#000000",
         colorLight : "#ffffff",
         correctLevel : QRCode.CorrectLevel.H
     });
-    </script>
+    </script> -->
     <!-- ----------------------- Script End ---------------------->
 
     <!-- ----------------------- Script for PDF Download ---------------------->
-    <script src="views/theme/js/html2pdf.js"></script>
+    <!-- <script src="views/theme/js/html2pdf.js"></script>
     <script>
         function generatePDF(){
             const element = document.getElementById("a4-pdf");
@@ -177,7 +253,7 @@
             };
             html2pdf().set(opt).from(element).save();
         }
-    </script>
+    </script> -->
     <!-- ----------------------- Script End ---------------------->
 
     <!-- ----------------------- Script for Print Dialog ---------------------->
