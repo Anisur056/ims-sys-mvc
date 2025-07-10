@@ -9,6 +9,7 @@ class ModelDbClass{
         $this->pub_pdo = $pdo;
     }
 
+    // ========================= STUDENT RELATED DB SCRIPT ================================= //
     public function StudentCount($CLASS,$STATUS){
 
         if($STATUS){
@@ -53,12 +54,12 @@ class ModelDbClass{
     }
 
     public function updateStudentById($ACADEMIC_YEAR,$SHIFT,$SECTION,
-    $CLASS,$ROLL,$NAME_EN,
-    $NAME_BN,$BLOOD_GROUP,$RELIGION,
-    $GENDER,$DATE_OF_BIRTH,$BIRTH_REG_NO,
-    $FATHER_NAME,$FATHER_MOBILE_NUMBER,$FATHER_NID,
-    $MOTHER_NAME,$MOTHER_MOBILE_NUMBER,$MOTHER_NID,
-    $PRESENT_ADDRESS,$PERMANENT_ADDRESS,$REMARK,$STUDENT_ID){
+        $CLASS,$ROLL,$NAME_EN,
+        $NAME_BN,$BLOOD_GROUP,$RELIGION,
+        $GENDER,$DATE_OF_BIRTH,$BIRTH_REG_NO,
+        $FATHER_NAME,$FATHER_MOBILE_NUMBER,$FATHER_NID,
+        $MOTHER_NAME,$MOTHER_MOBILE_NUMBER,$MOTHER_NID,
+        $PRESENT_ADDRESS,$PERMANENT_ADDRESS,$REMARK,$STUDENT_ID){
         $update = $this->pub_pdo->prepare('UPDATE `shnmm_tbl_students` SET 
         `ACADEMIC_YEAR`= ?,`SHIFT`= ?,`SECTION`= ?,
         `CLASS`= ?,`ROLL`= ?,`NAME_EN`= ?,
@@ -79,12 +80,12 @@ class ModelDbClass{
     }
 
     public function addStudentRecord($ACADEMIC_YEAR,$SHIFT,$SECTION,
-    $CLASS,$ROLL,$NAME_EN,
-    $NAME_BN,$BLOOD_GROUP,$RELIGION,
-    $GENDER,$DATE_OF_BIRTH,$BIRTH_REG_NO,
-    $FATHER_NAME,$FATHER_MOBILE_NUMBER,$FATHER_NID,
-    $MOTHER_NAME,$MOTHER_MOBILE_NUMBER,$MOTHER_NID,
-    $PRESENT_ADDRESS,$PERMANENT_ADDRESS,$REMARK){
+        $CLASS,$ROLL,$NAME_EN,
+        $NAME_BN,$BLOOD_GROUP,$RELIGION,
+        $GENDER,$DATE_OF_BIRTH,$BIRTH_REG_NO,
+        $FATHER_NAME,$FATHER_MOBILE_NUMBER,$FATHER_NID,
+        $MOTHER_NAME,$MOTHER_MOBILE_NUMBER,$MOTHER_NID,
+        $PRESENT_ADDRESS,$PERMANENT_ADDRESS,$REMARK){
         $addStudent = $this->pub_pdo->prepare('INSERT INTO `shnmm_tbl_students` (`ACADEMIC_YEAR`, `SHIFT`, `SECTION`, 
         `CLASS`, `ROLL`, `NAME_EN`, 
         `NAME_BN`, `BLOOD_GROUP`, `RELIGION`, 
@@ -113,4 +114,42 @@ class ModelDbClass{
         $changeStatus = $this->pub_pdo->prepare('UPDATE `shnmm_tbl_students` SET `STATUS`= ?, `REMARK`= ? WHERE `STUDENT_ID` = ?');
 	    $changeStatus->execute([$STATUS,$REMARK,$STUDENT_ID]);
     }
+    // ========================= STUDENT RELATED DB SCRIPT ================================= //
+
+
+    // ========================= VOUCHER RELATED DB SCRIPT ================================= //
+    public function showVoucherByStudentId($student_id){
+        $statement = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_vouchers` WHERE `INKED_TO`=? AND `TRANSECTION_STATUS`=? AND `ACCOUNTS_HEAD`=?');
+        $statement->execute([$student_id,'cash_in','FEES_COLLECTION']);
+        return $statement->fetchAll();
+    }
+
+    public function addVoucher($ENTRY_DATE, $TRANSECTION_STATUS, $ACCOUNTS_HEAD, 
+        $DESCRIPTION, $AMOUNT, $RECEIVED, 
+        $DUE, $REMARK, $RECEIVED_BY, $INKED_TO){
+            $addStudent = $this->pub_pdo->prepare('INSERT INTO `shnmm_tbl_vouchers`
+            (`ENTRY_DATE`, `TRANSECTION_STATUS`, `ACCOUNTS_HEAD`, `DESCRIPTION`, `AMOUNT`, `RECEIVED`, `DUE`, `REMARK`, `RECEIVED_BY`, `INKED_TO`) 
+            VALUES (?,?,?,
+            ?,?,?,
+            ?,?,?,?)');
+      
+        $addStudent->execute([
+            $ENTRY_DATE, $TRANSECTION_STATUS, $ACCOUNTS_HEAD, 
+            $DESCRIPTION, $AMOUNT, $RECEIVED, 
+            $DUE, $REMARK, $RECEIVED_BY, $INKED_TO]);
+    }
+
+    public function updateVoucher($ENTRY_DATE,$DESCRIPTION, $AMOUNT, 
+        $RECEIVED,$DUE, $REMARK, $VOUCHER_NO){
+        $update = $this->pub_pdo->prepare('UPDATE `shnmm_tbl_vouchers` SET 
+        `ENTRY_DATE`= ?,`DESCRIPTION`= ?,`AMOUNT`= ?,`RECEIVED`= ?,
+        `DUE`= ?,`REMARK`= ? WHERE `VOUCHER_NO` = ?');
+  
+        $update->execute([
+          $ENTRY_DATE,$DESCRIPTION,
+          $AMOUNT,$RECEIVED,$DUE,
+          $REMARK,$VOUCHER_NO,]);
+    }
+
+
 }

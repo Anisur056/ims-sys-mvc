@@ -170,18 +170,18 @@
               ?>
 
               <tr>
-              <td><a class="text-decoration-none btn btn-primary" href="/student-profile?id=<?= $data['STUDENT_ID'] ?>"><?= $data['ROLL'] ?></a></td>
-              <td><img src="<?= $data['PIC'] ?>" alt="" class="img-fluid img-thumbnail" style="width:150px; height:auto;"></td>
-              <td class="bangla"><?= $data['NAME_BN'] ?></td>
-              <td><?= $data['NAME_EN'] ?></td>
-              <td><?= $data['FATHER_NAME'] ?></td>
-              <td class="bangla"><?= $data['REMARK'] ?></td>
-              <td>
-                <a class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#update<?= $data['STUDENT_ID'] ?>" href="#"><i class="fas fa-pen-to-square"></i> Update</a>
-                <a class="btn btn-success m-1" data-bs-toggle="modal" data-bs-target="#call<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-phone-volume"></i> Call</a>
-                <a class="btn btn-info m-1" data-bs-toggle="modal" data-bs-target="#sms<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-comment-sms"></i> SMS</a>
-                <a class="btn btn-danger m-1" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-right-left"></i> Move</a>
-              </td>
+                <td data-label="ROLL: "><a class="text-decoration-none btn btn-primary" href="/student-profile?id=<?= $data['STUDENT_ID'] ?>"><?= $data['ROLL'] ?></a></td>
+                <td data-label="PIC: "><img src="<?= $data['PIC'] ?>" alt="" class="img-fluid img-thumbnail" style="width:150px; height:auto;"></td>
+                <td data-label="নাম: " class="bangla"><?= $data['NAME_BN'] ?></td>
+                <td data-label="NAME: "><?= $data['NAME_EN'] ?></td>
+                <td data-label="FATHER NAME: "><?= $data['FATHER_NAME'] ?></td>
+                <td data-label="REMARK: " class="bangla"><?= $data['REMARK'] ?></td>
+                <td data-label="ACTION: ">
+                  <a class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#update<?= $data['STUDENT_ID'] ?>" href="#"><i class="fas fa-pen-to-square"></i> Update</a>
+                  <a class="btn btn-success m-1" data-bs-toggle="modal" data-bs-target="#call<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-phone-volume"></i> Call</a>
+                  <a class="btn btn-info m-1" data-bs-toggle="modal" data-bs-target="#sms<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-comment-sms"></i> SMS</a>
+                  <a class="btn btn-danger m-1" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-right-left"></i> Move</a>
+                </td>
               </tr>
 
               <!-- Model Content For CALL-->

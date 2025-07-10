@@ -9,25 +9,10 @@
     .studentRecordTable td{
         display: grid;
         gap: 5px;
-
     }
-    .studentRecordTable td:nth-of-type(1)::before{
-        content: "ROLL: ";
+    
+    .studentRecordTable td:before{
+        content: attr(data-label);
         text-align: left;
-    }
-    .studentRecordTable td:nth-of-type(2)::before{
-        text-align: center;
-    }
-    .studentRecordTable td:nth-of-type(3)::before{
-        content: "নাম: ";
-    }
-    .studentRecordTable td:nth-of-type(4)::before{
-        content: "NAME: ";
-    }
-    .studentRecordTable td:nth-of-type(5)::before{
-        content: "FATHER: ";
-    }
-    .studentRecordTable td:nth-of-type(6)::before{
-        content: "REMARK: ";
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2025 at 03:53 AM
+-- Generation Time: May 12, 2025 at 04:07 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -206,6 +206,33 @@ INSERT INTO `shnmm_tbl_students` (`STUDENT_ID`, `ACADEMIC_YEAR`, `SHIFT`, `SECTI
 (2504145, '2025', 'N/A', 'N/A', 'HIFZ-NAZERA', '031', 'WAHIDUL ISLAM', 'ওয়াহিদুল ইসলাম', 'N/A', 'ISLAM', 'MALE', 'N/A', 'N/A', 'N/A', '01859897358', 'N/A', 'SAZIDA AKTER', '01859897358', '2393838319', 'N/A', 'N/A', 'views/theme/img/2504145.png', 'ACTIVE', ''),
 (2504146, '2025', 'N/A', 'N/A', 'HIFZ-NAZERA', '032', 'MD SIYAM', 'সিয়াম', 'N/A', 'ISLAM', 'MALE', '25/06/2016', 'N/A', 'MD BAHAR ALAM', '01872078961', '4177659523', 'ALEYA KHATUN', '01889843399', '7777660494', 'N/A', 'N/A', 'views/theme/img/2504146.png', 'ACTIVE', '');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shnmm_tbl_vouchers`
+--
+
+CREATE TABLE `shnmm_tbl_vouchers` (
+  `VOUCHER_NO` int(11) NOT NULL,
+  `ENTRY_DATE` text NOT NULL,
+  `TRANSECTION_STATUS` text NOT NULL,
+  `ACCOUNTS_HEAD` text NOT NULL,
+  `DESCRIPTION` text NOT NULL,
+  `AMOUNT` int(11) NOT NULL,
+  `RECEIVED` int(11) NOT NULL,
+  `DUE` int(11) NOT NULL,
+  `REMARK` text NOT NULL,
+  `RECEIVED_BY` text NOT NULL,
+  `INKED_TO` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+
+--
+-- Dumping data for table `shnmm_tbl_vouchers`
+--
+
+INSERT INTO `shnmm_tbl_vouchers` (`VOUCHER_NO`, `ENTRY_DATE`, `TRANSECTION_STATUS`, `ACCOUNTS_HEAD`, `DESCRIPTION`, `AMOUNT`, `RECEIVED`, `DUE`, `REMARK`, `RECEIVED_BY`, `INKED_TO`) VALUES
+(2025000009, '11/05/2025', 'cash_in', 'FEES_COLLECTION', 'জানুয়ারী-২০২৫ এর বেতন গ্রহণ।', 1200, 600, 0, 'জানুয়ারীর কোচিং এর টাকা ৫০০ টাকা বাকী আছে।', 'Anisur Rahman', '2504001');
+
 --
 -- Indexes for dumped tables
 --
@@ -217,6 +244,12 @@ ALTER TABLE `shnmm_tbl_students`
   ADD PRIMARY KEY (`STUDENT_ID`);
 
 --
+-- Indexes for table `shnmm_tbl_vouchers`
+--
+ALTER TABLE `shnmm_tbl_vouchers`
+  ADD PRIMARY KEY (`VOUCHER_NO`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -225,6 +258,12 @@ ALTER TABLE `shnmm_tbl_students`
 --
 ALTER TABLE `shnmm_tbl_students`
   MODIFY `STUDENT_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2504147;
+
+--
+-- AUTO_INCREMENT for table `shnmm_tbl_vouchers`
+--
+ALTER TABLE `shnmm_tbl_vouchers`
+  MODIFY `VOUCHER_NO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2025000010;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

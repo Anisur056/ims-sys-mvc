@@ -21,9 +21,36 @@ $page = $_GET['page'];
 
 if ($_SERVER['REQUEST_METHOD']=='POST') 
 {
-  if(isset($_POST['update'])){
-    
-  }
+    if(isset($_POST['addVoucherbtn'])){
+        $ENTRY_DATE = $_POST['ENTRY_DATE'];
+        $TRANSECTION_STATUS = 'cash_in';
+        $ACCOUNTS_HEAD = 'FEES_COLLECTION';
+        $DESCRIPTION = $_POST['DESCRIPTION'];
+        $AMOUNT = $_POST['AMOUNT'];
+        $RECEIVED = $_POST['RECEIVED'];
+        $DUE = $_POST['DUE'];
+        $REMARK = $_POST['REMARK'];
+        $RECEIVED_BY = $_SESSION['user'];
+        $INKED_TO = $id;
+
+        $db->addVoucher($ENTRY_DATE, $TRANSECTION_STATUS, $ACCOUNTS_HEAD, 
+            $DESCRIPTION, $AMOUNT, $RECEIVED, 
+            $DUE, $REMARK, $RECEIVED_BY, $INKED_TO);
+    }
+
+    if(isset($_POST['updateVoucherbtn'])){
+        $VOUCHER_NO = $_POST['VOUCHER_NO'];
+        $ENTRY_DATE = $_POST['ENTRY_DATE'];
+        $DESCRIPTION = $_POST['DESCRIPTION'];
+        $AMOUNT = $_POST['AMOUNT'];
+        $RECEIVED = $_POST['RECEIVED'];
+        $DUE = $_POST['DUE'];
+        $REMARK = $_POST['REMARK'];
+
+        $db->updateVoucher($ENTRY_DATE,$DESCRIPTION, $AMOUNT, 
+            $RECEIVED,$DUE, $REMARK, $VOUCHER_NO);
+    }
+  
 }
 ?>
 
@@ -57,8 +84,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
                 <div class="card-body">
                     <nav class="mb-3">
                         <a class="btn btn-primary m-1" href="?id=<?= $id ?>&page=profile">Profile</a>
-                        <a class="btn btn-primary m-1" href="?id=<?= $id ?>&page=id-card">ID-Card</a>
                         <a class="btn btn-primary m-1" href="?id=<?= $id ?>&page=fees">Fees</a>
+                        <a class="btn btn-primary m-1" href="?id=<?= $id ?>&page=id-card">ID-Card</a>
                         <a class="btn btn-primary m-1" href="?id=<?= $id ?>&page=result">Result</a>
                         <a class="btn btn-primary m-1" href="?id=<?= $id ?>&page=attendance">Attendance</a>
                     </nav>
@@ -259,35 +286,153 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
                             <div class="card mt-3">
                                 <div class="card-body">
                                     <p class="fs-5 w-auto fw-bold p-3 border-bottom">Student Fees Collection</p>
-                                    <button type="button" class="btn btn-primary float-end m-2" data-bs-toggle="modal" data-bs-target="#modelAddStudent">
-                                        <i class="fa-solid fa-user-plus"></i> Take Fees
-                                    </button>
+                                    <a href="#" class="btn btn-primary float-end m-2" data-bs-toggle="modal" data-bs-target="#modelAddVoucher">
+                                        <i class="fa-solid fa-hand-holding-dollar"></i> Take Fees
+                                    </a>
                                     <table class="table table-bordered table-striped studentRecordTable">
                                         <thead>
                                             <tr>
-                                                <th>Voucher No</th>
-                                                <th>Description</th>
-                                                <th>Amount</th>
-                                                <th>Due</th>
-                                                <th>Remark</th>
-                                                <th>Action</th>
+                                                <th>VOUCHER NO</th>
+                                                <th>ENTRY DATE</th>
+                                                <th>DESCRIPTION</th>
+                                                <th>AMOUNT</th>
+                                                <th>RECEIVED</th>
+                                                <th>DUE</th>
+                                                <th>REMARK</th>
+                                                <th>RECEIVED BY</th>
+                                                <th>ACTIONS</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>202505070001</td>
-                                                <td class="bangla">জানুয়ারী মাসের বেতন পরিশোধ বাবদ প্রদান</td>
-                                                <td>1500</td>
-                                                <td>0</td>
-                                                <td class="bangla">ফেব্রুয়ারী বেতন বকেয়া</td>
-                                                <td>
-                                                <a class="btn btn-warning m-1" data-bs-toggle="modal" data-bs-target="#update<?= $data['STUDENT_ID'] ?>" href="#"><i class="fas fa-pen-to-square"></i></a>
-                                                <a class="btn btn-danger m-1" data-bs-toggle="modal" data-bs-target="#update<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-trash"></i></a>
-                                                <a class="btn btn-success m-1" data-bs-toggle="modal" data-bs-target="#update<?= $data['STUDENT_ID'] ?>" href="#"><i class="fas fa-solid fa-print"></i></a>
-                                                </td>
-                                            </tr>
+                                            <?php
+                                                $result = $db->showVoucherByStudentId($id);
+                                                foreach($result as $data){
+                                                    ?>
+                                                <tr>
+                                                    <td data-label="VOUCHER NO:"><?= $data['VOUCHER_NO'] ?></td>
+                                                    <td data-label="ENTRY DATE:"><?= $data['ENTRY_DATE'] ?></td>
+                                                    <td data-label="DESCRIPTION:" class="bangla"><?= $data['DESCRIPTION'] ?></td>
+                                                    <td data-label="AMOUNT:"><?= $data['AMOUNT'] ?></td>
+                                                    <td data-label="RECEIVED:"><?= $data['RECEIVED'] ?></td>
+                                                    <td data-label="DUE:"><?= $data['DUE'] ?></td>
+                                                    <td data-label="REMARK:" class="bangla"><?= $data['REMARK'] ?></td>
+                                                    <td data-label="RECEIVED BY:"><?= $data['RECEIVED_BY'] ?></td>
+                                                    <td data-label="ACTIONS:">
+                                                    <a class="btn btn-warning m-1" data-bs-toggle="modal" data-bs-target="#update<?= $data['VOUCHER_NO'] ?>" href="#"><i class="fas fa-pen-to-square"></i></a>
+                                                    <a class="btn btn-success m-1" href="/student-fee-print?voucher-print-id=<?= $data['VOUCHER_NO'] ?>"><i class="fas fa-solid fa-print"></i></a>
+                                                    </td>
+                                                </tr>
+
+                                                    <!-- Model Content For Voucher Add-->
+                                                    <div class="modal fade" id="update<?= $data['VOUCHER_NO'] ?>">
+                                                        <form action="" method="post">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5">Update Fees Information</h1>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+
+                                                                <input type="hidden" name="VOUCHER_NO" value="<?= $data['VOUCHER_NO'] ?>">
+
+                                                                <div class="form-floating mb-3">
+                                                                    <input type="text" class="form-control" name="ENTRY_DATE" placeholder="" value="<?= $data['ENTRY_DATE'] ?>">
+                                                                    <label>ENTRY_DATE:</label>
+                                                                </div>
+
+                                                                <div class="form-floating mb-3">
+                                                                    <textarea name="DESCRIPTION" class="form-control bangla" placeholder="" id="floatingTextarea2" style="height: 200px"><?= $data['DESCRIPTION'] ?></textarea>
+                                                                    <label for="floatingTextarea2">DESCRIPTION</label>
+                                                                </div>
+
+                                                                <div class="form-floating mb-3">
+                                                                    <input type="text" class="form-control" name="AMOUNT" placeholder="" value="<?= $data['AMOUNT'] ?>" required>
+                                                                    <label>AMOUNT:</label>
+                                                                </div>
+
+                                                                <div class="form-floating mb-3">
+                                                                    <input type="text" class="form-control" name="RECEIVED" placeholder="" value="<?= $data['RECEIVED'] ?>">
+                                                                    <label>RECEIVED:</label>
+                                                                </div>
+                                                                
+                                                                <div class="form-floating mb-3">
+                                                                    <input type="text" class="form-control" name="DUE" placeholder="" value="<?= $data['DUE'] ?>">
+                                                                    <label>DUE:</label>
+                                                                </div>
+
+                                                                <div class="form-floating mb-3">
+                                                                    <textarea name="REMARK" class="form-control bangla" placeholder="" id="floatingTextarea2" style="height: 200px"><?= $data['REMARK'] ?></textarea>
+                                                                    <label for="floatingTextarea2">REMARK</label>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit" name="updateVoucherbtn" class="btn btn-primary">Update</button>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                        </form>
+                                                    </div>
+                                                    <!-- End Model Content -->
+                                                <?php }?>
                                         </tbody>
                                     </table>
+
+                                    <!-- Model Content For Voucher Add-->
+                                    <div class="modal fade" id="modelAddVoucher">
+                                        <form action="" method="post">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5">Take Fees</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <input type="hidden" name="STUDENT_ID" value="<?= $id ?>">
+
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" name="ENTRY_DATE" placeholder="" value="<?= date('d/m/Y') ?>">
+                                                    <label>ENTRY_DATE:</label>
+                                                </div>
+
+                                                <div class="form-floating mb-3">
+                                                    <textarea name="DESCRIPTION" class="form-control bangla" placeholder="" id="floatingTextarea2" style="height: 200px">জানুয়ারী-২০২৫ এর বেতন গ্রহণ।</textarea>
+                                                    <label for="floatingTextarea2">DESCRIPTION</label>
+                                                </div>
+
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" name="AMOUNT" placeholder="" value="" required>
+                                                    <label>AMOUNT:</label>
+                                                </div>
+
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" name="RECEIVED" placeholder="" value="">
+                                                    <label>RECEIVED:</label>
+                                                </div>
+                                                
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" name="DUE" placeholder="" value="">
+                                                    <label>DUE:</label>
+                                                </div>
+
+                                                <div class="form-floating mb-3">
+                                                    <textarea name="REMARK" class="form-control bangla" placeholder="" id="floatingTextarea2" style="height: 200px">বেতন সংক্রান্ত কোন মন্তব্য থাকলে লিখুন</textarea>
+                                                    <label for="floatingTextarea2">REMARK</label>
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" name="addVoucherbtn" class="btn btn-primary">Save</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        </form>
+                                    </div>
+                                    <!-- End Model Content -->
                                 </div>
                             </div>
                             <?php
