@@ -49,15 +49,15 @@
                     </a>
                     </li>
                     <li class="nav-item">
-                    <a href="<?= $web_address ?>student-attendance" class="nav-link <?= urlIs('/student-attendance') ? 'active' : '' ?>">
-                        <i class="nav-icon bi bi-clipboard-check"></i>
-                        <p>Attendance</p>
+                    <a href="<?= $web_address ?>student-fee-take" class="nav-link <?= urlIs('/student-fee-take') ? 'active' : '' ?>">
+                        <i class="nav-icon bi bi-cash-coin"></i>
+                        <p>Take Fees</p>
                     </a>
                     </li>
                     <li class="nav-item">
-                    <a href="<?= $web_address ?>student-take-fees" class="nav-link <?= urlIs('/student-take-fees') ? 'active' : '' ?>">
-                        <i class="nav-icon bi bi-cash-coin"></i>
-                        <p>Take Fees</p>
+                    <a href="<?= $web_address ?>student-attendance" class="nav-link <?= urlIs('/student-attendance') ? 'active' : '' ?>">
+                        <i class="nav-icon bi bi-clipboard-check"></i>
+                        <p>Attendance</p>
                     </a>
                     </li>
                     <!-- <li class="nav-item">

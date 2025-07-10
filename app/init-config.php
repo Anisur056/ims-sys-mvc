@@ -8,7 +8,7 @@
     $charset='utf8';
     $web_socket='http://';
     $server='192.168.0.151';
-    $dir='';
+    $dir='sirikotia/';
     $web_address = $web_socket.$server.'/'.$dir;
     $time_zone='Asia/Dhaka';
     date_default_timezone_set('Asia/Dhaka');

@@ -283,12 +283,41 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
                         case 'id-card':
                             ?>
                             <!--id-card----------------------------------------------------------------------------------------------------------->
+                                <a class="btn btn-success m-1" target="_blank" href="<?= $web_address ?>student-print-id?idcard-print=<?= $id ?>"> Id Card Print  <i class="fas fa-solid fa-print"></i></a>
                             <?php
                             break;
 
                         case 'fees':
                             ?>
                             <!--Fees----------------------------------------------------------------------------------------------------------->
+                            <div class="card mt-3">
+                                <div class="row p-3 text-center">
+                                    <div class="col-sm-6 border-end">
+                                        <h3 style="color: green;">TOTAL RECEIVED: 
+                                            <?php
+                                                $received_amount = 0;
+                                                $result = $db->showVoucherByStudentId($id);
+                                                foreach($result as $data){
+                                                    $received_amount+= $data['RECEIVED'];
+                                                }
+                                                echo "<b>$received_amount</b>";
+                                            ?>                                    
+                                        </h3>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h3 style="color: red;">TOTAL DUE: 
+                                            <?php
+                                                $due_amount = 0;
+                                                $result = $db->showVoucherByStudentId($id);
+                                                foreach($result as $data){
+                                                    $due_amount+= $data['DUE'];
+                                                }
+                                                echo "<b>$due_amount</b>";
+                                            ?>                                    
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="card mt-3">
                                 <div class="card-body">
                                     <p class="fs-5 w-auto fw-bold p-3 border-bottom">Student Fees Collection</p>
@@ -325,7 +354,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
                                                         <td data-label="RECEIVED BY:"><?= $data['RECEIVED_BY'] ?></td>
                                                         <td data-label="ACTIONS:">
                                                         <a class="btn btn-warning m-1" data-bs-toggle="modal" data-bs-target="#update<?= $data['VOUCHER_NO'] ?>" href="#"><i class="fas fa-pen-to-square"></i></a>
-                                                        <a class="btn btn-success m-1" target="_blank" href="/student-fee-print?voucher-print-id=<?= $data['VOUCHER_NO'] ?>"><i class="fas fa-solid fa-print"></i></a>
+                                                        <a class="btn btn-success m-1" target="_blank" href="<?= $web_address ?>student-print-fee?voucher-print-id=<?= $data['VOUCHER_NO'] ?>"><i class="fas fa-solid fa-print"></i></a>
                                                         </td>
                                                     </tr>
 

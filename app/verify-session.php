@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('init-config.php');
 
 if (isset($_SESSION['user'])) {
 
@@ -8,7 +9,7 @@ if (isset($_SESSION['user'])) {
         session_destroy();
 
         echo '<script>';
-        echo 'location.replace("/verify")';
+        echo "location.replace('verify')";
         echo '</script>';
     }else{
         $_SESSION['time'] = time();
@@ -19,7 +20,7 @@ else
 {
 
     echo '<script>';
-    echo 'location.replace("/verify")';
+    echo "location.replace('verify')";
     echo '</script>';
 
 }

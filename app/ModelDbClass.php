@@ -8,7 +8,6 @@ class ModelDbClass{
         require "app/init-config.php";
         $this->pub_pdo = $pdo;
     }
-
     // ========================= STUDENT RELATED DB SCRIPT ================================= //
     public function StudentCount($CLASS,$STATUS){
 
@@ -25,13 +24,11 @@ class ModelDbClass{
         }
 
     }
-
     public function showStudentsAll(){
         $statement = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students`');
         $statement->execute();
         return $statement->fetchAll();
     }
-
     public function showStudentByCatagory($CLASS,$STATUS){
 
         if($STATUS){
@@ -46,13 +43,11 @@ class ModelDbClass{
             return $select->fetchAll();
         }
     }
-
     public function showStudentById($student_id){
         $statement = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `STUDENT_ID`=?');
         $statement->execute([$student_id]);
         return $statement->fetchAll();
     }
-
     public function updateStudentById($ACADEMIC_YEAR,$SHIFT,$SECTION,
         $CLASS,$ROLL,$NAME_EN,
         $NAME_BN,$BLOOD_GROUP,$RELIGION,
@@ -78,7 +73,6 @@ class ModelDbClass{
           $MOTHER_NAME,$MOTHER_MOBILE_NUMBER,$MOTHER_NID,
           $PRESENT_ADDRESS,$PERMANENT_ADDRESS,$REMARK,$STUDENT_ID]);
     }
-
     public function addStudentRecord($ACADEMIC_YEAR,$SHIFT,$SECTION,
         $CLASS,$ROLL,$NAME_EN,
         $NAME_BN,$BLOOD_GROUP,$RELIGION,
@@ -109,21 +103,33 @@ class ModelDbClass{
         $MOTHER_NAME,$MOTHER_MOBILE_NUMBER,$MOTHER_NID,
         $PRESENT_ADDRESS,$PERMANENT_ADDRESS,$REMARK]);
     }
-
     public function changeStatusStudentById($STUDENT_ID,$STATUS,$REMARK){
         $changeStatus = $this->pub_pdo->prepare('UPDATE `shnmm_tbl_students` SET `STATUS`= ?, `REMARK`= ? WHERE `STUDENT_ID` = ?');
 	    $changeStatus->execute([$STATUS,$REMARK,$STUDENT_ID]);
     }
-    // ========================= STUDENT RELATED DB SCRIPT ================================= //
+    public function searchStudent($SEARCH){
+        // $statement = $this->pub_pdo->prepare('SELECT * `shnmm_tbl_students` WHERE `NAME_EN` LIKE ?');
+        // $statement->execute(array('%'.$SEARCH.'%'));
+        // return $statement->fetchAll();
+
+        $statement = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `NAME_EN` LIKE ? OR `NAME_BN` LIKE ? OR `ROLL` LIKE ? ');
+        $statement->execute(['%'.$SEARCH.'%','%'.$SEARCH.'%','%'.$SEARCH.'%']);
+        return $statement->fetchAll();
+    }
+    // ========================= END STUDENT RELATED DB SCRIPT ================================= //
 
 
     // ========================= VOUCHER RELATED DB SCRIPT ================================= //
+    public function showVoucherAll(){
+        $statement = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_vouchers` WHERE `TRANSECTION_STATUS`=? AND `ACCOUNTS_HEAD`=? ORDER BY `VOUCHER_NO` DESC LIMIT 10');
+        $statement->execute(['cash_in','FEES_COLLECTION']);
+        return $statement->fetchAll();
+    }
     public function showVoucherByStudentId($student_id){
         $statement = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_vouchers` WHERE `INKED_TO`=? AND `TRANSECTION_STATUS`=? AND `ACCOUNTS_HEAD`=?');
         $statement->execute([$student_id,'cash_in','FEES_COLLECTION']);
         return $statement->fetchAll();
     }
-
     public function addVoucher($ENTRY_DATE, $STUDENT_NAME,$STUDENT_CLASS,
             $STUDENT_SECTION, $STUDENT_ROLL,
             $TRANSECTION_STATUS, $ACCOUNTS_HEAD, 
@@ -145,7 +151,6 @@ class ModelDbClass{
             $DESCRIPTION, $AMOUNT, $RECEIVED, 
             $DUE, $REMARK, $RECEIVED_BY, $INKED_TO]);
     }
-
     public function updateVoucher($ENTRY_DATE,$DESCRIPTION, $AMOUNT, 
         $RECEIVED,$DUE, $REMARK, $VOUCHER_NO){
         $update = $this->pub_pdo->prepare('UPDATE `shnmm_tbl_vouchers` SET 
@@ -157,11 +162,11 @@ class ModelDbClass{
           $AMOUNT,$RECEIVED,$DUE,
           $REMARK,$VOUCHER_NO,]);
     }
-    
     public function showVoucherById($voucher_id){
         $statement = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_vouchers` WHERE `VOUCHER_NO`=?');
         $statement->execute([$voucher_id]);
         return $statement->fetchAll();
     }
+    // ========================= END VOUCHER RELATED DB SCRIPT ================================= //
 
 }

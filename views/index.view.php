@@ -97,17 +97,35 @@
         <!--end::Col-->
         <div class="col-lg-3 col-6">
           <!--begin::Small Box Widget 4-->
-          <!-- <a href="<?= $web_address ?>student-phone-book">
+          <a href="<?= $web_address ?>student-fee-take">
             <div class="small-box text-bg-primary">
               <div class="inner">
                 <h3>
-                <?php //$db->StudentCount('*'); ?>
+                  <?php
+                      $received_amount = 0;
+                      $result = $db->showVoucherAll();
+                      foreach($result as $data){
+                          $received_amount+= $data['RECEIVED'];
+                      }
+                      echo $received_amount;
+                  ?>  
                 </h3>
-                <p>Phone Book</p>
+                <p>Total Received Fees</p>
+                <h3>
+                  <?php
+                      $due_amount = 0;
+                      $result = $db->showVoucherAll();
+                      foreach($result as $data){
+                          $due_amount+= $data['DUE'];
+                      }
+                      echo $due_amount;
+                  ?>  
+                </h3>
+                <p>Total Dues</p>
               </div>
               <span class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">Click Here <i class="bi bi-link-45deg"></i></span>
             </div>
-          </a> -->
+          </a>
           <!--end::Small Box Widget 4-->
         </div>
         <!--end::Col-->

@@ -8,9 +8,10 @@ $routes = [
     '/'.$dir.'student-record' => 'views/student-record.view.php',
     '/'.$dir.'student-record-table' => 'views/student-record-table.view.php',
     '/'.$dir.'student-profile' => 'views/student-profile.view.php',
-    '/'.$dir.'student-attendance' => 'views/student-attendance.view.php',
+    '/'.$dir.'student-print-fee' => 'views/student-print-fee.view.php',
     '/'.$dir.'student-fee-take' => 'views/student-fee-take.view.php',
-    '/'.$dir.'student-fee-print' => 'views/student-fee-print.view.php',
+    '/'.$dir.'student-print-id' => 'views/student-print-id.view.php',
+    // '/'.$dir.'student-attendance' => 'views/student-attendance.view.php',
 ];
 
 if(array_key_exists($uri,$routes)){

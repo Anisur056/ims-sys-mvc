@@ -157,6 +157,7 @@
           <tr>
           <th>ROLL</th>
           <th>PIC</th>
+          <th>CLASS</th>
           <th>NAME_BN</th>
           <th>NAME_EN</th>
           <th>FATHER_NAME</th>                    
@@ -170,8 +171,9 @@
               ?>
 
               <tr>
-                <td data-label="ROLL: "><a class="text-decoration-none btn btn-primary" href="/student-profile?id=<?= $data['STUDENT_ID'] ?>"><?= $data['ROLL'] ?></a></td>
+                <td data-label="ROLL: "><a class="text-decoration-none btn btn-primary" href="<?= $web_address ?>student-profile?id=<?= $data['STUDENT_ID'] ?>"><?= $data['ROLL'] ?></a></td>
                 <td data-label="PIC: "><img src="<?= $data['PIC'] ?>" alt="" class="img-fluid img-thumbnail" style="width:150px; height:auto;"></td>
+                <td data-label="CLASS: "><?= $data['CLASS'] ?></td>
                 <td data-label="নাম: " class="bangla"><?= $data['NAME_BN'] ?></td>
                 <td data-label="NAME: "><?= $data['NAME_EN'] ?></td>
                 <td data-label="FATHER NAME: "><?= $data['FATHER_NAME'] ?></td>
