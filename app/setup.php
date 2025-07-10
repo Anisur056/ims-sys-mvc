@@ -346,7 +346,7 @@
                             <input type="text" name="server" value="<?php echo(empty($server)) ? $_SERVER['SERVER_NAME'] : $server ; ?>">
                             
                             <span>DIRECTORY_PATH(IF-ITS-ON-SUBDIRECTORY)</span>
-                            <input type="text" name="dir" value="<?php echo(empty($dir)) ? "sub-folder/" : $dir ; ?>">
+                            <input type="text" name="dir" value="<?php echo(empty($dir)) ? '' : $dir ; ?>" placeholder='sub-folder/'>
 
                             <span>TIME_ZONE_(Default:Asia/Dhaka) <a target="_blank" href="https://www.php.net/manual/en/timezones.php">timezones</a> </span>
                             <input type="text" name="time_zone" value="<?php echo (empty($time_zone)) ? 'Asia/Dhaka' : $time_zone ; ?>">
@@ -432,30 +432,33 @@
                     }
                     ?>
                     <textarea name="sql">CREATE TABLE `<?= $tbl_prefix ?>tbl_students` (
-                    `STUDENT_ID`	INT(11) PRIMARY KEY AUTO_INCREMENT,
-                    `ACADEMIC_YEAR`	TEXT,
-                    `SHIFT`	TEXT,
-                    `SECTION`	TEXT,
-                    `CLASS`	TEXT,
-                    `ROLL`	TEXT,
-                    `NAME_EN`	TEXT,
-                    `NAME_BN`	TEXT,
-                    `BLOOD_GROUP`	TEXT,
-                    `RELIGION`	TEXT,
-                    `GENDER`	TEXT,
-                    `DATE_OF_BIRTH`	TEXT,
-                    `BIRTH_REG_NO`	TEXT,
-                    `FATHER_NAME`	TEXT,
-                    `FATHER_MOBILE_NUMBER`	TEXT,
-                    `FATHER_NID`	TEXT,
-                    `MOTHER_NAME`	TEXT,
-                    `MOTHER_MOBILE_NUMBER`	TEXT,
-                    `MOTHER_NID`	TEXT,
-                    `PRESENT_ADDRESS`	TEXT,
-                    `PERMANENT_ADDRESS`	TEXT,
-                    `PIC`	TEXT
+                    `STUDENT_ID` INT(11) PRIMARY KEY AUTO_INCREMENT,
+                    `ACADEMIC_YEAR` TEXT,
+                    `SHIFT` TEXT,
+                    `SECTION` TEXT,
+                    `CLASS` TEXT,
+                    `ROLL` TEXT,
+                    `NAME_EN` TEXT,
+                    `NAME_BN` TEXT,
+                    `BLOOD_GROUP` TEXT,
+                    `RELIGION` TEXT,
+                    `GENDER` TEXT,
+                    `DATE_OF_BIRTH` TEXT,
+                    `BIRTH_REG_NO` TEXT,
+                    `FATHER_NAME` TEXT,
+                    `FATHER_MOBILE_NUMBER` TEXT,
+                    `FATHER_NID` TEXT,
+                    `MOTHER_NAME` TEXT,
+                    `MOTHER_MOBILE_NUMBER` TEXT,
+                    `MOTHER_NID` TEXT,
+                    `PRESENT_ADDRESS` TEXT,
+                    `PERMANENT_ADDRESS` TEXT,
+                    `PIC` TEXT,
+                    `STATUS` TEXT NOT NULL  DEFAULT ('ACTIVE')
                 );</textarea>
                 </div>
+
+                <!-- ALTER TABLE `shnmm_tbl_students` ADD `STATUS` TEXT NOT NULL  DEFAULT ('ACTIVE'); -->
 
                 <div class="div-card-footer">
                     <input type="submit" value="Install">

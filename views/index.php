@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404 | page not found!</title>
+  <title>Forbidden Access</title>
   <link href="https://fonts.googleapis.com/css2?family=Akshar:wght@300..700&family=Anton&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <style>
   *{

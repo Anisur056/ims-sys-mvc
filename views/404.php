@@ -22,6 +22,9 @@
     background:rgb(27, 27, 27);
     color: #ffffff;
   }
+  body h2{
+    text-align:center;
+  }
   </style>
 </head>
 <body>

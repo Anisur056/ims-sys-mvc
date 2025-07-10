@@ -2,7 +2,6 @@
 <?php $db = new ModelDbClass(); ?>
 
 <main class="app-main">
-
   <!--begin::App Content Header-->
   <div class="app-content-header">
     <div class="container-fluid">
@@ -22,31 +21,34 @@
   <div class="app-content">
     <div class="container-fluid">
       <div class="div-container">
-        <table id="example" class="table table-striped" style="width:100%">
-          <tr>
-          <th>STUDENT_ID</th>
-          <th>ACADEMIC_YEAR</th>
-          <th>SHIFT</th>
-          <th>SECTION</th>
-          <th>CLASS</th>
-          <th>ROLL</th>
-          <th>NAME_EN</th>
-          <th>NAME_BN</th>
-          <th>BLOOD_GROUP</th>
-          <th>RELIGION</th>
-          <th>GENDER</th>
-          <th>DATE_OF_BIRTH</th>
-          <th>BIRTH_REG_NO</th>
-          <th>FATHER_NAME</th>
-          <th>FATHER_MOBILE_NUMBER</th>
-          <th>FATHER_NID</th>
-          <th>MOTHER_NAME</th>
-          <th>MOTHER_MOBILE_NUMBER</th>
-          <th>MOTHER_NID</th>
-          <th>PRESENT_ADDRESS</th>
-          <th>PERMANENT_ADDRESS</th>
-          <th>PIC</th>
-          </tr>
+      
+        <table id="studentTable" class="table table-striped" style="width:70%">
+          <thead>
+            <tr>
+            <th>STUDENT_ID</th>
+            <th>NAME_EN</th>
+            <th>NAME_BN</th>
+            <th>CLASS</th>
+            <th>ROLL</th>
+            <th>ACADEMIC_YEAR</th>
+            <th>SHIFT</th>
+            <th>SECTION</th>
+            <th>BLOOD_GROUP</th>
+            <th>RELIGION</th>
+            <th>GENDER</th>
+            <th>DATE_OF_BIRTH</th>
+            <th>BIRTH_REG_NO</th>
+            <th>FATHER_NAME</th>
+            <th>FATHER_MOBILE_NUMBER</th>
+            <th>FATHER_NID</th>
+            <th>MOTHER_NAME</th>
+            <th>MOTHER_MOBILE_NUMBER</th>
+            <th>MOTHER_NID</th>
+            <th>PRESENT_ADDRESS</th>
+            <th>PERMANENT_ADDRESS</th>
+            <th>PIC</th>
+            </tr>
+          </thead>
           <?php
             $result = $db->showStudentsAll();
             foreach($result as $data){
@@ -54,13 +56,13 @@
                 
                   <tr>
                   <td><?= $data['STUDENT_ID'] ?></td>
+                  <td><?= $data['NAME_EN'] ?></td>
+                  <td><?= $data['NAME_BN'] ?></td>
+                  <td><?= $data['CLASS'] ?></td>
+                  <td><?= $data['ROLL'] ?></td>
                   <td><?= $data['ACADEMIC_YEAR'] ?></td>
                   <td><?= $data['SHIFT'] ?></td>
                   <td><?= $data['SECTION'] ?></td>
-                  <td><?= $data['CLASS'] ?></td>
-                  <td><?= $data['ROLL'] ?></td>
-                  <td><?= $data['NAME_EN'] ?></td>
-                  <td><?= $data['NAME_BN'] ?></td>
                   <td><?= $data['BLOOD_GROUP'] ?></td>
                   <td><?= $data['RELIGION'] ?></td>
                   <td><?= $data['GENDER'] ?></td>

@@ -50,6 +50,8 @@
     <!--begin::Required Plugin(AdminLTE)-->
     <link rel="stylesheet" href="views/theme/css/adminlte.css" />
     <link rel="stylesheet" href="views/theme/css/theme.css" />
+    <link rel="stylesheet" href="views/theme/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="views/theme/css/buttons.dataTables.css" />
     <!--end::Required Plugin(AdminLTE)-->
     <!-- apexcharts -->
     <link

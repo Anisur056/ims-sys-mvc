@@ -6,12 +6,6 @@
 <!-- begin::`shnmm_tbl_students`-update -->
 <?php
 
-  if(empty($_GET['class'])){
-    $class = 'PLAY';
-  }else{
-    $class = $_GET['class'];
-  }
-
   if ($_SERVER['REQUEST_METHOD']=='POST') 
   {
 
@@ -94,7 +88,7 @@
   <div class="app-content-header">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-6"><h3 class="mb-0">Students Record</h3></div>
+        <div class="col-sm-6"><h3 class="mb-0">Students EX Record</h3></div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-end">
             <li class="breadcrumb-item"><a href="<?= $web_address ?>">Home</a></li>
@@ -103,210 +97,15 @@
         </div>
       </div>
     </div>
-
-    <div class="container-fluid">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modelAddStudent">
-      <i class="fa-solid fa-user-plus"></i> Add Student
-      </button>
-      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modelBulkUpload">
-      <i class="fa-solid fa-cloud-arrow-up"></i> Bulk Upload
-      </button>
-      <a target="_blank" type="button" class="btn btn-success" href="<?= $web_address ?>student-record-table" >
-      <i class="fa-solid fa-list-check"></i>  Records Table
-      </a>
-      <!-- Model Add Student -->
-      <div class="modal fade" id="modelAddStudent">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Add New Student</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-
-              <form method="post">
-                <div class="card-body">
-                  <div class="card p-3 mb-3">
-                    <h5>Academic Information</h5>
-
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="ACADEMIC_YEAR" placeholder="" >
-                      <label>Academic Year:</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="SHIFT" placeholder="">
-                      <label>Shift</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="CLASS" placeholder="" >
-                      <label>Class</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="SECTION" placeholder="">
-                      <label>Section</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="ROLL" placeholder="">
-                      <label>Roll</label>
-                    </div>
-                  </div>
-
-                  <div class="card p-3 mb-3">
-                    <h5>Student Information</h5>
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="NAME_EN" placeholder="">
-                      <label>Name (In English)</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="NAME_BN" placeholder="">
-                      <label>Name (In Bangla)</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="BLOOD_GROUP" placeholder="">
-                      <label>Blood Group</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="RELIGION" placeholder="">
-                      <label>Religion</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="GENDER" placeholder="">
-                      <label>Gender</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="DATE_OF_BIRTH" placeholder="">
-                      <label>Date of Birth</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="BIRTH_REG_NO" placeholder="">
-                      <label>Birth Reg. No.</label>
-                    </div>
-                  </div>
-
-                  <div class="card p-3 mb-3">
-                    <h5>Guardian Information</h5>
-
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="FATHER_NAME" placeholder="">
-                      <label>Father's Name</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="FATHER_MOBILE_NUMBER" placeholder="" placeholder="">
-                      <label>Father's Mobile Number</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="FATHER_NID" placeholder="" placeholder="">
-                      <label>Father's N.I.D</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="MOTHER_NAME" placeholder="" placeholder="">
-                      <label>Mother's Name</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="MOTHER_MOBILE_NUMBER" placeholder="">
-                      <label>Mother's Mobile Number</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="MOTHER_NID" placeholder="" placeholder="">
-                      <label>Mother's N.I.D</label>
-                    </div>
-                  </div>
-
-                  <div class="card p-3 mb-3">
-                    <h5>Address</h5>
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="PRESENT_ADDRESS" placeholder="">
-                      <label>Present Address</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" name="PERMANENT_ADDRESS" placeholder="">
-                      <label>Permanent Address</label>
-                    </div>
-                  </div>
-
-                </div> 
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-outline-primary" name="addStudentbtn"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-                  <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"> <i class="fa-solid fa-xmark"></i> Cancel</button>
-                </div> 
-              </form>
-
-            </div>
-            
-          </div>
-        </div>
-      </div>
-      <!-- End Model Add Student -->
-
-      <!-- Model Bulk Upload Student -->
-      <div class="modal fade" id="modelBulkUpload">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Bulk Upload File</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-
-              <form method="post">
-                <div class="card-body">
-                  <div class="card p-3 mb-3">
-                    <h5 class="mb-3 text-center">Upload with Excel File</h5>
-                    <div class="mb-3">
-                      <input class="form-control form-control-lg" type="file">
-                    </div>
-                  </div>
-                </div> 
-                <div class="card-footer">
-                  <input type="submit" class="btn btn-outline-primary" name="bulkUpload" value="Upload">
-                  <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
-                </div> 
-              </form>
-
-            </div>
-            
-          </div>
-        </div>
-      </div>
-      <!-- End Model Bulk Upload Student -->
-    </div>
-
   </div>
   <!--end::App Content Header-->
 
   <div class="app-content">
     
     <div class="container-fluid">
+
       <hr>
-      <nav class="mb-3">
-        <a class="btn btn-primary m-1" href="?class=PLAY">PLAY- <?php $db->StudentCount('PLAY'); ?></a>
-        <a class="btn btn-primary m-1" href="?class=NURSERY">NURSERY- <?php $db->StudentCount('NURSERY'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=ONE">ONE- <?php $db->StudentCount('ONE'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=TWO">TWO- <?php $db->StudentCount('TWO'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=THREE">THREE- <?php $db->StudentCount('THREE'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=FOUR">FOUR- <?php $db->StudentCount('FOUR'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=HIFZ-NAZERA">HIFZ-NAZERA- <?php $db->StudentCount('HIFZ-NAZERA'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=HIFZ-INTERNATIONAL">HIFZ-INTERNATIONAL- <?php $db->StudentCount('HIFZ-INTERNATIONAL'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=HIFZ-RIVISION">HIFZ-RIVISION- <?php $db->StudentCount('HIFZ-RIVISION'); ?></a>
-      </nav>
-      <hr>
-      <h4 class="mb-3">Total Record Found <b><?php $db->StudentCount($class); ?></b></h4>
+      <h4 class="mb-3">Total Record Found <b><?php $db->StudentCountExStatus(); ?></b></h4>
 
       <div class="div-container">
 
@@ -322,7 +121,7 @@
             </tr>
           </thead>
             <?php
-              $result = $db->showStudentByClass($class);
+              $result = $db->showStudentByExStatus();
               foreach($result as $data){
                 ?>
                 <!-- Model Content For SMS-->
@@ -536,8 +335,8 @@
                 <!-- End Model Content --> 
 
                 <tr>
-                <td><a class="text-decoration-none btn btn-primary" href="/student-profile?id=<?= $data['STUDENT_ID'] ?>"><?= $data['ROLL'] ?></a></td>
-                <td><img src="<?= $data['PIC'] ?>" alt="" class="profile-img img-thumbnail"></td>
+                <td><a class="text-decoration-none btn btn-primary" href="/student-details?id=<?= $data['STUDENT_ID'] ?>"><?= $data['ROLL'] ?></a></td>
+                <td><img src="views/theme/img/<?= $data['STUDENT_ID'] ?>.png" alt="" class="profile-img img-thumbnail"></td>
                 <td><?= $data['NAME_BN'] ?></td>
                 <td><?= $data['NAME_EN'] ?></td>
                 <td><?= $data['FATHER_NAME'] ?></td>
@@ -546,7 +345,7 @@
                   <a class="btn btn-success" href="tel:<?= $data['FATHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i>(<?= $data['FATHER_MOBILE_NUMBER'] ?>) </a>
                   <a class="btn btn-success" href="tel:<?= $data['MOTHER_MOBILE_NUMBER'] ?>" class="button"><i class="fa-solid fa-phone-volume"></i>(<?= $data['MOTHER_MOBILE_NUMBER'] ?>)</a>
                   <a class="btn btn-info" data-bs-toggle="modal" data-bs-target="#sms<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-comment-sms"></i></a>
-                  <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="fa-solid fa-trash"></i></a>
+                  <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<?= $data['STUDENT_ID'] ?>" href="#"><i class="bi bi-arrow-clockwise"></i></a>
                 </td>
                 </tr>
                     
@@ -560,6 +359,7 @@
     </div>
     
   </div>
+
   <!--end::App Content-->
 </main>
 

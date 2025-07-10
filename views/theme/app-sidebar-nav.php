@@ -41,10 +41,29 @@
                 <p>Students Portal</p>
                 </a> -->
                 <!-- <ul class="nav nav-treeview"> -->
+                <li class="nav-header"><b>Student Portal</b></li>
                     <li class="nav-item">
                     <a href="<?= $web_address ?>student-record" class="nav-link <?= urlIs('/student-record') ? 'active' : '' ?>">
                         <i class="nav-icon bi bi-person-lines-fill"></i>
                         <p>Students Record</p>
+                    </a>
+                    </li>
+                    <li class="nav-item">
+                    <a href="<?= $web_address ?>student-ex-record" class="nav-link <?= urlIs('/student-ex-record') ? 'active' : '' ?>">
+                        <i class="nav-icon bi bi-person-x"></i>
+                        <p>Students Ex Record</p>
+                    </a>
+                    </li>
+                    <li class="nav-item">
+                    <a href="<?= $web_address ?>student-attendance" class="nav-link <?= urlIs('/student-attendance') ? 'active' : '' ?>">
+                        <i class="nav-icon bi bi-clipboard-check"></i>
+                        <p>Attendance</p>
+                    </a>
+                    </li>
+                    <li class="nav-item">
+                    <a href="<?= $web_address ?>student-take-fees" class="nav-link <?= urlIs('/student-take-fees') ? 'active' : '' ?>">
+                        <i class="nav-icon bi bi-cash-coin"></i>
+                        <p>Take Fees</p>
                     </a>
                     </li>
                     <!-- <li class="nav-item">

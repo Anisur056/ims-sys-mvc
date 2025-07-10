@@ -1,13 +1,15 @@
 <?php
 
-
 $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
 
 $routes = [
-    '/'.$dir.'' => 'controllers/index.php',
-    '/'.$dir.'student-record' => 'controllers/student-record.php',
-    '/'.$dir.'student-record-table' => 'controllers/student-record-table.php',
-    '/'.$dir.'student-details' => 'controllers/student-details.php',
+    '/'.$dir.'' => 'views/index.view.php',
+    '/'.$dir.'student-record' => 'views/student-record.view.php',
+    '/'.$dir.'student-ex-record' => 'views/student-ex-record.view.php',
+    '/'.$dir.'student-record-table' => 'views/student-record-table.view.php',
+    '/'.$dir.'student-profile' => 'views/student-profile.view.php',
+    '/'.$dir.'student-attendance' => 'views/student-attendance.view.php',
+    '/'.$dir.'student-take-fees' => 'views/student-take-fees.view.php',
 ];
 
 if(array_key_exists($uri,$routes)){
