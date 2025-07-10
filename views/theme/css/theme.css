@@ -1,3 +1,7 @@
+.bangla{
+    font-family: "Tiro Bangla", serif;
+}
+
 .div-container{
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(200px, 1fr));
@@ -41,17 +45,20 @@
 }
 .buttons{
     display: flex;
+    flex-direction: column;
     align-items: center;
-    margin: 15px 0px;
+    width: 100%;
 }
 .button{
     color: #fff;
     text-decoration: none;
-    border-radius: 24px;
-    margin: 0 10px;
-    padding: 4px 12px;
+    text-align: center;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    padding: 2px;
     background-color: #4070f4;
     transition: all 0.3s ease;
+    width: 100%;
 }
 .button:hover{
     background-color: #0e4bf1;
