@@ -6,10 +6,12 @@
 <!-- begin::`shnmm_tbl_students`-update -->
 <?php
 
-  if(empty($_GET['class'])){
-    $class = 'PLAY';
+  if(empty($_GET['class']) && empty($_GET['status'])){
+    $CLASS = 'PLAY';
+    $STATUS = NULL;
   }else{
-    $class = $_GET['class'];
+    $CLASS = $_GET['class']; 
+    $STATUS = $_GET['status']; 
   }
 
   if ($_SERVER['REQUEST_METHOD']=='POST') 
@@ -126,23 +128,23 @@
     <div class="container-fluid">
       <hr>
       <nav class="mb-3">
-        <a class="btn btn-primary m-1" href="?class=PLAY">PLAY- <?php $db->StudentCount('PLAY','ACTIVE'); ?></a>
-        <a class="btn btn-primary m-1" href="?class=NURSERY">NURSERY- <?php $db->StudentCount('NURSERY','ACTIVE'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=ONE">ONE- <?php $db->StudentCount('ONE','ACTIVE'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=TWO">TWO- <?php $db->StudentCount('TWO','ACTIVE'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=THREE">THREE- <?php $db->StudentCount('THREE','ACTIVE'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=FOUR">FOUR- <?php $db->StudentCount('FOUR','ACTIVE'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=HIFZ-NAZERA">HIFZ-NAZERA- <?php $db->StudentCount('HIFZ-NAZERA','ACTIVE'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=HIFZ-INTERNATIONAL">HIFZ-INTERNATIONAL- <?php $db->StudentCount('HIFZ-INTERNATIONAL','ACTIVE'); ?></a>
-        <a class="btn btn-primary m-1 " href="?class=HIFZ-RIVISION">HIFZ-RIVISION- <?php $db->StudentCount('HIFZ-RIVISION','ACTIVE'); ?></a>
+        <a class="btn btn-primary m-1" href="?class=PLAY">PLAY- <?php $db->StudentCount('PLAY',NULL); ?></a>
+        <a class="btn btn-primary m-1" href="?class=NURSERY&status=NULL">NURSERY- <?php $db->StudentCount('NURSERY',NULL); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=ONE&status=NULL">ONE- <?php $db->StudentCount('ONE',NULL); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=TWO&status=NULL">TWO- <?php $db->StudentCount('TWO',NULL); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=THREE&status=NULL">THREE- <?php $db->StudentCount('THREE',NULL); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=FOUR&status=NULL">FOUR- <?php $db->StudentCount('FOUR',NULL); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=HIFZ-NAZERA&status=NULL">HIFZ-NAZERA- <?php $db->StudentCount('HIFZ-NAZERA',NULL); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=HIFZ-INTERNATIONAL&status=NULL">HIFZ-INTERNATIONAL- <?php $db->StudentCount('HIFZ-INTERNATIONAL',NULL); ?></a>
+        <a class="btn btn-primary m-1 " href="?class=HIFZ-RIVISION&status=NULL">HIFZ-RIVISION- <?php $db->StudentCount('HIFZ-RIVISION',NULL); ?></a>
         <hr>
-        <a class="btn btn-danger m-1 " href="?STATUS=IN-ACTIVE">IN-ACTIVE- <?php $db->StudentCount('','IN-ACTIVE'); ?></a>
-        <a class="btn btn-danger m-1 " href="?STATUS=ILEAVE">LEAVE- <?php $db->StudentCount('','ILEAVE'); ?></a>
-        <a class="btn btn-danger m-1 " href="?STATUS=TC">TC- <?php $db->StudentCount('','TC'); ?></a>
-        <a class="btn btn-danger m-1 " href="?STATUS=BOARD-EXAM-COMPLETE">BOARD-EXAM-COMPLETE- <?php $db->StudentCount('','BOARD-EXAM-COMPLETE'); ?></a>
+        <a class="btn btn-danger m-1 " href="?STATUS=IN-ACTIVE">IN-ACTIVE- <?php $db->StudentCount(NULL,'IN-ACTIVE'); ?></a>
+        <a class="btn btn-danger m-1 " href="?STATUS=ILEAVE">LEAVE- <?php $db->StudentCount(NULL,'ILEAVE'); ?></a>
+        <a class="btn btn-danger m-1 " href="?STATUS=TC">TC- <?php $db->StudentCount(NULL,'TC'); ?></a>
+        <a class="btn btn-danger m-1 " href="?STATUS=BOARD-EXAM-COMPLETE">BOARD-EXAM-COMPLETE- <?php $db->StudentCount(NULL,'BOARD-EXAM-COMPLETE'); ?></a>
       </nav>
       <hr>
-      <h4 class="mb-3">Total Record Found <b><?php $db->StudentCount($class); ?></b></h4>
+      <h4 class="mb-3">Total Record Found <b><?php $db->StudentCount($CLASS,NULL); ?></b></h4>
 
       <table id="studentTable" class="table table-striped table-bordered studentRecordTable">
         <thead>
@@ -156,7 +158,7 @@
           </tr>
         </thead>
           <?php
-            $result = $db->showStudentByClass($class);
+            $result = $db->showStudentByCatagory($CLASS, $STATUS);
             foreach($result as $data){
               ?>
 

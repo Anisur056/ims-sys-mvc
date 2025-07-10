@@ -11,41 +11,18 @@ class ModelDbClass{
 
     public function StudentCount($CLASS,$STATUS){
 
-        if($CLASS === 'ALL'){
+        if($STATUS){
             $select = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `STATUS`=?');
             $select->execute([$STATUS]);
             echo $select->rowCount();
         }
 
-        if(!empty($CLASS)){
+        if($CLASS){
             $select = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `CLASS`=? AND `STATUS`=?');
-            $select->execute([$CLASS,$STATUS]);
-            echo $select->rowCount();
-        }
-        
-
-        if($CLASS === ''){
-            $select = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `STATUS`=?');
-            $select->execute([$STATUS]);
+            $select->execute([$CLASS,'ACTIVE']);
             echo $select->rowCount();
         }
 
-        // if($info === '*'){
-        //     $select = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students`');
-        //     $select->execute();
-        //     echo $select->rowCount();
-        // }else{
-        //     $select = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `CLASS`=?');
-        //     $select->execute([$info]);
-        //     echo $select->rowCount();
-        // }
-
-    }
-
-    public function StudentCountByStatus(){
-        $select = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `STATUS`=?');
-        $select->execute(['EX']);
-        echo $select->rowCount();
     }
 
     public function showStudentsAll(){
@@ -54,17 +31,20 @@ class ModelDbClass{
         return $statement->fetchAll();
     }
 
-    public function showStudentByClass($class){
-        $statement = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `CLASS`=? ORDER BY `ROLL`');
-        $statement->execute([$class]);
-        return $statement->fetchAll();
-    }
+    public function showStudentByCatagory($CLASS,$STATUS){
 
-    public function showStudentByExStatus(){
-        $statement = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `STATUS`=? ORDER BY `ROLL`');
-        $statement->execute(['IN-ACTIVE']);
-        return $statement->fetchAll();
-    } 
+        if($STATUS){
+            $select = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `STATUS`=? ORDER BY `ROLL`');
+            $select->execute([$STATUS]);
+            return $select->fetchAll();
+        }
+
+        if($CLASS){
+            $select = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `CLASS`=? AND `STATUS`=? ORDER BY `ROLL`');
+            $select->execute([$CLASS,'ACTIVE']);
+            return $select->fetchAll();
+        }
+    }
 
     public function showStudentById($student_id){
         $statement = $this->pub_pdo->prepare('SELECT * FROM `shnmm_tbl_students` WHERE `STUDENT_ID`=?');
