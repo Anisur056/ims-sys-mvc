@@ -33,7 +33,7 @@
         <!--begin::Col-->
         <div class="col-lg-3 col-6">
           <!--begin::Small Box Widget 1-->
-          <a href="<?= $web_address ?>student-record">
+          <a href="<?= $web_address ?>student-record" class="text-decoration-none">
             <div class="small-box text-bg-primary">
               <div class="inner">
                 <h3>
@@ -49,7 +49,7 @@
         <!--end::Col-->
         <div class="col-lg-3 col-6">
           <!--begin::Small Box Widget 2-->
-          <a href="<?= $web_address ?>">
+          <a href="<?= $web_address ?>" class="text-decoration-none">
             <div class="small-box text-bg-primary">
               <div class="inner">
                 <h3>
@@ -65,7 +65,7 @@
         <!--end::Col-->
         <div class="col-lg-3 col-6">
           <!--begin::Small Box Widget 3-->
-          <a href="<?= $web_address ?>">
+          <a href="<?= $web_address ?>" class="text-decoration-none">
             <div class="small-box text-bg-primary">
               <div class="inner">
                 <h3>
@@ -81,7 +81,7 @@
         <!--end::Col-->
         <div class="col-lg-3 col-6">
           <!--begin::Small Box Widget 4-->
-          <a href="<?= $web_address ?>">
+          <a href="<?= $web_address ?>" class="text-decoration-none">
             <div class="small-box text-bg-primary">
               <div class="inner">
                 <h3>
@@ -97,8 +97,8 @@
         <!--end::Col-->
         <div class="col-lg-3 col-6">
           <!--begin::Small Box Widget 4-->
-          <a href="<?= $web_address ?>student-fee-take">
-            <div class="small-box text-bg-primary">
+          <a href="<?= $web_address ?>student-fee-take" class="text-decoration-none">
+            <div class="small-box text-bg-success">
               <div class="inner">
                 <h3>
                   <?php
@@ -111,6 +111,17 @@
                   ?>  
                 </h3>
                 <p>Total Received Fees</p>
+              </div>
+              <span class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">Click Here <i class="bi bi-link-45deg"></i></span>
+            </div>
+          </a>
+          <!--end::Small Box Widget 4-->
+        </div>
+        <div class="col-lg-3 col-6">
+          <!--begin::Small Box Widget 4-->
+          <a href="<?= $web_address ?>student-fee-take" class="text-decoration-none">
+            <div class="small-box text-bg-danger">
+              <div class="inner">
                 <h3>
                   <?php
                       $due_amount = 0;

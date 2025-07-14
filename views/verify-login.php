@@ -3,7 +3,7 @@
 
     if (isset($_SESSION['user'])) {
         echo '<script>';
-        echo 'location.replace("/")';
+        echo 'location.replace("'.$web_address.'")';
         echo '</script>';
     }
 
@@ -18,8 +18,7 @@
         $pass_md5 = md5($pass);
 
         $pass_allow = array('340e910da91b75ce05a65ebf0ccdd778',
-        '6e1ff1976ef507dfe2693cfcbdd9aae6'
-    );
+        '6e1ff1976ef507dfe2693cfcbdd9aae6');
 
         if (in_array($pass_md5, $pass_allow)) 
         {
@@ -36,7 +35,7 @@
             }
 
             echo '<script>';
-            echo 'location.replace("/")';
+            echo 'location.replace("'.$web_address.'")';
             echo '</script>';
         }
         else
@@ -113,8 +112,15 @@
             margin: 3px;
             cursor: pointer;
         }
-        .red{
-            color : red;
+        .div-login{
+            width: 300px;
+            border: 1px solid rgb(226, 226, 226);
+            border-radius: 10px;
+            padding-bottom: 5px;
+            padding-top: 5px;
+            margin-bottom: 30px;
+            background: red; 
+            color : #fff;
         }
     </style>
 </head>
@@ -123,6 +129,16 @@
 
 <br>
 <body class="flex flex-col">
+
+    <?php 
+        if(isset($error))
+        {
+            echo '<div class="div-login"><center>';
+            echo $error;
+            echo '</center></div>';
+        }
+    ?>
+
     <div class="numberPad">
         <h3>ims-sys v7.4</h3>
         <div class="disp">
@@ -158,14 +174,7 @@
             </form> 
     </div>
 
-    <?php 
-        if(isset($error))
-        {
-            echo '<div class="div-login red"><center>';
-            echo $error;
-            echo '</center></div>';
-        }
-    ?>
+
 
 
     <script>
